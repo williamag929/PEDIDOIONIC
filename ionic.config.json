@@ -1,5 +1,8 @@
 {
   "name": "PedidoLince",
-  "app_id": "",
-  "type": "ionic-angular"
+  "app_id": "5d9e2c20",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }

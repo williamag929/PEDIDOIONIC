@@ -1,0 +1,77 @@
+<!--
+  Generated template for the ClienteInfoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Cliente</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label fixed>Cliente</ion-label>
+      <ion-input type="text" name="cli_nombre" [(ngModel)]="cliente.cli_nombre"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Direccion</ion-label>
+      <ion-input type="text" name="cli_direccion" [(ngModel)]="cliente.cli_direccion"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Ciudad</ion-label>
+      <ion-input type="text" name="cli_ciudad" [(ngModel)]="cliente.cli_ciudad"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Telefono 1</ion-label>
+      <ion-input type="text" name="cli_phone1" [(ngModel)]="cliente.cli_phone1"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Telefono 2</ion-label>
+      <ion-input type="text" name="cli_phone2" [(ngModel)]="cliente.phone2"></ion-input>
+    </ion-item>
+
+
+  </ion-list>
+
+  <ion-list>
+  <ion-item>
+    <button ion-button clear small color="info" (click)="pedido($event)">
+      <ion-icon name="add"></ion-icon>
+      Pedido
+    </button>
+    <ion-badge item-end>0</ion-badge>
+  </ion-item>
+  <ion-item>
+    <button ion-button clear small color="info" (click)="cartera($event)">
+      <ion-icon name="list"></ion-icon>
+      Cartera
+    </button>
+    <ion-badge item-end>0</ion-badge>
+  </ion-item>
+  <ion-item>
+    <button ion-button clear small color="info" (click)="vermapa($event)">
+      <ion-icon name="map"></ion-icon>
+      Mapa
+    </button>
+  </ion-item>
+  <ion-item>
+    <button ion-button clear small color="info" (click)="visita($event)">
+      <ion-icon name="calendar"></ion-icon>
+      Visita
+    </button>
+  </ion-item>
+</ion-list>
+  
+</ion-content>

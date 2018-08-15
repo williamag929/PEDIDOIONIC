@@ -1,0 +1,311 @@
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { PedproductosPage } from '../../pages/pedproductos/pedproductos';
+import { PedidoServiceProvider } from '../../providers/pedido-service/pedido-service';
+import { LocationServiceProvider } from '../../providers/location-service/location-service';
+
+import { ClienteServiceProvider } from '../../providers/cliente-service/cliente-service';
+import { Platform, ActionSheetController } from 'ionic-angular';
+import { DecimalPipe } from '@angular/common';
+
+//import { ModalController } from 'ionic-angular';
+//import { ModalPage } from '../pages/modal-page';
+
+/**
+ * Generated class for the PedidosPage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
+
+@IonicPage()
+@Component({
+  selector: 'page-pedidos',
+  templateUrl: 'pedidos.html',
+})
+export class PedidosPage {
+  cliente: {
+    cli_id: number, cli_nombre: string,
+    cli_direccion: string
+  } = {
+    cli_id: 0,
+    cli_nombre: '',
+    cli_direccion: ''
+  };
+
+  cli_nombre: string;
+
+  pedido: {
+    ped_id: number,
+    ped_numero: number,
+    ped_tipo: string,
+    cli_id: number,
+    cli_suc: number,
+    vend_id: number,
+    ped_fecha: any,
+    ped_fec_ent: any,
+    ped_subtotal: number,
+    ped_impuesto: number,
+    ped_total: number,
+    ped_desc: number,
+    ped_procesado: boolean,
+    ped_closed: boolean,
+    ped_note: string
+  } = {
+    ped_id: 0,
+    ped_numero: 0,
+    ped_tipo: '',
+    cli_id: 0,
+    cli_suc: 0,
+    vend_id: 0,
+    ped_fecha: '',
+    ped_fec_ent: '',
+    ped_subtotal: 0,
+    ped_impuesto: 0,
+    ped_total: 0,
+    ped_desc: 0,
+    ped_procesado: false,
+    ped_closed: false,
+    ped_note: ''
+  };
+
+  ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }
+  = { ped_det_id: 0, ped_id: 0, pro_id: '', pro_nom: '', cant: 0, precio: 0, porc_desc: 0, val_desc: 0, porc_imp: 0, val_imp: 0, subtotal: 0 };
+
+  ped_dets: Array<{ ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }>;
+
+  //ped_dets: Array<{ ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, subtotal: number }>;
+
+  location: {geolocid:number,
+    tiporeg: string,
+    regid: number,
+    fecha: any,
+    gelocpos: string,
+    vend_id: number,
+    cli_id: number}=
+    {
+      geolocid: 0,
+      tiporeg: '',
+      regid: 0,
+      fecha: '',
+      gelocpos: '',
+      vend_id: 0,
+      cli_id: 0
+    } 
+
+  coords : {};
+  
+
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public pedidosService: PedidoServiceProvider,
+    public locationService: LocationServiceProvider,
+    public clienteService: ClienteServiceProvider,
+    public platform: Platform,
+    public actionsheetCtrl: ActionSheetController
+  ) { }
+
+  ionViewDidLoad() {
+
+    this.pedido.ped_id = this.navParams.get('ped_id');
+
+    console.log('ped_id', this.pedido.ped_id);
+
+    if (this.pedido.ped_id == 0) {
+      //es un nuevo pedido
+      this.cliente = this.navParams.get('item');
+
+      this.pedido.cli_id = this.cliente.cli_id;
+      this.pedido.ped_numero = 0;  //buscar prox numero  
+      this.pedido.ped_fec_ent = new Date().toISOString().slice(0, 16);
+      this.pedido.ped_fecha = new Date().toISOString().slice(0, 16);
+
+      var vend_id = localStorage.getItem('vend_id');
+
+      console.log('vend_id', vend_id);
+     
+      this.pedido.vend_id = parseInt(vend_id);
+
+      //this.pedido.ped_fec_ent = new Date(Date.now());
+    }
+    else {
+
+      this.pedido = this.navParams.get('item');
+
+      //carga pedido
+      this.fillpedido(this.pedido.ped_id);
+
+    }
+
+    console.log(this.cliente);
+    console.log(this.pedido);
+    console.log(this.ped_dets);
+  }
+
+  fillpedido(ped_id){
+
+    //leer encabezado
+    this.pedidosService.GetPedido(ped_id).subscribe(
+      data => {
+        this.pedido = data;
+        console.log('lectura', data);
+
+        //leer datos cliente
+        this.fillcliente(data.cli_id);
+      },
+      err => {
+        console.log(err);
+      },
+      () => console.log('Proceso Completo')
+    );
+
+    //leer detalle
+
+    this.pedidosService.GetPedidosdet(this.pedido.ped_id).subscribe(
+      data => {
+        this.ped_dets = data;
+        console.log(data);
+      },
+      err => {
+        console.log(err);
+      },
+      () => console.log('Proceso Completo')
+    );
+
+  }
+
+  fillcliente(cli_id) {
+    console.log('cli_id', cli_id);
+
+    this.clienteService.GetCliente(cli_id).subscribe(
+      data => {
+        this.cliente = data;
+        console.log('cliente', data);
+      },
+      err => {
+        console.log(err);
+      },
+      () => console.log('Proceso Completo')
+    );
+  }
+
+
+ // callback...
+ 
+ myCallbackFunction = (_params) => {
+    return new Promise((resolve, reject) => {
+      console.log("_params",_params);
+      this.fillpedido(_params);
+      resolve();
+    });
+   }
+
+
+  productos(event) {
+    //guarda pedido
+    if (this.pedido.ped_id > 0) {
+      this.pedidosService.SetPedido(this.pedido)
+        .subscribe(res => {
+          console.log("suscb", res);
+        });
+      //ubicacion 
+      this.getLocation();
+
+      this.location.cli_id = this.pedido.cli_id;
+      this.location.fecha = Date.now;
+      this.location.regid = this.pedido.ped_id;
+      this.location.tiporeg = "Pedido";
+      this.location.vend_id = this.pedido.vend_id;
+      this.location.gelocpos = JSON.stringify(this.coords);
+
+      this.locationService.SetLocation(this.location)
+      .subscribe(res => {
+        console.log("loc",res)
+      });
+
+      //adiciona productos
+      this.navCtrl.push(PedproductosPage, {
+        pedido: this.pedido, ped_id: this.pedido.ped_id, callback : this.myCallbackFunction
+      });
+    }
+    else {
+      this.pedidosService.SetPedido(this.pedido).subscribe(res => {
+        console.log("suscb", res);
+        this.pedido.ped_id = res.ped_id;
+        this.navCtrl.push(PedproductosPage, {
+          pedido: this.pedido, ped_id: this.pedido.ped_id, callback : this.myCallbackFunction
+        });
+      }, err => console.log(err));
+    }
+  }
+
+
+  itemDeleted(item, index) {
+    
+    this.pedidosService.DeletePedidodet(this.pedido.ped_id).subscribe(res => {
+      console.log("suscb", res);
+      this.ped_dets.splice(index,1);
+    }, err => console.log(err
+    
+    //ped_dets
+    //this.pedidosService.
+    
+  }
+
+  getLocation() {
+    if (navigator.geolocation) {
+      var self = this;
+      navigator.geolocation.getCurrentPosition(function (response) {
+        self.showPosition(response, self);
+      }, function () {
+        alert("Unable to get GPS Location");
+      }, {
+          enableHighAccuracy: true
+        });
+    }
+    else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
+  showPosition(position: any, self: any) {
+    console.log("Coordenadas",position.coords);
+    this.coords = position.coords;
+  }
+
+  openMenu() {
+    let actionSheet = this.actionsheetCtrl.create({
+      title: 'Albums',
+      cssClass: 'action-sheets-basic-page',
+      buttons: [
+        {
+          text: 'Enviar',
+          role: 'destructive',
+          icon: !this.platform.is('ios') ? 'trash' : null,
+          handler: () => {
+            console.log('Delete clicked');
+          }
+        },
+        {
+          text: 'Imprimir',
+          icon: !this.platform.is('ios') ? 'share' : null,
+          handler: () => {
+            console.log('Share clicked');
+          }
+        },
+        {
+          text: 'Refrescar',
+          role: 'cancel', // will always sort to be on the bottom
+          icon: !this.platform.is('ios') ? 'close' : null,
+          handler: () => {
+            this.fillpedido(this.pedido.ped_id);
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+
+
+}

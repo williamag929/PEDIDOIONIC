@@ -1,0 +1,42 @@
+<!--
+  Generated template for the ClientesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Clientes</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar [(ngModel)]="searchfav" (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of (clientes ? clientes.slice(0,20) : [])" (click)="vercliente($event,item)">
+      <ion-item>
+        <h2>
+          {{item.cli_nombre}}
+        </h2>
+        <p>
+          nit: {{item.cli_nit}}, suc: {{item.cli_suc}} {{item.cli_direccion}}
+        </p>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="light" icon-start>
+          Más ...
+        </button>
+        <button ion-button color="primary" icon-start (click)="itemTapped($event,item)">
+          Pedido
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <div *ngIf="selectedItem" padding>
+    You navigated here from
+    <b>{{selectedItem.cli_nombre}}</b>
+  </div>
+</ion-content>
