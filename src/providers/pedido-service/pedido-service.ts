@@ -4,6 +4,7 @@ import { RequestOptions, Headers, Response } from '@angular/http'
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch'
 import { Observable } from "rxjs/Observable";
+import {DomSanitizer} from '@angular/platform-browser';
 
 import { GlobalVariable} from '../../app/app.config';
 
@@ -15,6 +16,7 @@ import { GlobalVariable} from '../../app/app.config';
 */
 @Injectable()
 export class PedidoServiceProvider {
+
 
   constructor(public http: Http) {
     console.log('Hello PedidoServiceProvider Provider');
@@ -36,6 +38,44 @@ export class PedidoServiceProvider {
     var response = this.http.get(url).map(res => res.json());
     return response;
   }
+
+
+  SendPedido(ped_id) {
+
+    this.headers = new Headers();
+    this.headers.append('Content-Type', 'application/json');
+
+    //this.headers.append("Content-Type", "application/x-www-form-urlencoded");
+
+    //this.headers.append('Content-Type', 'application/xml');
+    //this.headers.append('Accept',  'application/xml');
+    //this.headers.append('Response-Type', 'text' );
+    //var postedData  = "<id>"+ped_id+"</id>"
+
+    let bodyString = JSON.stringify({id : ped_id,vend_id:99});
+
+    console.log(bodyString);
+
+    //let options = new RequestOptions({ headers: this.headers });
+    var url = this.baseApiUrl +'pedidoPdf/';
+    var response = this.http.post(url, bodyString, { headers: this.headers })
+    .map(res => res.json())
+
+    return response;    
+  }
+
+  GetPdf(ped_id) {
+
+    //this.headers = new Headers();
+    //this.headers.append('Content-Type', 'application/json');
+
+
+    var url = this.baseApiUrl +'pedidoPdf/'+ + encodeURI(ped_id);
+    var response = this.http.get(url).map(res => res.json());
+    return response;
+ 
+  }
+
 
   SetPedido(object) {
 

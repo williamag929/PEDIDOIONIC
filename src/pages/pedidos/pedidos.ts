@@ -7,6 +7,11 @@ import { LocationServiceProvider } from '../../providers/location-service/locati
 import { ClienteServiceProvider } from '../../providers/cliente-service/cliente-service';
 import { Platform, ActionSheetController } from 'ionic-angular';
 import { DecimalPipe } from '@angular/common';
+import { File } from '@ionic-native/file';
+import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
+import { FileTransfer } from '@ionic-native/file-transfer';
+
+import { GlobalVariable} from '../../app/app.config';
 
 //import { ModalController } from 'ionic-angular';
 //import { ModalPage } from '../pages/modal-page';
@@ -22,16 +27,19 @@ import { DecimalPipe } from '@angular/common';
 @Component({
   selector: 'page-pedidos',
   templateUrl: 'pedidos.html',
+  template: '<pdf-viewer [src]="pdfSrc" [show-all]="true"></pdf-viewer>'
 })
 export class PedidosPage {
   cliente: {
     cli_id: number, cli_nombre: string,
     cli_direccion: string
   } = {
-    cli_id: 0,
-    cli_nombre: '',
-    cli_direccion: ''
-  };
+      cli_id: 0,
+      cli_nombre: '',
+      cli_direccion: ''
+    };
+
+  pdfSrc: any;
 
   cli_nombre: string;
 
@@ -52,37 +60,39 @@ export class PedidosPage {
     ped_closed: boolean,
     ped_note: string
   } = {
-    ped_id: 0,
-    ped_numero: 0,
-    ped_tipo: '',
-    cli_id: 0,
-    cli_suc: 0,
-    vend_id: 0,
-    ped_fecha: '',
-    ped_fec_ent: '',
-    ped_subtotal: 0,
-    ped_impuesto: 0,
-    ped_total: 0,
-    ped_desc: 0,
-    ped_procesado: false,
-    ped_closed: false,
-    ped_note: ''
-  };
+      ped_id: 0,
+      ped_numero: 0,
+      ped_tipo: '',
+      cli_id: 0,
+      cli_suc: 0,
+      vend_id: 0,
+      ped_fecha: '',
+      ped_fec_ent: '',
+      ped_subtotal: 0,
+      ped_impuesto: 0,
+      ped_total: 0,
+      ped_desc: 0,
+      ped_procesado: false,
+      ped_closed: false,
+      ped_note: ''
+    };
 
   ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }
-  = { ped_det_id: 0, ped_id: 0, pro_id: '', pro_nom: '', cant: 0, precio: 0, porc_desc: 0, val_desc: 0, porc_imp: 0, val_imp: 0, subtotal: 0 };
+    = { ped_det_id: 0, ped_id: 0, pro_id: '', pro_nom: '', cant: 0, precio: 0, porc_desc: 0, val_desc: 0, porc_imp: 0, val_imp: 0, subtotal: 0 };
 
   ped_dets: Array<{ ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }>;
 
   //ped_dets: Array<{ ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, subtotal: number }>;
 
-  location: {geolocid:number,
+  location: {
+    geolocid: number,
     tiporeg: string,
     regid: number,
     fecha: any,
     gelocpos: string,
     vend_id: number,
-    cli_id: number}=
+    cli_id: number
+  } =
     {
       geolocid: 0,
       tiporeg: '',
@@ -91,10 +101,10 @@ export class PedidosPage {
       gelocpos: '',
       vend_id: 0,
       cli_id: 0
-    } 
+    }
 
-  coords : {};
-  
+  coords: {};
+
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -102,7 +112,11 @@ export class PedidosPage {
     public locationService: LocationServiceProvider,
     public clienteService: ClienteServiceProvider,
     public platform: Platform,
-    public actionsheetCtrl: ActionSheetController
+    public actionsheetCtrl: ActionSheetController,
+    private document: DocumentViewer,
+    private file: File,
+    private transfer: FileTransfer
+
   ) { }
 
   ionViewDidLoad() {
@@ -123,7 +137,7 @@ export class PedidosPage {
       var vend_id = localStorage.getItem('vend_id');
 
       console.log('vend_id', vend_id);
-     
+
       this.pedido.vend_id = parseInt(vend_id);
 
       //this.pedido.ped_fec_ent = new Date(Date.now());
@@ -142,7 +156,52 @@ export class PedidosPage {
     console.log(this.ped_dets);
   }
 
-  fillpedido(ped_id){
+
+  sendpedido(ped_id) {
+    //leer encabezado
+    this.pedidosService.SendPedido(ped_id).subscribe(
+      data => {
+        this.pedido = data;
+        console.log('envio correo', data);
+        //leer datos cliente
+      },
+      err => {
+        console.log(err);
+      },
+      () => console.log('Proceso Completo')
+    );
+
+  }
+
+  getpedpdf(ped_id) {
+   // this.pedidosService.GetPdf(ped_id).subscribe((file: ArrayBuffer) => {
+   //   this.pdfSrc = new Uint8Array(file);
+      // or directly passing ArrayBuffer
+      // this.pdfSrc = file;
+  //  });
+
+    let path = null;
+ 
+    if (this.platform.is('ios')) {
+      path = this.file.documentsDirectory;
+    } else if (this.platform.is('android')) {
+      path = this.file.dataDirectory;
+    }
+
+    var baseApiUrl = GlobalVariable.BASE_API_URL;
+ 
+    const transfer = this.transfer.create();
+
+    var url = baseApiUrl +'pedidoPdf/'+ + encodeURI(ped_id);
+
+    transfer.download(url, path + ped_id+'.pdf').then(entry => {
+      let url = entry.toURL();
+      this.document.viewDocument(url, 'application/pdf', {});
+    });
+
+  }
+
+  fillpedido(ped_id) {
 
     //leer encabezado
     this.pedidosService.GetPedido(ped_id).subscribe(
@@ -190,15 +249,15 @@ export class PedidosPage {
   }
 
 
- // callback...
- 
- myCallbackFunction = (_params) => {
+  // callback...
+
+  myCallbackFunction = (_params) => {
     return new Promise((resolve, reject) => {
-      console.log("_params",_params);
+      console.log("_params", _params);
       this.fillpedido(_params);
       resolve();
     });
-   }
+  }
 
 
   productos(event) {
@@ -219,13 +278,13 @@ export class PedidosPage {
       this.location.gelocpos = JSON.stringify(this.coords);
 
       this.locationService.SetLocation(this.location)
-      .subscribe(res => {
-        console.log("loc",res)
-      });
+        .subscribe(res => {
+          console.log("loc", res)
+        });
 
       //adiciona productos
       this.navCtrl.push(PedproductosPage, {
-        pedido: this.pedido, ped_id: this.pedido.ped_id, callback : this.myCallbackFunction
+        pedido: this.pedido, ped_id: this.pedido.ped_id, callback: this.myCallbackFunction
       });
     }
     else {
@@ -233,7 +292,7 @@ export class PedidosPage {
         console.log("suscb", res);
         this.pedido.ped_id = res.ped_id;
         this.navCtrl.push(PedproductosPage, {
-          pedido: this.pedido, ped_id: this.pedido.ped_id, callback : this.myCallbackFunction
+          pedido: this.pedido, ped_id: this.pedido.ped_id, callback: this.myCallbackFunction
         });
       }, err => console.log(err));
     }
@@ -241,15 +300,15 @@ export class PedidosPage {
 
 
   itemDeleted(item, index) {
-    
+
     this.pedidosService.DeletePedidodet(this.pedido.ped_id).subscribe(res => {
       console.log("suscb", res);
-      this.ped_dets.splice(index,1);
-    }, err => console.log(err
-    
+      this.ped_dets.splice(index, 1);
+    }, err => console.log(err));
+
     //ped_dets
     //this.pedidosService.
-    
+
   }
 
   getLocation() {
@@ -269,7 +328,7 @@ export class PedidosPage {
   }
 
   showPosition(position: any, self: any) {
-    console.log("Coordenadas",position.coords);
+    console.log("Coordenadas", position.coords);
     this.coords = position.coords;
   }
 
@@ -281,15 +340,17 @@ export class PedidosPage {
         {
           text: 'Enviar',
           role: 'destructive',
-          icon: !this.platform.is('ios') ? 'trash' : null,
+          icon: !this.platform.is('ios') ? 'send' : null,
           handler: () => {
-            console.log('Delete clicked');
+            this.sendpedido(this.pedido.ped_id);
+            console.log('Enviar clicked');
           }
         },
         {
           text: 'Imprimir',
           icon: !this.platform.is('ios') ? 'share' : null,
           handler: () => {
+            this.getpedpdf(this.pedido.ped_id);
             console.log('Share clicked');
           }
         },

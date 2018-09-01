@@ -38,9 +38,9 @@
   <ion-searchbar [(ngModel)]="searchfav" (ionInput)="getItems($event)"></ion-searchbar>
   <ion-list>
     <button ion-item *ngFor="let item of (productos ? productos.slice(0,20): []) " (click)="openModal($event, item)">
-      <h2>
+      <h6>
         {{item.pro_nom}}
-      </h2>
+      </h6>
       <p>
         codigo: {{item.pro_id}}
       </p>

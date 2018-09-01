@@ -34,6 +34,10 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { GoogleMaps, Geocoder } from '@ionic-native/google-maps';
 import { Toast } from '@ionic-native/toast';
 
+import { File } from '@ionic-native/file';
+import { FileTransfer } from '@ionic-native/file-transfer';
+import { DocumentViewer } from '@ionic-native/document-viewer';
+
 
 @NgModule({
   declarations: [
@@ -87,8 +91,10 @@ import { Toast } from '@ionic-native/toast';
     //NativeGeocoder,
     Geolocation,
     GoogleMaps, Geocoder,
-    Toast
-    
+    Toast,
+    File,
+    DocumentViewer,
+    FileTransfer    
   ]
 })
 export class AppModule { }
