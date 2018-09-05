@@ -11,7 +11,8 @@ import { File } from '@ionic-native/file';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 import { FileTransfer } from '@ionic-native/file-transfer';
 
-import { GlobalVariable} from '../../app/app.config';
+import { GlobalVariable } from '../../app/app.config';
+
 
 //import { ModalController } from 'ionic-angular';
 //import { ModalPage } from '../pages/modal-page';
@@ -26,8 +27,8 @@ import { GlobalVariable} from '../../app/app.config';
 @IonicPage()
 @Component({
   selector: 'page-pedidos',
-  templateUrl: 'pedidos.html',
-  template: '<pdf-viewer [src]="pdfSrc" [show-all]="true"></pdf-viewer>'
+  templateUrl: 'pedidos.html'
+  //template: '<pdf-viewer [src]="pdfSrc" [show-all]="true"></pdf-viewer>'
 })
 export class PedidosPage {
   cliente: {
@@ -174,14 +175,14 @@ export class PedidosPage {
   }
 
   getpedpdf(ped_id) {
-   // this.pedidosService.GetPdf(ped_id).subscribe((file: ArrayBuffer) => {
-   //   this.pdfSrc = new Uint8Array(file);
-      // or directly passing ArrayBuffer
-      // this.pdfSrc = file;
-  //  });
-
+    // this.pedidosService.GetPdf(ped_id).subscribe((file: ArrayBuffer) => {
+    //   this.pdfSrc = new Uint8Array(file);
+    // or directly passing ArrayBuffer
+    // this.pdfSrc = file;
+    //  });
+    console.log(ped_id);
     let path = null;
- 
+
     if (this.platform.is('ios')) {
       path = this.file.documentsDirectory;
     } else if (this.platform.is('android')) {
@@ -189,14 +190,17 @@ export class PedidosPage {
     }
 
     var baseApiUrl = GlobalVariable.BASE_API_URL;
- 
+
     const transfer = this.transfer.create();
 
-    var url = baseApiUrl +'pedidoPdf/'+ + encodeURI(ped_id);
+    var url = baseApiUrl + 'pedidoPdf/' + encodeURI(ped_id);
 
-    transfer.download(url, path + ped_id+'.pdf').then(entry => {
+    console.log(url);
+
+    transfer.download(url, path + ped_id + '.pdf').then(entry => {
       let url = entry.toURL();
       this.document.viewDocument(url, 'application/pdf', {});
+      console.log('procesado');
     });
 
   }
@@ -299,13 +303,20 @@ export class PedidosPage {
   }
 
 
-  itemDeleted(item, index) {
+  itemDeleted(item,idx) {
 
-    this.pedidosService.DeletePedidodet(this.pedido.ped_id).subscribe(res => {
-      console.log("suscb", res);
+    let index = this.ped_dets.indexOf(item);
+
+    if(index > -1){
+
+
+    console.log("suscb", item);
+    this.pedidosService.DeletePedidodet(item.ped_det_id).subscribe(res => {
+      console.log("suscb res", res);
       this.ped_dets.splice(index, 1);
     }, err => console.log(err));
 
+  }
     //ped_dets
     //this.pedidosService.
 
@@ -351,13 +362,13 @@ export class PedidosPage {
           icon: !this.platform.is('ios') ? 'share' : null,
           handler: () => {
             this.getpedpdf(this.pedido.ped_id);
-            console.log('Share clicked');
+            console.log('Get Pdf clicked');
           }
         },
         {
           text: 'Refrescar',
           role: 'cancel', // will always sort to be on the bottom
-          icon: !this.platform.is('ios') ? 'close' : null,
+          icon: !this.platform.is('ios') ? 'refresh' : null,
           handler: () => {
             this.fillpedido(this.pedido.ped_id);
             console.log('Cancel clicked');

@@ -132,13 +132,16 @@ export class PedidoServiceProvider {
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
 
-    let bodyString = JSON.stringify(object);
+
+    let bodyString = JSON.stringify({id: object});
+
+    console.log("borrar",bodyString);
 
     //let options = new RequestOptions({ headers: this.headers });
 
-    var url =  this.baseApiUrl + 'pedidodet/';
+    var url =  this.baseApiUrl + 'pedidodet?id='+object;
 
-    var response = this.http.delete(url,bodyString).map(res => res.json())
+    var response = this.http.delete(url).map(res => res.json())
 
     //var response = this.http.delete(url, bodyString, { headers: this.headers }).map(res => res.json())
     
