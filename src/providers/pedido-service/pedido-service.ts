@@ -40,19 +40,12 @@ export class PedidoServiceProvider {
   }
 
 
-  SendPedido(ped_id) {
+  SendPedido(object) {
 
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
 
-    //this.headers.append("Content-Type", "application/x-www-form-urlencoded");
-
-    //this.headers.append('Content-Type', 'application/xml');
-    //this.headers.append('Accept',  'application/xml');
-    //this.headers.append('Response-Type', 'text' );
-    //var postedData  = "<id>"+ped_id+"</id>"
-
-    let bodyString = JSON.stringify({id : ped_id,vend_id:99});
+    let bodyString = JSON.stringify(object);
 
     console.log(bodyString);
 

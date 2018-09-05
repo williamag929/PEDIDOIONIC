@@ -160,7 +160,7 @@ export class PedidosPage {
 
   sendpedido(ped_id) {
     //leer encabezado
-    this.pedidosService.SendPedido(ped_id).subscribe(
+    this.pedidosService.SendPedido(this.pedido).subscribe(
       data => {
         this.pedido = data;
         console.log('envio correo', data);
