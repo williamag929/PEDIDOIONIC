@@ -7,11 +7,14 @@ import { LocationServiceProvider } from '../../providers/location-service/locati
 import { ClienteServiceProvider } from '../../providers/cliente-service/cliente-service';
 import { Platform, ActionSheetController } from 'ionic-angular';
 import { DecimalPipe } from '@angular/common';
+import {intl} from 'intl';
 import { File } from '@ionic-native/file';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 import { FileTransfer } from '@ionic-native/file-transfer';
 
 import { GlobalVariable } from '../../app/app.config';
+
+
 
 
 //import { ModalController } from 'ionic-angular';
