@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { PedidoServiceProvider } from '../../providers/pedido-service/pedido-service';
 import { PedidosPage } from '../../pages/pedidos/pedidos';
 import { DecimalPipe } from '@angular/common';
@@ -11,7 +11,6 @@ import { DecimalPipe } from '@angular/common';
  * on Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-listapedidos',
   templateUrl: 'listapedidos.html',

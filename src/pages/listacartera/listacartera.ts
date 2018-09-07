@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { CarteraServiceProvider } from '../../providers/cartera-service/cartera-service';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { DatePipe } from '@angular/common';
@@ -12,7 +12,6 @@ import { DecimalPipe } from '@angular/common';
  * on Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-listacartera',
   templateUrl: 'listacartera.html',

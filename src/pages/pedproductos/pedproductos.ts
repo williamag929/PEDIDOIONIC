@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { App, IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { App, NavController, NavParams, ViewController } from 'ionic-angular';
 import { ProductoServiceProvider } from '../../providers/producto-service/producto-service';
 import { ModalController } from 'ionic-angular';
 import { PeddetModalPage } from '../../pages/peddet-modal/peddet-modal';
@@ -12,7 +12,6 @@ import { PedidosPage } from '../../pages/pedidos/pedidos';
  * on Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-pedproductos',
   templateUrl: 'pedproductos.html',

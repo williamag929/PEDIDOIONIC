@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { ClienteServiceProvider } from '../../providers/cliente-service/cliente-service';
 import { PedidosPage } from '../../pages/pedidos/pedidos';
 import { ListacarteraPage } from '../listacartera/listacartera';
@@ -13,7 +13,7 @@ import { MapaPage } from '../mapa/mapa'
  * on Ionic pages and navigation.
  */
 
-@IonicPage()
+
 @Component({
   selector: 'page-cliente-info',
   templateUrl: 'cliente-info.html',

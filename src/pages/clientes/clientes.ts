@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { ClienteServiceProvider } from '../../providers/cliente-service/cliente-service';
 import { PedidosPage } from '../../pages/pedidos/pedidos';
 import { ClienteInfoPage } from '../../pages/cliente-info/cliente-info';
 import { AuthService } from '../../providers/auth-service/auth-service';
 
-@IonicPage()
 @Component({
   selector: 'page-clientes',
   templateUrl: 'clientes.html',

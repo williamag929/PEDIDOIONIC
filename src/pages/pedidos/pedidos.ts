@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { PedproductosPage } from '../../pages/pedproductos/pedproductos';
 import { PedidoServiceProvider } from '../../providers/pedido-service/pedido-service';
 import { LocationServiceProvider } from '../../providers/location-service/location-service';
@@ -26,7 +26,6 @@ import { GlobalVariable } from '../../app/app.config';
  * on Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-pedidos',
   templateUrl: 'pedidos.html'

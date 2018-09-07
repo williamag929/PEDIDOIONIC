@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 import { PedidoServiceProvider } from '../../providers/pedido-service/pedido-service';
 
@@ -10,7 +10,6 @@ import { PedidoServiceProvider } from '../../providers/pedido-service/pedido-ser
  * on Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-peddet-modal',
   templateUrl: 'peddet-modal.html',

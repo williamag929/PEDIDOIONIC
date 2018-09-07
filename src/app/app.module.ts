@@ -1,6 +1,8 @@
+import { ClienteInfoPage } from './../pages/cliente-info/cliente-info';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicPageModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
@@ -12,7 +14,6 @@ import { PedidosPage } from '../pages/pedidos/pedidos';
 import { ListapedidosPage } from '../pages/listapedidos/listapedidos';
 import { PedproductosPage } from '../pages/pedproductos/pedproductos';
 import { PeddetModalPage } from '../pages/peddet-modal/peddet-modal';
-import { ClienteInfoPage } from '../pages/cliente-info/cliente-info';
 import { ListacarteraPage } from '../pages/listacartera/listacartera';
 import { MapaPage } from '../pages/mapa/mapa';
 
@@ -25,6 +26,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../providers/auth-service/auth-service';
 import { VendedorServiceProvider } from '../providers/vendedor-service/vendedor-service';
 import { CarteraServiceProvider } from '../providers/cartera-service/cartera-service';
+import {SearchfilterPipe} from '../utilities/Search-filter.pipe';
 
 //import {AgmCoreModule} from 'angular2-google-maps/core';
 import { LocationServiceProvider } from '../providers/location-service/location-service';
@@ -39,6 +41,8 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 import { DocumentViewer } from '@ionic-native/document-viewer';
 
 
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -46,13 +50,14 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     HomePage,
     ListPage,
     ClientesPage,
+    ClienteInfoPage,
     ListapedidosPage,
     PedidosPage,
     PedproductosPage,
     PeddetModalPage,
-    ClienteInfoPage,
     ListacarteraPage,
-    MapaPage
+    MapaPage,
+    SearchfilterPipe
 
   ],
   imports: [
@@ -60,6 +65,15 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     HttpModule,
     IonicModule.forRoot(MyApp),
     FormsModule,
+    IonicPageModule.forChild(ClientesPage),
+    IonicPageModule.forChild(ClienteInfoPage),
+    IonicPageModule.forChild(ListacarteraPage),   
+    IonicPageModule.forChild(ListacarteraPage), 
+    IonicPageModule.forChild(ListapedidosPage),
+    IonicPageModule.forChild(PeddetModalPage),
+    IonicPageModule.forChild(MapaPage),
+    IonicPageModule.forChild(PedidosPage),
+    IonicPageModule.forChild(PedproductosPage),
     //AgmCoreModule.forRoot({apiKey:'AIzaSyA_ilIcEf7N06opMqZInZN10rfP3zz5QTs'})
   ],
   bootstrap: [IonicApp],
@@ -69,11 +83,11 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     HomePage,
     ListPage,
     ClientesPage,
+    ClienteInfoPage,
     ListapedidosPage,
     PedidosPage,
     PedproductosPage,
     PeddetModalPage,
-    ClienteInfoPage,
     ListacarteraPage,
     MapaPage
   ],

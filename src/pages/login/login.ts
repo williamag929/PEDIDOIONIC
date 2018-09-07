@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController, Loading, IonicPage } from 'ionic-angular';
+import { NavController, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { HomePage } from '../../pages/home/home';
 import { ClientesPage } from '../../pages/clientes/clientes';
-//@IonicPage()
+
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
