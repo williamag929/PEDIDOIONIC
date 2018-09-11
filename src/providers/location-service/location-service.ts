@@ -33,14 +33,18 @@ export class LocationServiceProvider {
         this.headers.append('Content-Type', 'application/json');
     
         let bodyString = JSON.stringify(object);
+
+        console.log(bodyString);
+
+        console.log("coords"+object.geolocpos);
     
         //let options = new RequestOptions({ headers: this.headers });
     
-        var url =  this.baseApiUrl + 'pedidodet/';
+        var url =  this.baseApiUrl + 'GeoLoc/';
     
         var response = this.http.post(url, bodyString, { headers: this.headers })
         .map(res => res.json())
-    
+
         return response;
       }
     

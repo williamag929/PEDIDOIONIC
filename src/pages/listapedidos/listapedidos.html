@@ -20,10 +20,10 @@
     <ion-item-sliding *ngFor="let item of (pedidos ? pedidos.slice(0,20) : [])"  (click)="itemTapped($event,item)">
       <ion-item>
         <h2>
-         {{item.ped_numero}} {{item.cli_nombre}}
+         {{item.ped_numero}} | {{item.cli_nombre}} suc: {{item.cli_suc}} 
         </h2>
         <p>
-          numero: {{item.ped_numero}}, Total: {{item.ped_total}}
+          {{item.ped_fecha | date : format : shortDate}} | Valor:  {{item.ped_total | number}}
         </p>
       </ion-item>
       <ion-item-options>

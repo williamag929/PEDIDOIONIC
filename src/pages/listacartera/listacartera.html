@@ -19,15 +19,15 @@
     <ion-item-sliding *ngFor="let item of (carteras ? carteras.slice(0,20) : [])" (click)="creasuceso($event,item)">
       <ion-item>
         <h2>
-          {{item.tipo}}-{{item.numero}}, Saldo: {{item.saldo}}
+          {{item.tipo}}-{{item.numero}} | Saldo: {{item.saldo | number}}
         </h2>
         <p>
-          Fecha:{{item.fecha | date:'dd MM yyyy'}}, Dias: {{item.dias}} : {{item.estado}}
+          {{item.fecha | date:'dd MM yyyy'}} | Dias: {{item.dias}} : {{item.estado }}
         </p>
       </ion-item>
       <ion-item-options>
         <button ion-button color="light" icon-start>
-          Más ...
+          Recibo
         </button>
         <button ion-button color="primary" icon-start (click)="itemTapped($event,item)">
           Suceso
@@ -36,7 +36,6 @@
     </ion-item-sliding>
   </ion-list>
   <div *ngIf="selectedItem" padding>
-    You navigated here from
     <b>{{selectedItem.cli_nombre}}</b>
   </div>
 </ion-content>

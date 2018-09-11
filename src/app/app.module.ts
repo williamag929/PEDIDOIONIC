@@ -1,3 +1,5 @@
+import { SucesoServiceProvider } from './../providers/suceso-service/suceso-service';
+import { SucesoPage } from './../pages/suceso/suceso';
 import { ClienteInfoPage } from './../pages/cliente-info/cliente-info';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -28,6 +30,7 @@ import { VendedorServiceProvider } from '../providers/vendedor-service/vendedor-
 import { CarteraServiceProvider } from '../providers/cartera-service/cartera-service';
 import {SearchfilterPipe} from '../utilities/Search-filter.pipe';
 
+
 //import {AgmCoreModule} from 'angular2-google-maps/core';
 import { LocationServiceProvider } from '../providers/location-service/location-service';
 //import {NativeGeocoder} from '@ionic-native/native-geocoder'
@@ -57,7 +60,8 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     PeddetModalPage,
     ListacarteraPage,
     MapaPage,
-    SearchfilterPipe
+    SearchfilterPipe,
+    SucesoPage
 
   ],
   imports: [
@@ -74,6 +78,7 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     IonicPageModule.forChild(MapaPage),
     IonicPageModule.forChild(PedidosPage),
     IonicPageModule.forChild(PedproductosPage),
+    IonicPageModule.forChild(SucesoPage),
     //AgmCoreModule.forRoot({apiKey:'AIzaSyA_ilIcEf7N06opMqZInZN10rfP3zz5QTs'})
   ],
   bootstrap: [IonicApp],
@@ -89,7 +94,8 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     PedproductosPage,
     PeddetModalPage,
     ListacarteraPage,
-    MapaPage
+    MapaPage,
+    SucesoPage
   ],
   providers: [
     StatusBar,
@@ -102,6 +108,7 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     VendedorServiceProvider,
     CarteraServiceProvider,
     LocationServiceProvider,
+    SucesoServiceProvider,
     //NativeGeocoder,
     Geolocation,
     GoogleMaps, Geocoder,

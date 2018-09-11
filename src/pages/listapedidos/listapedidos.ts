@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { PedidoServiceProvider } from '../../providers/pedido-service/pedido-service';
 import { PedidosPage } from '../../pages/pedidos/pedidos';
-import { DecimalPipe } from '@angular/common';
 
 /**
  * Generated class for the ListapedidosPage page.
@@ -19,6 +18,7 @@ export class ListapedidosPage {
   public pedidos: any;
   public pedidosloaded: any;
   selectedItem: any;
+  cliente:any;
 
   pedido: {
     ped_id: number,
@@ -71,6 +71,7 @@ export class ListapedidosPage {
   loadData() {
 
     var vend_id = localStorage.getItem('vend_id');
+    this.cliente = this.navParams.get('cli_id');
 
     console.log('vendped',vend_id);
     
@@ -78,6 +79,13 @@ export class ListapedidosPage {
       data => {
         this.pedidos = data;
         this.pedidosloaded = data;
+
+        if (this.cliente > 0)
+       {
+          this.pedidos = this.filtercliente(this.cliente,"cli_id");
+          this.pedidosloaded = this.pedidos;
+        }
+
         console.log(data);
       },
       err => {
@@ -88,6 +96,25 @@ export class ListapedidosPage {
 
   }
 
+  filtercliente(element,field) {
+    let results = [];
+    results = this.pedidos.filter(function (item) {
+      //por cada propieda del item busca
+      for (let property in item) {
+        //si la propieda es null continua
+        if (item[field] === null) {
+          continue;
+        }
+        //si la busqueda es acertada retorna true
+        if (item[field] == element) {
+          return true;
+        }
+      }
+      //si no se cumple retorna falso
+      return false;
+    });
+    return results
+  }
 
   getItems(ev: any) {
 

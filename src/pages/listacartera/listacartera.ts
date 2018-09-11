@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { CarteraServiceProvider } from '../../providers/cartera-service/cartera-service';
 import { AuthService } from '../../providers/auth-service/auth-service';
-import { DatePipe } from '@angular/common';
-import { DecimalPipe } from '@angular/common';
+
 
 /**
  * Generated class for the ListacarteraPage page.

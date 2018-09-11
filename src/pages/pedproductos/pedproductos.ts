@@ -77,7 +77,7 @@ export class PedproductosPage {
     this.loadProductos();
   }
 
-
+  //cargue inicial
   loadProductos() {
 
     this.productoService.GetProductos(this.pedido.ped_id).subscribe(
@@ -96,7 +96,8 @@ export class PedproductosPage {
 
 
 
-
+  //descargar los productos segun 
+  //la busqueda
   getItems(ev: any) {
     // set val to the value of the searchbar
     let val = ev.target.value;
@@ -127,16 +128,8 @@ export class PedproductosPage {
     });
   }
 
-
+///regresa al formulario de pedido con callback
   openPedido() {
-    //this.navCtrl.setRoot(PedidosPage);
-
-    // this.appCtrl.getRootNav().push(PedidosPage,{
-    //        item: {}, ped_id: this.pedido.ped_id
-    //});
-
-    //this.navCtrl.pop();
-
     var param = this.pedido.ped_id;
 
     console.log("param", param);
@@ -144,13 +137,10 @@ export class PedproductosPage {
     this.callback(param).then(() => {
       this.navCtrl.pop();
     });
-    //this.navCtrl.push(PedidosPage,{
-    //  item: {}, ped_id: this.pedido.ped_id
-    //});
-
-
   }
 
+  ///muestra modal de producto 
+  ///para ingresar cantidad
   openModal(event, item) {
 
     let modaldet = this.modalCtrl.create(PeddetModalPage, {

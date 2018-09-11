@@ -1,3 +1,4 @@
+import { ListapedidosPage } from './../listapedidos/listapedidos';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ClienteServiceProvider } from '../../providers/cliente-service/cliente-service';
@@ -33,7 +34,11 @@ export class ClienteInfoPage {
     cli_phone1: string,
     cli_phone2: string,
     cli_cupo: number,
-    cli_estado: string
+    cli_estado: string,
+    pedidos : number,
+    visitas: number,
+    cartera:number,
+    cotizaciones:number
   } = {
       cli_id: 0,
       cli_suc: 0,
@@ -46,7 +51,11 @@ export class ClienteInfoPage {
       cli_phone1: '',
       cli_phone2: '',
       cli_cupo: 0,
-      cli_estado: ''
+      cli_estado: '',
+      pedidos:0,
+      visitas:0,
+      cartera:0,
+      cotizaciones:0
     };
   selectedItem: any;
 
@@ -71,6 +80,14 @@ export class ClienteInfoPage {
     //this.navCtrl.setRoot(PedidosPage);
     this.navCtrl.push(PedidosPage, {
       item: this.cliente, ped_id: 0
+    });
+  }
+
+  
+  pedidos(event) {
+    //this.navCtrl.setRoot(PedidosPage);
+    this.navCtrl.push(ListapedidosPage, {
+      cli_id: this.cliente.cli_id
     });
   }
 

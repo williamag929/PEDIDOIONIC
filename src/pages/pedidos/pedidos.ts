@@ -91,7 +91,7 @@ export class PedidosPage {
     tiporeg: string,
     regid: number,
     fecha: any,
-    gelocpos: string,
+    geolocpos: any,
     vend_id: number,
     cli_id: number
   } =
@@ -100,12 +100,12 @@ export class PedidosPage {
       tiporeg: '',
       regid: 0,
       fecha: '',
-      gelocpos: '',
+      geolocpos: '',
       vend_id: 0,
       cli_id: 0
     }
 
-  coords: {};
+  coords: any;
 
 
   constructor(public navCtrl: NavController,
@@ -126,6 +126,8 @@ export class PedidosPage {
     this.pedido.ped_id = this.navParams.get('ped_id');
 
     console.log('ped_id', this.pedido.ped_id);
+
+    this.getLocation();
 
     if (this.pedido.ped_id == 0) {
       //es un nuevo pedido
@@ -158,7 +160,8 @@ export class PedidosPage {
     console.log(this.ped_dets);
   }
 
-
+///envia el pedido para ser marcado como
+//cerrado y enviar el correo
   sendpedido(ped_id) {
     //leer encabezado
     this.pedidosService.SendPedido(this.pedido).subscribe(
@@ -175,6 +178,7 @@ export class PedidosPage {
 
   }
 
+  ///descarga el pdf
   getpedpdf(ped_id) {
     // this.pedidosService.GetPdf(ped_id).subscribe((file: ArrayBuffer) => {
     //   this.pdfSrc = new Uint8Array(file);
@@ -206,6 +210,8 @@ export class PedidosPage {
 
   }
 
+  ///llena la pantalla con los datos
+  ///del pedido
   fillpedido(ped_id) {
 
     //leer encabezado
@@ -238,6 +244,7 @@ export class PedidosPage {
 
   }
 
+  //llena los datos del cliente
   fillcliente(cli_id) {
     console.log('cli_id', cli_id);
 
@@ -254,8 +261,8 @@ export class PedidosPage {
   }
 
 
-  // callback...
-
+  // callback para refrescar pantalla
+  //al regresar del carrito fillpedido
   myCallbackFunction = (_params) => {
     return new Promise((resolve, reject) => {
       console.log("_params", _params);
@@ -264,7 +271,8 @@ export class PedidosPage {
     });
   }
 
-
+//carrito para adicionar productos
+//push a pagina PedproductosPage
   productos(event) {
     //guarda pedido
     if (this.pedido.ped_id > 0) {
@@ -273,14 +281,17 @@ export class PedidosPage {
           console.log("suscb", res);
         });
       //ubicacion 
-      this.getLocation();
+      console.log("coords",this.coords);
 
-      this.location.cli_id = this.pedido.cli_id;
-      this.location.fecha = Date.now;
-      this.location.regid = this.pedido.ped_id;
+      this.location.geolocid = 0;
       this.location.tiporeg = "Pedido";
-      this.location.vend_id = this.pedido.vend_id;
-      this.location.gelocpos = JSON.stringify(this.coords);
+      this.location.regid = this.pedido.ped_id;
+      this.location.fecha = this.pedido.ped_fecha;
+      this.location.geolocpos = JSON.stringify({ latitude: this.coords.latitude, longitude:this.coords.longitude});
+      this.location.vend_id = this.pedido.vend_id;     
+      this.location.cli_id = this.pedido.cli_id;
+
+      console.log(this.location.geolocpos);
 
       this.locationService.SetLocation(this.location)
         .subscribe(res => {
@@ -303,7 +314,7 @@ export class PedidosPage {
     }
   }
 
-
+//borra item
   itemDeleted(item,idx) {
 
     let index = this.ped_dets.indexOf(item);
@@ -323,7 +334,9 @@ export class PedidosPage {
 
   }
 
+  //leer ubicacion
   getLocation() {
+    console.log("obtener coord");
     if (navigator.geolocation) {
       var self = this;
       navigator.geolocation.getCurrentPosition(function (response) {
@@ -338,12 +351,13 @@ export class PedidosPage {
       alert("Geolocation is not supported by this browser.");
     }
   }
-
+//mostrar ubicacion
   showPosition(position: any, self: any) {
     console.log("Coordenadas", position.coords);
     this.coords = position.coords;
   }
 
+  //menu emergente
   openMenu() {
     let actionSheet = this.actionsheetCtrl.create({
       title: 'Albums',
