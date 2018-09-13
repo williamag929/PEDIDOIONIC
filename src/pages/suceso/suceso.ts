@@ -43,9 +43,9 @@ export class SucesoPage {
       tipo: ''
     }
 
-    coords: any;
+  coords: any;
 
-    
+
   location: {
     geolocid: number,
     tiporeg: string,
@@ -65,20 +65,20 @@ export class SucesoPage {
       cli_id: 0
     }
 
-    cliente: {
-      cli_id: number, cli_nombre: string,
-      cli_direccion: string
-    } = {
-        cli_id: 0,
-        cli_nombre: '',
-        cli_direccion: ''
-      };
-  
+  cliente: {
+    cli_id: number, cli_nombre: string,
+    cli_direccion: string
+  } = {
+      cli_id: 0,
+      cli_nombre: '',
+      cli_direccion: ''
+    };
 
-  constructor(public navCtrl: NavController, 
+
+  constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public locationService: LocationServiceProvider,
-     public sucesoService: SucesoServiceProvider,
+    public sucesoService: SucesoServiceProvider,
     public clienteService: ClienteServiceProvider) {
   }
 
@@ -95,8 +95,7 @@ export class SucesoPage {
     this.sucesomodel.vend_id = parseInt(vend_id);
     this.sucesomodel.cli_id = this.cliente.cli_id;
 
-    if (this.sucesomodel.sucesoid > 0) 
-    {
+    if (this.sucesomodel.sucesoid > 0) {
       this.fillsuceso(this.sucesomodel.sucesoid);
     }
 
@@ -140,32 +139,35 @@ export class SucesoPage {
     );
   }
 
-  setsuceso(){
+  setsuceso() {
     this.sucesoService.SetSuceso(this.sucesomodel).subscribe(res => {
       console.log("suscb", res);
+      console.log("ID", res.sucesoid);
       this.sucesomodel.sucesoid = res.sucesoid;
+
+      this.location.geolocid = 0;
+      this.location.tiporeg = "suceso: " + this.sucesomodel.tipo;
+      this.location.regid = res.sucesoid;
+      this.location.fecha = this.sucesomodel.fecha;
+      this.location.geolocpos = JSON.stringify({ latitude: this.coords.latitude, longitude: this.coords.longitude });
+      this.location.vend_id = this.sucesomodel.vend_id;
+      this.location.cli_id = this.sucesomodel.cli_id;
+
+      console.log(this.location.geolocpos);
+
+      this.locationService.SetLocation(this.location)
+        .subscribe(res => {
+          console.log("loc", res)
+        });
+
+      this.navCtrl.pop();
 
     }, err => console.log(err));
 
-    this.location.geolocid = 0;
-    this.location.tiporeg = "suceso: "+this.sucesomodel.tipo;
-    this.location.regid = this.sucesomodel.sucesoid;
-    this.location.fecha = this.sucesomodel.fecha;
-    this.location.geolocpos = JSON.stringify({ latitude: this.coords.latitude, longitude:this.coords.longitude});
-    this.location.vend_id = this.sucesomodel.vend_id;     
-    this.location.cli_id = this.sucesomodel.cli_id;
 
-    console.log(this.location.geolocpos);
-
-    this.locationService.SetLocation(this.location)
-      .subscribe(res => {
-        console.log("loc", res)
-      });
-
-        this.navCtrl.pop();
 
   }
-  
+
   //leer ubicacion
   getLocation() {
     console.log("obtener coord");
@@ -183,7 +185,7 @@ export class SucesoPage {
       alert("Geolocation is not supported by this browser.");
     }
   }
-//mostrar ubicacion
+  //mostrar ubicacion
   showPosition(position: any, self: any) {
     console.log("Coordenadas", position.coords);
     this.coords = position.coords;
