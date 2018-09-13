@@ -1,3 +1,4 @@
+import { ListasucesosPage } from './../pages/listasucesos/listasucesos';
 import { SucesoServiceProvider } from './../providers/suceso-service/suceso-service';
 import { SucesoPage } from './../pages/suceso/suceso';
 import { ClienteInfoPage } from './../pages/cliente-info/cliente-info';
@@ -61,7 +62,8 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     ListacarteraPage,
     MapaPage,
     SearchfilterPipe,
-    SucesoPage
+    SucesoPage,
+    ListasucesosPage
 
   ],
   imports: [
@@ -74,6 +76,7 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     IonicPageModule.forChild(ListacarteraPage),   
     IonicPageModule.forChild(ListacarteraPage), 
     IonicPageModule.forChild(ListapedidosPage),
+    IonicPageModule.forChild(ListasucesosPage),
     IonicPageModule.forChild(PeddetModalPage),
     IonicPageModule.forChild(MapaPage),
     IonicPageModule.forChild(PedidosPage),
@@ -95,7 +98,8 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     PeddetModalPage,
     ListacarteraPage,
     MapaPage,
-    SucesoPage
+    SucesoPage,
+    ListasucesosPage
   ],
   providers: [
     StatusBar,

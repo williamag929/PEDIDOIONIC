@@ -1,3 +1,5 @@
+import { ListasucesosPage } from './../listasucesos/listasucesos';
+import { SucesoPage } from './../suceso/suceso';
 import { ListapedidosPage } from './../listapedidos/listapedidos';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
@@ -105,6 +107,21 @@ export class ClienteInfoPage {
       address: this.cliente.cli_direccion
     });
   }
+
+  suceso(event) {
+    //this.navCtrl.setRoot(PedidosPage);
+    this.navCtrl.push(SucesoPage, {
+      item: this.cliente, sucesoid: 0
+    });
+  }
+
+  sucesos(event) {
+    //this.navCtrl.setRoot(PedidosPage);
+    this.navCtrl.push(ListasucesosPage, {
+      cli_id: this.cliente.cli_id
+    });
+  }
+
 
   loadClientes() {
 

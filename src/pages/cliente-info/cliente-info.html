@@ -71,11 +71,11 @@
     Mapa
   </ion-item-->
   <ion-item>
-    <button ion-button clear small color="info" (click)="visita($event)">
+    <button ion-button clear small color="info" (click)="suceso($event)">
       <ion-icon name="calendar"></ion-icon>
     </button>
-    Visita 
-    <ion-badge item-end>{{cliente.visitas}}</ion-badge>    
+    Actividades 
+    <ion-badge item-end (click)="sucesos($event)">{{cliente.visitas}}</ion-badge>    
 
   </ion-item>
 </ion-list>

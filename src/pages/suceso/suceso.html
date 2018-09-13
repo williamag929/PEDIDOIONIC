@@ -7,12 +7,52 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>suceso</ion-title>
-  </ion-navbar>
 
+    <ion-title>Actividad</ion-title>
+
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openMenu()">
+        <ion-icon name="apps"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
 </ion-header>
 
 
+
 <ion-content padding>
+
+  <ion-list>
+    <ion-item>
+      {{cliente.cli_nombre}}
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Tipo</ion-label>
+      <ion-input type="text" name="tipo" [(ngModel)]="sucesomodel.tipo"></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label fixed>Fecha</ion-label>
+      <ion-datetime displayFormat="MMM DD YYYY" name="fecha" [(ngModel)]="sucesomodel.fecha"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Duracion</ion-label>
+      <ion-input type="text" name="tiempo" [(ngModel)]="sucesomodel.tiempo"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea placeholder="Nota" type="text" name="nota" autocomplete="on" autocorrect="on" [(ngModel)]="sucesomodel.nota"></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <div class="bar bar-footer bar-balanced">
+    <button ion-button block (click)="setsuceso($event)">Aceptar</button>
+  </div>
+
 
 </ion-content>
