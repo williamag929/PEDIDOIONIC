@@ -16,7 +16,6 @@
         <ion-icon name="apps"></ion-icon>
       </button>
     </ion-buttons>
-
   </ion-navbar>
 </ion-header>
 
@@ -25,29 +24,48 @@
 <ion-content padding>
 
   <ion-list>
-    <ion-item>
-      {{cliente.cli_nombre}}
-    </ion-item>
 
-    <ion-item>
-      <ion-label fixed>Tipo</ion-label>
-      <ion-input type="text" name="tipo" [(ngModel)]="sucesomodel.tipo"></ion-input>
-    </ion-item>
-
+      <ion-item>
+          <ion-label>Tipo de Actividad</ion-label>
+          <ion-select [(ngModel)]="sucesomodel.tipo" interface="action-sheet">
+            <ion-option value="Llamada"><ion-icon name="call"></ion-icon>LLamada</ion-option>
+            <ion-option value="Visita"><ion-icon name="people"></ion-icon>Visita</ion-option>
+            <ion-option value="Tarea"><ion-icon name="time"></ion-icon>Tarea</ion-option>
+            <ion-option value="Plazo"><ion-icon name="flag"></ion-icon>Plazo</ion-option>
+            <ion-option value="Recaudo"><ion-icon name="pricetag"></ion-icon>Recaudo</ion-option>
+          </ion-select>
+        </ion-item>
 
     <ion-item>
       <ion-label fixed>Fecha</ion-label>
-      <ion-datetime displayFormat="MMM DD YYYY" name="fecha" [(ngModel)]="sucesomodel.fecha"></ion-datetime>
+      <ion-datetime displayFormat="MMM DD YYYY HH:mm" name="fecha" [(ngModel)]="sucesomodel.fecha"></ion-datetime>
     </ion-item>
 
     <ion-item>
-      <ion-label fixed>Duracion</ion-label>
-      <ion-input type="text" name="tiempo" [(ngModel)]="sucesomodel.tiempo"></ion-input>
-    </ion-item>
+        <ion-label>Duración Min</ion-label>
+        <ion-select [(ngModel)]="sucesomodel.tiempo">
+          <ion-option value="5">5 Minutos</ion-option>
+          <ion-option value="10">10 Minutos</ion-option>
+          <ion-option value="15">15 Minutos</ion-option>
+          <ion-option value="30">30 Minutos</ion-option>
+          <ion-option value="60">60 Minutos</ion-option>
+          <ion-option value="120">2 Horas</ion-option>
+          <ion-option value="180">3 Horas</ion-option> 
+          <ion-option value="240">4 Horas</ion-option>
+
+        </ion-select>
+      </ion-item>
 
     <ion-item>
       <ion-textarea placeholder="Nota" type="text" name="nota" autocomplete="on" autocorrect="on" [(ngModel)]="sucesomodel.nota"></ion-textarea>
     </ion-item>
+
+    <ion-item-divider>VINCULADO A</ion-item-divider>
+    <ion-item>
+      {{cliente.cli_nombre}}
+    </ion-item>
+
+ 
   </ion-list>
 
   <div class="bar bar-footer bar-balanced">

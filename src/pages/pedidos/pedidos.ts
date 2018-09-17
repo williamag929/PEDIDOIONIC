@@ -121,6 +121,7 @@ export class PedidosPage {
 
   ) { }
 
+  ///carga el formulario
   ionViewDidLoad() {
 
     this.pedido.ped_id = this.navParams.get('ped_id');
@@ -155,9 +156,6 @@ export class PedidosPage {
 
     }
 
-    console.log(this.cliente);
-    console.log(this.pedido);
-    console.log(this.ped_dets);
   }
 
 ///envia el pedido para ser marcado como
@@ -281,7 +279,7 @@ export class PedidosPage {
           console.log("suscb", res);
         });
       //ubicacion 
-      console.log("coords",this.coords);
+      //console.log("coords",this.coords);
 
       this.location.geolocid = 0;
       this.location.tiporeg = "Pedido";
@@ -291,7 +289,7 @@ export class PedidosPage {
       this.location.vend_id = this.pedido.vend_id;     
       this.location.cli_id = this.pedido.cli_id;
 
-      console.log(this.location.geolocpos);
+      //console.log(this.location.geolocpos);
 
       this.locationService.SetLocation(this.location)
         .subscribe(res => {

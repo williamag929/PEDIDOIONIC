@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+//import { HttpClient } from '@angular/common/http';
 import { Http,Request } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { GlobalVariable } from '../../app/app.config';

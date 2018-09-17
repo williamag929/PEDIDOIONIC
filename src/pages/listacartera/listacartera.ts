@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { CarteraServiceProvider } from '../../providers/cartera-service/cartera-service';
 import { AuthService } from '../../providers/auth-service/auth-service';
+import { SucesoPage } from '../suceso/suceso';
 
 
 /**
@@ -23,6 +24,9 @@ export class ListacarteraPage {
   public carterasloaded: any;
   selectedItem: any;
 
+  cliente: any;
+
+
   username = '';
   email = '';
   vend_id = '';
@@ -37,6 +41,8 @@ export class ListacarteraPage {
     private auth: AuthService) {
 
     this.selectedItem = navParams.get('item');
+
+    this.cliente = this.selectedItem;
 
     this.cli_nombre = this.selectedItem.cli_nombre;
     this.cli_nit = this.selectedItem.cli_nit;
@@ -69,6 +75,13 @@ loadCartera(){
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ListacarteraPage');
+  }
+
+  suceso(event) {
+    //this.navCtrl.setRoot(PedidosPage);
+    this.navCtrl.push(SucesoPage, {
+      item: this.cliente, sucesoid: 0
+    });
   }
 
   getItems(ev: any) {
