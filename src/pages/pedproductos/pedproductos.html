@@ -22,13 +22,14 @@
 <ion-content>
   <ion-searchbar [(ngModel)]="searchfav" (ionInput)="getItems($event)"></ion-searchbar>
   <ion-list>
-    <button ion-item *ngFor="let item of (productos ? productos.slice(0,20): []) " (click)="openModal($event, item)">
+    <button ion-item *ngFor="let item of (productos ? productos.slice(0,50): []) " (click)="openModal($event, item)">
       <h6>
         {{item.pro_nom}}
       </h6>
       <p>
-        codigo: {{item.pro_id}}
+        codigo: {{item.pro_id}} | disp:  {{item.existencia}} | Cant. {{item.ordenado}}
       </p>
+      <ion-badge *ngIf="item.ordenado != 0" item-end>{{item.ordenado}}</ion-badge>  
     </button>
   </ion-list>
   <div *ngIf="selectedItem" padding>

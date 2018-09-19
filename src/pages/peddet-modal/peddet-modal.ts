@@ -30,7 +30,9 @@ export class PeddetModalPage {
     precio5: number,
     preccio6: number,
     estado: string,
-    peso: number
+    peso: number,
+    ordenado: number,
+    existencia: number
   } = this.navParams.get('item');//{pro_id:'',pro_nom:'',pro_ref:'', pro_und:'',precio1:0};
   ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }
   = { ped_det_id: 0, ped_id: 0, pro_id: '', pro_nom: '', cant: 0, precio: 0, porc_desc: 0, val_desc: 0, porc_imp: 0, val_imp: 0, subtotal: 0 };
@@ -52,7 +54,7 @@ export class PeddetModalPage {
 
     this.ped_det.pro_id = this.producto.pro_id;
     this.ped_det.pro_nom = this.producto.pro_nom;
-    this.ped_det.cant = 0;
+    this.ped_det.cant = this.producto.ordenado;
     this.ped_det.precio = this.producto.precio;
     this.ped_det.ped_id = this.ped_id;
     this.ped_det.porc_imp = this.producto.imp_porc;
