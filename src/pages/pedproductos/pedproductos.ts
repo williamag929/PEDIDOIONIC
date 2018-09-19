@@ -128,7 +128,7 @@ export class PedproductosPage {
     });
   }
 
-///regresa al formulario de pedido con callback
+  ///regresa al formulario de pedido con callback
   openPedido() {
     var param = this.pedido.ped_id;
 
@@ -151,10 +151,13 @@ export class PedproductosPage {
 
     modaldet.onDidDismiss(data => {
 
-      console.log('recibe', data);
-      this.ped_det = data;
-      this.ped_dets.push(data);
+      if (data) {
+        console.log('recibe', data);
+        this.ped_det = data;
+        this.ped_dets.push(data);
 
+        item.ordenado = data.cant;
+      }
     });
 
     console.log('ped_dets', this.ped_dets);
