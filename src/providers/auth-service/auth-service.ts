@@ -2,19 +2,22 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { VendedorServiceProvider } from '../../providers/vendedor-service/vendedor-service';
-import { GlobalVariable} from '../../app/app.config';
+import { GlobalVariable, AppSetting} from '../../app/app.config';
 import { Http } from '@angular/http';
+import { urlToNavGroupStrings } from 'ionic-angular/umd/navigation/url-serializer';
 
  
 export class User {
   name: string;
   email: string;
   vend_id : string;
+  urlapi : string;
  
-  constructor( name: string, email: string, vend_id: string) {
+  constructor( name: string, email: string, vend_id: string, urlapi: string) {
     this.name = name;
     this.email = email;
     this.vend_id = vend_id;
+    this.urlapi = urlapi
   }
 }
 
@@ -35,7 +38,7 @@ export class AuthService {
 
   public login(credentials) {
 
-    var baseApiUrl = GlobalVariable.BASE_API_URL;
+    var baseApiUrl = GlobalVariable.LOG_API_URL;
 
     if (credentials.email === null || credentials.password === null) {
       return Observable.throw("Please insert credentials");
@@ -44,19 +47,25 @@ export class AuthService {
 
       return Observable.create(observer => {
         
-        this.http.get(baseApiUrl+ 'user?user='+credentials.email+'&password='+credentials.password)
+        this.http.get(baseApiUrl+ 'loguser?user='+credentials.email+'&password='+credentials.password)
         .map(res => res.json())
         .subscribe(data =>
         {
           console.log(data);
-          console.log(data)//you can format the response from your server
+          console.log(credentials);//you can format the response from your server
 
-          //GlobalVariable.vend_id = data.vend_id;
+          //GlobalVariable.BASE_API_URL = data.urlapi;
+          localStorage.setItem('vend_id', data.vend_id);
+          localStorage.setItem('urlapi', data.urlapi);
 
-          let access = (data.usuario == credentials.email  && data.password == credentials.password);
-          this.currentUser = new User(data.usuario, data.email, data.vend_id);
+          let access = (data.usuario == credentials.email  && data.clave == credentials.password);
+          this.currentUser = new User(data.usuario, data.email, data.vend_id, data.urlapi);
           observer.next(access);// data.usuario != "" and then return data
           observer.complete();
+
+
+
+
         });
         });
         
@@ -72,7 +81,7 @@ export class AuthService {
     }
   }
  
-  private baseApiUrl = GlobalVariable.BASE_API_URL;
+  private baseApiUrl = GlobalVariable.LOG_API_URL;
 
   public register(credentials) {
     if (credentials.email === null || credentials.password === null) {

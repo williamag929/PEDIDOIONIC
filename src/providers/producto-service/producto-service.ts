@@ -17,7 +17,8 @@ export class ProductoServiceProvider {
     console.log('Hello ProductoServiceProvider Provider');
   }
 
-  private baseApiUrl = GlobalVariable.BASE_API_URL;
+  //private baseApiUrl = GlobalVariable.BASE_API_URL;
+  private baseApiUrl = localStorage.getItem("urlapi");
 
     GetProductos(pedid) {
     var url = this.baseApiUrl + 'producto/' + encodeURI(pedid);

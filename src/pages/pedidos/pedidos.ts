@@ -192,7 +192,8 @@ export class PedidosPage {
       path = this.file.dataDirectory;
     }
 
-    var baseApiUrl = GlobalVariable.BASE_API_URL;
+    //var baseApiUrl = GlobalVariable.BASE_API_URL;
+    var baseApiUrl = localStorage.getItem("urlapi");
 
     const transfer = this.transfer.create();
 

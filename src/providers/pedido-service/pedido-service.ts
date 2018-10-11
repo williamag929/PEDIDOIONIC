@@ -1,3 +1,4 @@
+import { AppSetting } from './../../app/app.config';
 import { Injectable } from '@angular/core';
 import { Http,Request } from '@angular/http';
 import { RequestOptions, Headers, Response } from '@angular/http'
@@ -22,7 +23,8 @@ export class PedidoServiceProvider {
     console.log('Hello PedidoServiceProvider Provider');
   }
 
-  private baseApiUrl = GlobalVariable.BASE_API_URL;
+  //private baseApiUrl = GlobalVariable.AppSetting;
+  private baseApiUrl = localStorage.getItem("urlapi");
 
   data: any;
   private headers: Headers;

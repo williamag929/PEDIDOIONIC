@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch'
 import { Observable } from "rxjs/Observable";
 
-import { GlobalVariable} from '../../app/app.config';
+import { GlobalVariable, AppSetting} from '../../app/app.config';
 
 /*
   Generated class for the ClienteServiceProvider provider.
@@ -29,7 +29,7 @@ export class ClienteServiceProvider {
 
   }
 
-  private baseApiUrl = GlobalVariable.BASE_API_URL;
+  private baseApiUrl = localStorage.getItem("urlapi");
 
   data: any;
   private headers: Headers;

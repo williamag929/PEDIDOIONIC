@@ -18,6 +18,7 @@ export class ClientesPage {
   username = '';
   email = '';
   vend_id = '';
+  urlapi = '';
   location = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -31,6 +32,7 @@ export class ClientesPage {
     this.username = info['name'];
     this.email = info['email'];
     this.vend_id = info['vend_id'];
+    this.urlapi = info['urlapi'];
 
 
     console.log('login', this.username);

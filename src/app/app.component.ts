@@ -6,12 +6,6 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { ClientesPage } from '../pages/clientes/clientes';
 import { ListapedidosPage } from '../pages/listapedidos/listapedidos';
-//import { PedproductosPage } from '../pages/pedproductos/pedproductos';
-//import { ClienteInfoPage } from '../pages/cliente-info/cliente-info';
-//import { ListacarteraPage } from '../pages/listacartera/listacartera';
-//import { MapaPage } from '../pages/mapa/mapa';
-//import { AuthService } from '../providers/auth-service/auth-service';
-//import { ListPage } from '../pages/list/list';
 
 @Component({
   templateUrl: 'app.html'
@@ -43,9 +37,6 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-
-      //this.rootPage = LoginPage;
-
 
     });
   }

@@ -17,8 +17,8 @@ export class CarteraServiceProvider {
     console.log('Hello CarteraServiceProvider Provider');
   }
 
-
-  private baseApiUrl = GlobalVariable.BASE_API_URL;
+  private baseApiUrl = localStorage.getItem("urlapi");
+  //private baseApiUrl = GlobalVariable.BASE_API_URL;
   
     data: any;
   

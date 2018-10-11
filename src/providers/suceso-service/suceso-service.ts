@@ -19,7 +19,8 @@ export class SucesoServiceProvider {
     console.log('Hello SucesoServiceProvider Provider');
   }
 
-  private baseApiUrl = GlobalVariable.BASE_API_URL;
+  //private baseApiUrl = GlobalVariable.BASE_API_URL;
+  private baseApiUrl = localStorage.getItem("urlapi");
   
   data: any;
   private headers: Headers;

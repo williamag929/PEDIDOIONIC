@@ -17,7 +17,8 @@ export class VendedorServiceProvider {
     console.log('Hello VendedorServiceProvider Provider');
   }
 
-  private baseApiUrl = GlobalVariable.BASE_API_URL;
+  //private baseApiUrl = GlobalVariable.BASE_API_URL;
+  private baseApiUrl = localStorage.getItem("urlapi");
   
     data: any;
   

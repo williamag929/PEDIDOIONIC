@@ -23,6 +23,8 @@ export class LoginPage {
     this.auth.login(this.registerCredentials).subscribe(allowed => {
       if (allowed) {   
 
+        //establer urlApi
+        //establecer vendedor
         console.log("Access Enabled");
         //this.nav.push(HomePage);  
         this.nav.setRoot(ClientesPage);   
