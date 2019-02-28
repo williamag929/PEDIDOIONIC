@@ -6,6 +6,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { ClienteServiceProvider } from '../../providers/cliente-service/cliente-service';
 import { PedidosPage } from '../../pages/pedidos/pedidos';
 import { ListacarteraPage } from '../listacartera/listacartera';
+import { Platform, ActionSheetController } from 'ionic-angular';
 import { MapaPage } from '../mapa/mapa'
 
 
@@ -37,10 +38,10 @@ export class ClienteInfoPage {
     cli_phone2: string,
     cli_cupo: number,
     cli_estado: string,
-    pedidos : number,
+    pedidos: number,
     visitas: number,
-    cartera:number,
-    cotizaciones:number
+    cartera: number,
+    cotizaciones: number
   } = {
       cli_id: 0,
       cli_suc: 0,
@@ -54,16 +55,21 @@ export class ClienteInfoPage {
       cli_phone2: '',
       cli_cupo: 0,
       cli_estado: '',
-      pedidos:0,
-      visitas:0,
-      cartera:0,
-      cotizaciones:0
+      pedidos: 0,
+      visitas: 0,
+      cartera: 0,
+      cotizaciones: 0
     };
   selectedItem: any;
 
   coords: {};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  documentos: any;
+
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public platform: Platform,
+    public actionsheetCtrl: ActionSheetController,
     public clienteService: ClienteServiceProvider) {
     this.selectedItem = navParams.get('item');
 
@@ -78,14 +84,36 @@ export class ClienteInfoPage {
     console.log('ionViewDidLoad ClienteInfoPage');
   }
 
+  //crea pedido nuevo
   pedido(event) {
     //this.navCtrl.setRoot(PedidosPage);
-    this.navCtrl.push(PedidosPage, {
-      item: this.cliente, ped_id: 0
-    });
+
+    //mostrar menu por tipo documento
+    this.clienteService.GetDocumentos('PE').subscribe(
+      data => {
+        this.documentos = data;
+
+        //console.log(data);
+        //console.log(data[0].tipo)
+        if (data.length > 1) {
+          this.openMenu();
+        }
+        else {
+          //crear pedido
+          this.navCtrl.push(PedidosPage, {
+            item: this.cliente, ped_id: 0, ped_tipo: data[0].tipo
+          });
+        }
+      },
+      err => {
+        console.log(err);
+      });
+
+
+
   }
 
-  
+  //lista de pedidos
   pedidos(event) {
     //this.navCtrl.setRoot(PedidosPage);
     this.navCtrl.push(ListapedidosPage, {
@@ -165,6 +193,37 @@ export class ClienteInfoPage {
     this.coords = position.coords;
 
   }
+
+
+  openMenu() {
+    let actionSheet = this.actionsheetCtrl.create({
+      title: 'Pedido P1',
+      cssClass: 'action-sheets-basic-page',
+      buttons: [
+        {
+          text: 'Pedido P1',
+          role: 'destructive',
+          icon: !this.platform.is('ios') ? 'add-circle' : null,
+          handler: () => {
+            this.navCtrl.push(PedidosPage, {
+              item: this.cliente, ped_id: 0, ped_tipo: 'P1'
+            });
+          }
+        },
+        {
+          text: 'Pedido P2',
+          icon: !this.platform.is('ios') ? 'add-circle' : null,
+          handler: () => {
+            this.navCtrl.push(PedidosPage, {
+              item: this.cliente, ped_id: 0, ped_tipo: 'P2'
+            });
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+
 
 
 

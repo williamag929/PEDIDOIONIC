@@ -46,38 +46,32 @@
   </ion-list>
 
   <ion-list>
-  <ion-item>
-    <button ion-button item-start clear small color="info" (click)="pedido($event)">
-      <ion-icon name="add"></ion-icon>
-    </button>
-    Pedido
-    
-
-        <ion-badge item-end (click)="pedidos($event)"> {{cliente.pedidos}}</ion-badge>
-
-
-  </ion-item>
-  <ion-item>
-    <button ion-button clear small color="info" (click)="cartera($event)">
-      <ion-icon name="list"></ion-icon>
-    </button>
-    Cartera
-    <ion-badge item-end>{{cliente.cartera}}</ion-badge>
-  </ion-item>
-  <!--ion-item>
+    <ion-item>
+      <button ion-button item-start clear small color="info" (click)="pedido($event)">
+        <ion-icon name="add"></ion-icon>
+      </button>
+      Pedido
+      <ion-badge item-end (click)="pedidos($event)"> {{cliente.pedidos}}</ion-badge>
+    </ion-item>
+    <ion-item>
+      <button ion-button clear small color="info" (click)="cartera($event)">
+        <ion-icon name="list"></ion-icon>
+      </button>
+      Cartera
+      <ion-badge item-end>{{cliente.cartera}}</ion-badge>
+    </ion-item>
+    <!--ion-item>
     <button ion-button clear small color="info" (click)="vermapa($event)">
       <ion-icon name="map"></ion-icon>
     </button>
     Mapa
   </ion-item-->
-  <ion-item>
-    <button ion-button clear small color="info" (click)="suceso($event)">
-      <ion-icon name="calendar"></ion-icon>
-    </button>
-    Actividades 
-    <ion-badge item-end (click)="sucesos($event)">{{cliente.visitas}}</ion-badge>    
-
-  </ion-item>
-</ion-list>
-  
+    <ion-item>
+      <button ion-button clear small color="info" (click)="suceso($event)">
+        <ion-icon name="calendar"></ion-icon>
+      </button>
+      Actividades
+      <ion-badge item-end (click)="sucesos($event)">{{cliente.visitas}}</ion-badge>
+    </ion-item>
+  </ion-list>
 </ion-content>

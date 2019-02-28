@@ -134,6 +134,8 @@ export class PedidosPage {
       //es un nuevo pedido
       this.cliente = this.navParams.get('item');
 
+      this.pedido.ped_tipo = this.navParams.get('ped_tipo');
+
       this.pedido.cli_id = this.cliente.cli_id;
       this.pedido.ped_numero = 0;  //buscar prox numero  
       this.pedido.ped_fec_ent = new Date().toISOString().slice(0, 16);
@@ -274,6 +276,7 @@ export class PedidosPage {
 //push a pagina PedproductosPage
   productos(event) {
     //guarda pedido
+    //si ya existe modifica
     if (this.pedido.ped_id > 0) {
       this.pedidosService.SetPedido(this.pedido)
         .subscribe(res => {

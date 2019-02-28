@@ -7,6 +7,8 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicPageModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
+import { LoadingController } from 'ionic-angular'
+import { AlertController } from "ionic-angular"
 
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';

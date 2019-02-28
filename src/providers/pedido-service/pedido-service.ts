@@ -41,6 +41,12 @@ export class PedidoServiceProvider {
     return response;
   }
 
+  GetDocumentos(clase) {
+    var url = this.baseApiUrl + 'Documentos?clase=' + encodeURI(clase);
+    var response = this.http.get(url).map(res => res.json());
+    return response;
+  }
+
 
   SendPedido(object) {
 

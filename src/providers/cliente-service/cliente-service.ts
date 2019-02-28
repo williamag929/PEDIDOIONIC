@@ -47,4 +47,12 @@ export class ClienteServiceProvider {
     var response = this.http.get(url).map(res => res.json());
     return response;
   }
+
+  //retorna los tipos de documentos 
+  GetDocumentos(clase) {
+    var url = this.baseApiUrl + 'Documentos?clase=' + encodeURI(clase);
+    var response = this.http.get(url).map(res => res.json());
+    return response;
+  }
+
 }

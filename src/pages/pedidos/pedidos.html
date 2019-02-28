@@ -6,16 +6,12 @@
 -->
 <ion-header>
   <ion-navbar>
-
     <ion-title>Pedido</ion-title>
-
-
     <ion-buttons end>
       <button ion-button icon-only (click)="openMenu()">
         <ion-icon name="apps"></ion-icon>
       </button>
     </ion-buttons>
-
   </ion-navbar>
 </ion-header>
 
@@ -23,22 +19,18 @@
 <ion-content padding>
 
   <ion-list>
-
     <ion-item>
       <ion-label fixed>Cliente</ion-label>
       <ion-input type="text" name="cli_nombre" [(ngModel)]="cliente.cli_nombre"></ion-input>
     </ion-item>
-
     <ion-item>
       <ion-label fixed>Numero</ion-label>
       <ion-input type="text" name="ped_numero" [(ngModel)]="pedido.ped_numero"></ion-input>
     </ion-item>
-
     <ion-item>
       <ion-label fixed>Fecha Entrega</ion-label>
       <ion-datetime displayFormat="MMM DD YYYY" name="ped_fec_ent" [(ngModel)]="pedido.ped_fec_ent"></ion-datetime>
     </ion-item>
-
   </ion-list>
 
   <button ion-button secondary (click)="productos($event)">
@@ -61,7 +53,6 @@
           Borrar
         </button>
       </ion-item-options>
-
     </ion-item-sliding>
   </ion-list>
 
