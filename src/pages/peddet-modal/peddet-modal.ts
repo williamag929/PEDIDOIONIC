@@ -40,6 +40,7 @@ export class PeddetModalPage {
 
   ped_id: number;
 
+  descuento: number = 0;
 
 
   constructor(public navParams: NavParams,
@@ -47,6 +48,8 @@ export class PeddetModalPage {
     public pedidosService: PedidoServiceProvider) {
 
     this.ped_id = this.navParams.get('ped_id');
+
+    
 
     //this.producto = this.navParams.get('item');
 
@@ -60,7 +63,7 @@ export class PeddetModalPage {
     this.ped_det.porc_imp = this.producto.imp_porc;
     this.ped_det.val_imp = 0; 
     this.ped_det.subtotal = 0;
-
+    this.ped_det.porc_desc = this.navParams.get('descuento');
 
   }
 

@@ -31,6 +31,10 @@
       <ion-label fixed>Fecha Entrega</ion-label>
       <ion-datetime displayFormat="MMM DD YYYY" name="ped_fec_ent" [(ngModel)]="pedido.ped_fec_ent"></ion-datetime>
     </ion-item>
+    <ion-item>
+      <ion-label fixed>Descuento</ion-label>
+      <ion-input type="text" name="descuento" [(ngModel)]="pedido.descuento"></ion-input>
+    </ion-item>
   </ion-list>
 
   <button ion-button secondary (click)="productos($event)">

@@ -34,11 +34,13 @@ import { GlobalVariable } from '../../app/app.config';
 export class PedidosPage {
   cliente: {
     cli_id: number, cli_nombre: string,
-    cli_direccion: string
+    cli_direccion: string,
+    descuento : number
   } = {
       cli_id: 0,
       cli_nombre: '',
-      cli_direccion: ''
+      cli_direccion: '',
+      descuento: 0
     };
 
   pdfSrc: any;
@@ -60,7 +62,8 @@ export class PedidosPage {
     ped_desc: number,
     ped_procesado: boolean,
     ped_closed: boolean,
-    ped_note: string
+    ped_note: string,
+    descuento : number
   } = {
       ped_id: 0,
       ped_numero: 0,
@@ -76,7 +79,8 @@ export class PedidosPage {
       ped_desc: 0,
       ped_procesado: false,
       ped_closed: false,
-      ped_note: ''
+      ped_note: '',
+      descuento: 0
     };
 
   ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }
@@ -146,6 +150,8 @@ export class PedidosPage {
       console.log('vend_id', vend_id);
 
       this.pedido.vend_id = parseInt(vend_id);
+
+      this.pedido.descuento = this.cliente.descuento;
 
       //this.pedido.ped_fec_ent = new Date(Date.now());
     }
@@ -302,7 +308,7 @@ export class PedidosPage {
 
       //adiciona productos
       this.navCtrl.push(PedproductosPage, {
-        pedido: this.pedido, ped_id: this.pedido.ped_id, callback: this.myCallbackFunction
+        pedido: this.pedido, ped_id: this.pedido.ped_id,descuento: this.cliente.descuento, callback: this.myCallbackFunction
       });
     }
     else {
@@ -310,7 +316,7 @@ export class PedidosPage {
         console.log("suscb", res);
         this.pedido.ped_id = res.ped_id;
         this.navCtrl.push(PedproductosPage, {
-          pedido: this.pedido, ped_id: this.pedido.ped_id, callback: this.myCallbackFunction
+          pedido: this.pedido, ped_id: this.pedido.ped_id,descuento: this.cliente.descuento, callback: this.myCallbackFunction
         });
       }, err => console.log(err));
     }

@@ -23,6 +23,9 @@ export class PedproductosPage {
   public productos: any;
   public productosloaded: any;
   selectedItem: any;
+
+  descuento: number = 0.0;
+  
   //public fObj = {};
 
   pedido: {
@@ -36,7 +39,8 @@ export class PedproductosPage {
     ped_desc: number,
     ped_procesado: boolean,
     ped_closed: boolean,
-    ped_note: string
+    ped_note: string,
+    descuento : number
   } = {
       ped_id: 0,
       ped_numero: 0,
@@ -48,7 +52,8 @@ export class PedproductosPage {
       ped_desc: 0,
       ped_procesado: false,
       ped_closed: false,
-      ped_note: ''
+      ped_note: '',
+      descuento: 0
     };
 
   ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }
@@ -67,6 +72,8 @@ export class PedproductosPage {
     console.log('ionViewDidLoad PedproductosPage');
 
     this.pedido.ped_id = this.navParams.get('ped_id');
+
+    this.descuento = this.navParams.get('descuento');
 
     this.callback = this.navParams.get("callback");
 
@@ -144,7 +151,7 @@ export class PedproductosPage {
   openModal(event, item) {
 
     let modaldet = this.modalCtrl.create(PeddetModalPage, {
-      item: item, ped_id: this.pedido.ped_id
+      item: item, ped_id: this.pedido.ped_id, descuento : this.descuento
     });
 
     console.log('envia', item);

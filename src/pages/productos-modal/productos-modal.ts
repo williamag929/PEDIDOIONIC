@@ -23,6 +23,7 @@ export class ProductosModalPage {
   public productosloaded: any;
   selectedItem: any;
 
+  descuento: number = 0.0;
 
   pedido: {
     ped_id: number,
@@ -66,6 +67,8 @@ export class ProductosModalPage {
     console.log('ionViewDidLoad PedproductosPage');
 
     this.pedido.ped_id = this.navParams.get('ped_id');
+
+    this.descuento = this.navParams.get('descuento');
 
     console.log('ped_id',this.pedido.ped_id);
 
@@ -133,7 +136,7 @@ export class ProductosModalPage {
   openModal(event, item) {
 
     let modaldet = this.modalCtrl.create(PeddetModalPage, {
-      item: item, ped_id: this.pedido.ped_id
+      item: item, ped_id: this.pedido.ped_id, descuento : this.descuento
     });
 
     console.log('envia',item);
