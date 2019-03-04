@@ -27,8 +27,10 @@
         {{item.pro_nom}}
       </h6>
       <p>
-        codigo: {{item.pro_id}} | disp:  {{item.existencia}} | Cant. {{item.ordenado}}
+        {{item.pro_id}} 
+        <a *ngIf="verexistencia">| Disp:  {{item.existencia}}</a>
       </p>
+      
       <ion-badge *ngIf="item.ordenado != 0" item-end>{{item.ordenado}}</ion-badge>  
     </button>
   </ion-list>

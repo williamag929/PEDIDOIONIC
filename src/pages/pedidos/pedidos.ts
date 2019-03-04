@@ -11,7 +11,7 @@ import { File } from '@ionic-native/file';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 import { FileTransfer } from '@ionic-native/file-transfer';
 
-import { GlobalVariable } from '../../app/app.config';
+import { VendedorServiceProvider } from '../../providers/vendedor-service/vendedor-service';
 
 
 
@@ -63,7 +63,10 @@ export class PedidosPage {
     ped_procesado: boolean,
     ped_closed: boolean,
     ped_note: string,
-    descuento : number
+    descuento : number,
+    formapago : string,
+    plazo: number,
+    direccionentr: string
   } = {
       ped_id: 0,
       ped_numero: 0,
@@ -80,7 +83,10 @@ export class PedidosPage {
       ped_procesado: false,
       ped_closed: false,
       ped_note: '',
-      descuento: 0
+      descuento: 0,
+      formapago: '',
+      plazo: 0,
+      direccionentr:''
     };
 
   ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }
@@ -109,7 +115,12 @@ export class PedidosPage {
       cli_id: 0
     }
 
-  coords: any;
+  coords:  {
+    latitude: number,
+    longitude : number}=
+    {latitude:0.0, longitude: 0.0}
+
+  vendedor:any;
 
 
   constructor(public navCtrl: NavController,
@@ -121,7 +132,8 @@ export class PedidosPage {
     public actionsheetCtrl: ActionSheetController,
     private document: DocumentViewer,
     private file: File,
-    private transfer: FileTransfer
+    private transfer: FileTransfer,
+    private vendedorService : VendedorServiceProvider
 
   ) { }
 
@@ -132,11 +144,35 @@ export class PedidosPage {
 
     console.log('ped_id', this.pedido.ped_id);
 
+    var vend_id = localStorage.getItem('vend_id');
+
+
+    //retirar usado solo para permisos
+
+    this.vendedorService.GetVendedor(vend_id).subscribe(
+      data => {
+        this.vendedor = data;
+        console.log('vendedor', data);
+        localStorage.setItem('modprecio', data.modprecio);
+        localStorage.setItem('verexistencia', data.verexistencia);
+        },
+      err => {
+        console.log(err);
+      },
+      () => console.log('Proceso Completo')
+    );
+
+
+
     this.getLocation();
+
+
 
     if (this.pedido.ped_id == 0) {
       //es un nuevo pedido
       this.cliente = this.navParams.get('item');
+
+      this.pedido.direccionentr = this.cliente.cli_direccion;
 
       this.pedido.ped_tipo = this.navParams.get('ped_tipo');
 
@@ -145,13 +181,13 @@ export class PedidosPage {
       this.pedido.ped_fec_ent = new Date().toISOString().slice(0, 16);
       this.pedido.ped_fecha = new Date().toISOString().slice(0, 16);
 
-      var vend_id = localStorage.getItem('vend_id');
 
-      console.log('vend_id', vend_id);
-
+  
       this.pedido.vend_id = parseInt(vend_id);
 
       this.pedido.descuento = this.cliente.descuento;
+
+      
 
       //this.pedido.ped_fec_ent = new Date(Date.now());
     }
@@ -289,12 +325,16 @@ export class PedidosPage {
           console.log("suscb", res);
         });
       //ubicacion 
-      //console.log("coords",this.coords);
+      console.log("coords",this.coords);
 
+    
+      try
+      {
       this.location.geolocid = 0;
       this.location.tiporeg = "Pedido";
       this.location.regid = this.pedido.ped_id;
       this.location.fecha = this.pedido.ped_fecha;
+      
       this.location.geolocpos = JSON.stringify({ latitude: this.coords.latitude, longitude:this.coords.longitude});
       this.location.vend_id = this.pedido.vend_id;     
       this.location.cli_id = this.pedido.cli_id;
@@ -305,10 +345,12 @@ export class PedidosPage {
         .subscribe(res => {
           console.log("loc", res)
         });
+      }catch(err)
+      {}
 
       //adiciona productos
       this.navCtrl.push(PedproductosPage, {
-        pedido: this.pedido, ped_id: this.pedido.ped_id,descuento: this.cliente.descuento, callback: this.myCallbackFunction
+        pedido: this.pedido, ped_id: this.pedido.ped_id,descuento: this.pedido.descuento, callback: this.myCallbackFunction
       });
     }
     else {
@@ -316,7 +358,7 @@ export class PedidosPage {
         console.log("suscb", res);
         this.pedido.ped_id = res.ped_id;
         this.navCtrl.push(PedproductosPage, {
-          pedido: this.pedido, ped_id: this.pedido.ped_id,descuento: this.cliente.descuento, callback: this.myCallbackFunction
+          pedido: this.pedido, ped_id: this.pedido.ped_id,descuento: this.pedido.descuento, callback: this.myCallbackFunction
         });
       }, err => console.log(err));
     }

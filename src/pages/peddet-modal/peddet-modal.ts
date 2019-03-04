@@ -13,6 +13,7 @@ import { PedidoServiceProvider } from '../../providers/pedido-service/pedido-ser
 @Component({
   selector: 'page-peddet-modal',
   templateUrl: 'peddet-modal.html',
+  //template: '<input [textMask]="{mask: mask}" [(ngModel)]="myModel" type="text"/>'
 })
 export class PeddetModalPage {
   producto: {
@@ -32,7 +33,9 @@ export class PeddetModalPage {
     estado: string,
     peso: number,
     ordenado: number,
-    existencia: number
+    existencia: number,
+    cantprom:number,
+    porc_descprom:number
   } = this.navParams.get('item');//{pro_id:'',pro_nom:'',pro_ref:'', pro_und:'',precio1:0};
   ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }
   = { ped_det_id: 0, ped_id: 0, pro_id: '', pro_nom: '', cant: 0, precio: 0, porc_desc: 0, val_desc: 0, porc_imp: 0, val_imp: 0, subtotal: 0 };
@@ -41,6 +44,8 @@ export class PeddetModalPage {
   ped_id: number;
 
   descuento: number = 0;
+  mensaje: string = '';
+  modprecio: boolean = false;
 
 
   constructor(public navParams: NavParams,
@@ -49,7 +54,15 @@ export class PeddetModalPage {
 
     this.ped_id = this.navParams.get('ped_id');
 
+    //permisos
+    //console.log('modprecio',localStorage.getItem('modprecio'));
+
+    if (localStorage.getItem('modprecio') =='true')
+      this.modprecio = true;
+
     
+    this.descuento = this.navParams.get('descuento');
+    console.log("descuento",this.descuento);
 
     //this.producto = this.navParams.get('item');
 
@@ -63,7 +76,7 @@ export class PeddetModalPage {
     this.ped_det.porc_imp = this.producto.imp_porc;
     this.ped_det.val_imp = 0; 
     this.ped_det.subtotal = 0;
-    this.ped_det.porc_desc = this.navParams.get('descuento');
+    this.ped_det.porc_desc = this.descuento;
 
   }
 
@@ -90,6 +103,23 @@ export class PeddetModalPage {
     //console.log("resp", this.pedidosService.SetPedidodet(this.ped_det));
 
 
+  }
+
+  validaprom(cantidad)
+  {
+
+    if (cantidad >= this.producto.cantprom && this.producto.cantprom > 0)
+    {
+      this.mensaje = "Producto aplica descuento "+this.producto.porc_descprom.toString();
+      this.ped_det.porc_desc = this.descuento + this.producto.porc_descprom;
+    }
+    this.validaprecio();
+  }
+
+  validaprecio()
+  {
+    this.ped_det.val_desc = (this.ped_det.precio *  this.ped_det.cant) * this.ped_det.porc_desc /100;
+    this.ped_det.subtotal = (this.ped_det.precio *  this.ped_det.cant) - this.ped_det.val_desc;
   }
 
   dismiss() {

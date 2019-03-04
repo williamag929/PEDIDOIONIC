@@ -38,7 +38,10 @@ export class ListapedidosPage {
     cli_ciudad: string,
     vend_zona: string,
     ped_procesado: boolean,
-    ped_closed: boolean
+    ped_closed: boolean,
+    descuento : number,
+    formapago : string,
+    plazo: number
   }={
     ped_id: 0,
     ped_tipo: 'PE',
@@ -57,7 +60,10 @@ export class ListapedidosPage {
     cli_ciudad: '',
     vend_zona: '',
     ped_procesado: false,
-    ped_closed: false
+    ped_closed: false,
+    descuento: 0,
+    formapago:'',
+    plazo:0
   };
 
 

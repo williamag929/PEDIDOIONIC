@@ -21,21 +21,60 @@
   <ion-list>
     <ion-item>
       <ion-label fixed>Cliente</ion-label>
-      <ion-input type="text" name="cli_nombre" [(ngModel)]="cliente.cli_nombre"></ion-input>
+      <ion-input type="text" name="cli_nombre" [readonly]=true [(ngModel)]="cliente.cli_nombre"></ion-input>
     </ion-item>
     <ion-item>
+      <ion-label fixed>Dirección</ion-label>
+      <ion-input type="text" name="direccionentr" [(ngModel)]="pedido.direccionentr"></ion-input>
+    </ion-item>    
+    <ion-item>
       <ion-label fixed>Numero</ion-label>
-      <ion-input type="text" name="ped_numero" [(ngModel)]="pedido.ped_numero"></ion-input>
+      <ion-input type="text" name="ped_numero" [readonly]=true [(ngModel)]="pedido.ped_numero"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label fixed>Fecha Entrega</ion-label>
       <ion-datetime displayFormat="MMM DD YYYY" name="ped_fec_ent" [(ngModel)]="pedido.ped_fec_ent"></ion-datetime>
     </ion-item>
+
+
     <ion-item>
+      <ion-label>Forma Pago</ion-label>
+      <ion-select   [(ngModel)]="pedido.formapago">>
+        <ion-option value="Contado">Contado</ion-option>
+        <ion-option value="Credito">Credito</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="false">
       <ion-label fixed>Descuento</ion-label>
       <ion-input type="text" name="descuento" [(ngModel)]="pedido.descuento"></ion-input>
     </ion-item>
-  </ion-list>
+
+    <ion-item>
+      <ion-label>Descuento</ion-label>
+      <ion-select [(ngModel)]="pedido.descuento">
+        <ion-option value="0">0%</ion-option>
+        <ion-option value="10">10%</ion-option>
+        <ion-option value="12">12%</ion-option>
+        <ion-option value="14">14%</ion-option>
+        <ion-option value="15">15%</ion-option>
+      </ion-select>
+    </ion-item>
+
+
+  <ion-item>
+    <ion-label>Plazo</ion-label>
+    <ion-select [(ngModel)]="pedido.plazo">
+      <ion-option value="0">0</ion-option>
+      <ion-option value="10">10</ion-option>
+      <ion-option value="15">15</ion-option>
+      <ion-option value="30">30</ion-option>
+      <ion-option value="45">45</ion-option>
+    </ion-select>
+  </ion-item>
+
+
+</ion-list>
 
   <button ion-button secondary (click)="productos($event)">
     <ion-icon name="cart"></ion-icon>

@@ -26,6 +26,7 @@ export class PedproductosPage {
 
   descuento: number = 0.0;
   
+  verexistencia: boolean = false;
   //public fObj = {};
 
   pedido: {
@@ -74,6 +75,11 @@ export class PedproductosPage {
     this.pedido.ped_id = this.navParams.get('ped_id');
 
     this.descuento = this.navParams.get('descuento');
+
+    if (localStorage.getItem('verexistencia') =='true')
+      this.verexistencia = true;
+    
+    console.log("descuento",this.descuento);
 
     this.callback = this.navParams.get("callback");
 

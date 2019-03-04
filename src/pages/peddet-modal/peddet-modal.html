@@ -21,7 +21,7 @@
 
 <ion-content padding>
 
-
+{{mensaje}}
     <ion-list>
 
     <ion-item>
@@ -32,12 +32,20 @@
 
     <ion-item>
       <ion-label fixed>Cantidad</ion-label>
-      <ion-input type="text" name="cant"  [(ngModel)]="ped_det.cant"></ion-input>
+      <ion-input type="text" name="cant"  [(ngModel)]="ped_det.cant" (change)=validaprom(ped_det.cant)></ion-input>
     </ion-item>
 
      <ion-item>
       <ion-label fixed>Precio</ion-label>
-      <ion-input type="text" name="precio"  [(ngModel)]="ped_det.precio"></ion-input>
+
+      <ion-input type="text" name="precio" [readonly]="!modprecio" [(ngModel)]="ped_det.precio" (change)=validaprecio()></ion-input>
+    </ion-item>   
+
+    <ion-item>
+      <ion-label fixed>Subtotal</ion-label>
+      <ion-label fixed>{{ped_det.subtotal | number}}</ion-label>
+      
+     
     </ion-item>   
 
     </ion-list>

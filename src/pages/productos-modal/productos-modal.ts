@@ -69,6 +69,7 @@ export class ProductosModalPage {
     this.pedido.ped_id = this.navParams.get('ped_id');
 
     this.descuento = this.navParams.get('descuento');
+    console.log("descuento",this.descuento);
 
     console.log('ped_id',this.pedido.ped_id);
 
