@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 import { PedidoServiceProvider } from '../../providers/pedido-service/pedido-service';
+import { ProductoServiceProvider } from '../../providers/producto-service/producto-service';
 
 /**
  * Generated class for the PeddetModalPage page.
@@ -36,7 +37,45 @@ export class PeddetModalPage {
     existencia: number,
     cantprom:number,
     porc_descprom:number
-  } = this.navParams.get('item');//{pro_id:'',pro_nom:'',pro_ref:'', pro_und:'',precio1:0};
+  }=
+  {
+    pro_id: '', pro_nom: '', pro_ref: '', pro_und: '',
+    pro_grupo1: '',
+    pro_grupo2: '',
+    pro_grupo3: '',
+    imp_cod: 0,
+    imp_porc: 0,
+    precio: 0,
+    precio1: 0,
+    precio2: 0,
+    precio3: 0,
+    precio4: 0,
+    precio5: 0,
+    preccio6: 0,
+    estado: '',
+    peso: 0,
+    ordenado: 0,
+    existencia: 0,
+    cantprom:0,
+    porc_descprom:0
+
+  };
+
+  item : {
+    pro_id : string,
+    pro_nom : string,
+    pro_und: string,
+    precio : number,
+    ordenado: number,
+    existencia: number
+  }={pro_id:'',
+pro_nom:'',
+pro_und:'',
+precio: 0,
+ordenado: 0,
+existencia:0} ;
+
+
   ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }
   = { ped_det_id: 0, ped_id: 0, pro_id: '', pro_nom: '', cant: 0, precio: 0, porc_desc: 0, val_desc: 0, porc_imp: 0, val_imp: 0, subtotal: 0 };
 
@@ -50,6 +89,7 @@ export class PeddetModalPage {
 
   constructor(public navParams: NavParams,
     public viewCtrl: ViewController,
+    public productoService: ProductoServiceProvider,
     public pedidosService: PedidoServiceProvider) {
 
     this.ped_id = this.navParams.get('ped_id');
@@ -64,22 +104,44 @@ export class PeddetModalPage {
     this.descuento = this.navParams.get('descuento');
     console.log("descuento",this.descuento);
 
-    //this.producto = this.navParams.get('item');
+    this.item = this.navParams.get('item');
+
+    this.loadProducto();
 
     console.log('ped_id', this.ped_id);
 
-    this.ped_det.pro_id = this.producto.pro_id;
-    this.ped_det.pro_nom = this.producto.pro_nom;
-    this.ped_det.cant = this.producto.ordenado;
-    this.ped_det.precio = this.producto.precio;
-    this.ped_det.ped_id = this.ped_id;
-    this.ped_det.porc_imp = this.producto.imp_porc;
-    this.ped_det.val_imp = 0; 
-    this.ped_det.subtotal = 0;
-    this.ped_det.porc_desc = this.descuento;
-
   }
 
+
+  loadProducto() {
+
+    this.productoService.GetProducto(this.ped_id, this.item.pro_id).subscribe(
+      data => {
+        this.producto = data;
+
+
+        console.log(data);
+      
+
+        this.ped_det.pro_id = this.producto.pro_id;
+        this.ped_det.pro_nom = this.producto.pro_nom;
+        this.ped_det.cant = this.producto.ordenado;
+        this.ped_det.precio = this.producto.precio;
+        this.ped_det.ped_id = this.ped_id;
+        this.ped_det.porc_imp = this.producto.imp_porc;
+        this.ped_det.val_imp = 0; 
+        this.ped_det.subtotal = 0;
+        this.ped_det.porc_desc = this.descuento;
+          
+      
+      },
+      err => {
+        console.log(err);
+      },
+      () => console.log('Proceso Completo')
+    );
+
+  }
 
 
   AceptModal() {

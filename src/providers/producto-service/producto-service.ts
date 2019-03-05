@@ -24,6 +24,14 @@ export class ProductoServiceProvider {
     var url = this.baseApiUrl + 'producto/' + encodeURI(pedid);
     var response = this.http.get(url).map(res => res.json());
     return response;
+
+  }
+
+  GetProducto(pedid,pro_id) {
+    var url = this.baseApiUrl + 'producto?id=' + encodeURI(pedid)+'&pro_id='+encodeURI(pro_id);
+    var response = this.http.get(url).map(res => res.json());
+    return response;
+    
   }
 
 
