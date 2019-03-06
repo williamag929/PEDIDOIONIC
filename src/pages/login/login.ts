@@ -17,12 +17,21 @@ export class LoginPage {
   public createAccount() {
     this.nav.push('RegisterPage');
   }
- 
+
+  ionViewDidLoad() 
+ {
+
+  this.registerCredentials.email =         localStorage.getItem('email');
+  this.registerCredentials.password =   localStorage.getItem('password'); 
+
+ }
   public login() {
     this.showLoading()
     this.auth.login(this.registerCredentials).subscribe(allowed => {
       if (allowed) {   
 
+        localStorage.setItem('email', this.registerCredentials.email);
+        localStorage.setItem('password', this.registerCredentials.password);        
         //establer urlApi
         //establecer vendedor
         console.log("Access Enabled");

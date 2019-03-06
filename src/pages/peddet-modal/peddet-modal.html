@@ -30,16 +30,24 @@
       </p>
     </ion-item>
 
+
+
     <ion-item>
-      <ion-label fixed>Cantidad</ion-label>
-      <ion-input type="text" name="cant"  [(ngModel)]="ped_det.cant" (change)=validaprom(ped_det.cant)></ion-input>
-    </ion-item>
+      <ion-label fixed>Und. Medida</ion-label>
+
+      <ion-input type="text" name="pro_und" [readonly]="true" [(ngModel)]="producto.pro_und" ></ion-input>
+    </ion-item>   
 
      <ion-item>
       <ion-label fixed>Precio</ion-label>
 
       <ion-input type="text" name="precio" [readonly]="!modprecio" [(ngModel)]="ped_det.precio" (change)=validaprecio()></ion-input>
     </ion-item>   
+
+    <ion-item>
+      <ion-label fixed>Cantidad</ion-label>
+      <ion-input type="text" name="cant"  [(ngModel)]="ped_det.cant" (change)=validaprom(ped_det.cant)></ion-input>
+    </ion-item>
 
     <ion-item>
       <ion-label fixed>Subtotal</ion-label>

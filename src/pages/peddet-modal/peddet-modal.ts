@@ -154,13 +154,20 @@ existencia:0} ;
 
     console.log("guardar",this.ped_det);
 
-    this.pedidosService.SetPedidodet(this.ped_det).subscribe(res => {
-      console.log("suscb",res);
-      this.ped_det.ped_det_id = res.ped_det_id;
+    if (this.ped_det.cant > 0)
+    {
+        this.pedidosService.SetPedidodet(this.ped_det).subscribe(res => {
+          console.log("suscb",res);
+          this.ped_det.ped_det_id = res.ped_det_id;
+          this.viewCtrl.dismiss(this.ped_det);
+
+        }, err => console.log(err));
+    }
+    else
+    {
+      
       this.viewCtrl.dismiss(this.ped_det);
-
-   }, err => console.log(err));
-
+    }
 
     //console.log("resp", this.pedidosService.SetPedidodet(this.ped_det));
 
