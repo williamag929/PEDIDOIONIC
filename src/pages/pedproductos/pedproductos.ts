@@ -120,25 +120,28 @@ export class PedproductosPage {
     //reinicia la busqueda
     this.productos = this.productosloaded;
 
-    //por cada elemento realiza la busqueda
-    fObj.forEach(element => {
-      //acumula la busqueda
-      this.productos = this.productos.filter(function (item) {
-        //por cada propieda del item busca
-        for (let property in item) {
-          //si la propieda es null continua
-          if (item[property] === null) {
-            continue;
+    try{
+      //por cada elemento realiza la busqueda
+      fObj.forEach(element => {
+        //acumula la busqueda
+        this.productos = this.productos.filter(function (item) {
+          //por cada propieda del item busca
+          for (let property in item) {
+            //si la propieda es null continua
+            if (item[property] === null) {
+              continue;
+            }
+            //si la busqueda es acertada retorna true
+            if (item[property].toString().toLowerCase().includes(element.toLowerCase())) {
+              return true;
+            }
           }
-          //si la busqueda es acertada retorna true
-          if (item[property].toString().toLowerCase().includes(element.toLowerCase())) {
-            return true;
-          }
-        }
-        //si no se cumple retorna falso
-        return false;
+          //si no se cumple retorna falso
+          return false;
+        });
       });
-    });
+    }
+    catch{}
   }
 
   ///regresa al formulario de pedido con callback
