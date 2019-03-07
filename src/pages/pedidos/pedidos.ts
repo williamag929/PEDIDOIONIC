@@ -210,10 +210,12 @@ export class PedidosPage {
       data => {
         this.pedido = data;
         console.log('envio correo', data);
+        alert('Pedido Enviado');
         //leer datos cliente
       },
       err => {
         console.log(err);
+        alert('Error al enviar');
       },
       () => console.log('Proceso Completo')
     );

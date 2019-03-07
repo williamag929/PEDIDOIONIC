@@ -146,7 +146,8 @@ export class ProductosModalPage {
 
       console.log('recibe', data);
       this.ped_det = data;
-      this.ped_dets.push(data);
+      if (this.ped_det.cant > 0)
+        this.ped_dets.push(data);
 
     });
 
