@@ -57,7 +57,7 @@
     </ion-item>   
 
     </ion-list>
-  <button ion-button block (click)="AceptModal()">Aceptar</button>
+  <button *ngIf="valido" ion-button block (click)="AceptModal()">Aceptar</button>
 
 
 </ion-content>

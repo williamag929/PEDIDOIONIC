@@ -85,6 +85,9 @@ existencia:0} ;
   descuento: number = 0;
   mensaje: string = '';
   modprecio: boolean = false;
+  verexistencia: boolean = false;
+  valido : boolean = true;
+  validaexistencia :boolean = false;
 
 
   constructor(public navParams: NavParams,
@@ -97,9 +100,16 @@ existencia:0} ;
     //permisos
     //console.log('modprecio',localStorage.getItem('modprecio'));
 
+    if (localStorage.getItem('verexistencia') =='true')
+    this.verexistencia = true;
+
     if (localStorage.getItem('modprecio') =='true')
       this.modprecio = true;
 
+      if (localStorage.getItem('validaexistencia') =='true')
+        this.validaexistencia = true;
+
+    this.valido = true;
     
     this.descuento = this.navParams.get('descuento');
     console.log("descuento",this.descuento);
@@ -132,6 +142,7 @@ existencia:0} ;
         this.ped_det.val_imp = 0; 
         this.ped_det.subtotal = 0;
         this.ped_det.porc_desc = this.descuento;
+
           
       
       },
@@ -176,6 +187,19 @@ existencia:0} ;
 
   validaprom(cantidad)
   {
+
+    console.log("Existencia",this.producto.existencia)
+
+    if (cantidad > this.producto.existencia && this.validaexistencia) //&& this.verexistencia
+    {
+      this.mensaje = "Producto supera el disponible";
+      this.valido = false
+    }
+    else
+    {
+      this.mensaje = "";
+      this.valido = true;
+    }
 
     if (cantidad >= this.producto.cantprom && this.producto.cantprom > 0)
     {
