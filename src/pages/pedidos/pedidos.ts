@@ -155,6 +155,7 @@ export class PedidosPage {
         console.log('vendedor', data);
         localStorage.setItem('modprecio', data.modprecio);
         localStorage.setItem('verexistencia', data.verexistencia);
+        localStorage.setItem('validaexistencia',data.validaexistencia);
         },
       err => {
         console.log(err);
