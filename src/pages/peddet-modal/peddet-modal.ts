@@ -35,49 +35,51 @@ export class PeddetModalPage {
     peso: number,
     ordenado: number,
     existencia: number,
-    cantprom:number,
-    porc_descprom:number
-  }=
-  {
-    pro_id: '', pro_nom: '', pro_ref: '', pro_und: '',
-    pro_grupo1: '',
-    pro_grupo2: '',
-    pro_grupo3: '',
-    imp_cod: 0,
-    imp_porc: 0,
-    precio: 0,
-    precio1: 0,
-    precio2: 0,
-    precio3: 0,
-    precio4: 0,
-    precio5: 0,
-    preccio6: 0,
-    estado: '',
-    peso: 0,
-    ordenado: 0,
-    existencia: 0,
-    cantprom:0,
-    porc_descprom:0
+    cantprom: number,
+    porc_descprom: number
+  } =
+    {
+      pro_id: '', pro_nom: '', pro_ref: '', pro_und: '',
+      pro_grupo1: '',
+      pro_grupo2: '',
+      pro_grupo3: '',
+      imp_cod: 0,
+      imp_porc: 0,
+      precio: 0,
+      precio1: 0,
+      precio2: 0,
+      precio3: 0,
+      precio4: 0,
+      precio5: 0,
+      preccio6: 0,
+      estado: '',
+      peso: 0,
+      ordenado: 0,
+      existencia: 0,
+      cantprom: 0,
+      porc_descprom: 0
 
-  };
+    };
 
-  item : {
-    pro_id : string,
-    pro_nom : string,
+  item: {
+    pro_id: string,
+    pro_nom: string,
     pro_und: string,
-    precio : number,
+    precio: number,
     ordenado: number,
     existencia: number
-  }={pro_id:'',
-pro_nom:'',
-pro_und:'',
-precio: 0,
-ordenado: 0,
-existencia:0} ;
+  } = {
+    pro_id: '',
+      pro_nom: '',
+      pro_und: '',
+      precio: 0,
+      ordenado: 0,
+      existencia: 0
+    };
 
 
   ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }
-  = { ped_det_id: 0, ped_id: 0, pro_id: '', pro_nom: '', cant: 0, precio: 0, porc_desc: 0, val_desc: 0, porc_imp: 0, val_imp: 0, subtotal: 0 };
+    = { ped_det_id: 0, ped_id: 0, pro_id: '', pro_nom: '', cant: 0, precio: 0, porc_desc: 0, val_desc: 0, porc_imp: 0, val_imp: 0, subtotal: 0 };
 
 
   ped_id: number;
@@ -86,8 +88,8 @@ existencia:0} ;
   mensaje: string = '';
   modprecio: boolean = false;
   verexistencia: boolean = false;
-  valido : boolean = true;
-  validaexistencia :boolean = false;
+  valido: boolean = true;
+  validaexistencia: boolean = false;
 
 
   constructor(public navParams: NavParams,
@@ -100,19 +102,19 @@ existencia:0} ;
     //permisos
     //console.log('modprecio',localStorage.getItem('modprecio'));
 
-    if (localStorage.getItem('verexistencia') =='true')
-    this.verexistencia = true;
+    if (localStorage.getItem('verexistencia') == 'true')
+      this.verexistencia = true;
 
-    if (localStorage.getItem('modprecio') =='true')
+    if (localStorage.getItem('modprecio') == 'true')
       this.modprecio = true;
 
-      if (localStorage.getItem('validaexistencia') =='true')
-        this.validaexistencia = true;
+    if (localStorage.getItem('validaexistencia') == 'true')
+      this.validaexistencia = true;
 
     this.valido = true;
-    
+
     this.descuento = this.navParams.get('descuento');
-    console.log("descuento",this.descuento);
+    console.log("descuento", this.descuento);
 
     this.item = this.navParams.get('item');
 
@@ -131,7 +133,7 @@ existencia:0} ;
 
 
         console.log(data);
-      
+
 
         this.ped_det.pro_id = this.producto.pro_id;
         this.ped_det.pro_nom = this.producto.pro_nom;
@@ -139,12 +141,12 @@ existencia:0} ;
         this.ped_det.precio = this.producto.precio;
         this.ped_det.ped_id = this.ped_id;
         this.ped_det.porc_imp = this.producto.imp_porc;
-        this.ped_det.val_imp = 0; 
+        this.ped_det.val_imp = 0;
         this.ped_det.subtotal = 0;
         this.ped_det.porc_desc = this.descuento;
 
-          
-      
+
+
       },
       err => {
         console.log(err);
@@ -155,64 +157,67 @@ existencia:0} ;
   }
 
 
-  AceptModal() {
-    //validar campos
+  PutModal() {
 
-    //guardar cambios
+    //calcular 
 
-    this.ped_det.val_imp = this.ped_det.cant * this.ped_det.precio *  (this.ped_det.porc_imp /100);
+    this.ped_det.val_imp = this.ped_det.cant * this.ped_det.precio * (this.ped_det.porc_imp / 100);
     this.ped_det.subtotal = (this.ped_det.cant * this.ped_det.precio) + this.ped_det.val_imp;
 
-    console.log("guardar",this.ped_det);
-
-    if (this.ped_det.cant > 0)
+    //validar existencia
+    if (this.ped_det.cant > this.producto.existencia && this.validaexistencia) //&& this.verexistencia
     {
+      this.mensaje = "Producto supera el disponible";
+      this.valido = false
+    }
+    else {
+
+      this.valido = true;
+      //guardar informa
+
+
+      
+      if (this.ped_det.cant > 0) {
         this.pedidosService.SetPedidodet(this.ped_det).subscribe(res => {
-          console.log("suscb",res);
           this.ped_det.ped_det_id = res.ped_det_id;
           this.viewCtrl.dismiss(this.ped_det);
 
         }, err => console.log(err));
-    }
-    else
-    {
-      
-      this.viewCtrl.dismiss(this.ped_det);
-    }
+      }
+      else {
 
+        this.viewCtrl.dismiss(this.ped_det);
+      }
+    }
     //console.log("resp", this.pedidosService.SetPedidodet(this.ped_det));
 
 
   }
 
-  validaprom(cantidad)
-  {
+  validaprom(cantidad) {
 
-    console.log("Existencia",this.producto.existencia)
+    console.log("Existencia", this.producto.existencia)
 
     if (cantidad > this.producto.existencia && this.validaexistencia) //&& this.verexistencia
     {
       this.mensaje = "Producto supera el disponible";
       this.valido = false
     }
-    else
-    {
+    else {
       this.mensaje = "";
       this.valido = true;
     }
 
-    if (cantidad >= this.producto.cantprom && this.producto.cantprom > 0)
-    {
-      this.mensaje = "Producto aplica descuento "+this.producto.porc_descprom.toString();
+    if (cantidad >= this.producto.cantprom && this.producto.cantprom > 0) {
+      this.mensaje = "Producto aplica descuento " + this.producto.porc_descprom.toString();
       this.ped_det.porc_desc = this.descuento + this.producto.porc_descprom;
     }
     this.validaprecio();
   }
 
-  validaprecio()
-  {
-    this.ped_det.val_desc = (this.ped_det.precio *  this.ped_det.cant) * this.ped_det.porc_desc /100;
-    this.ped_det.subtotal = (this.ped_det.precio *  this.ped_det.cant) - this.ped_det.val_desc;
+  validaprecio() {
+    this.ped_det.val_desc = (this.ped_det.precio * this.ped_det.cant) * this.ped_det.porc_desc / 100;
+    this.ped_det.subtotal = (this.ped_det.precio * this.ped_det.cant) - this.ped_det.val_desc;
   }
 
   dismiss() {
