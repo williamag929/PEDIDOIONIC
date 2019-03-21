@@ -13,9 +13,30 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Fuerza de Ventas Gold</h3>
+  <ion-card>
+    <ion-card-header>
+      Top Clientes
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #barCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
 
-  <h3>Bienvenido</h3>
+  <ion-card>
+    <ion-card-header>
+      Categorias
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #doughnutCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
 
-  <button ion-button secondary menuToggle>Menu</button>
+  <ion-card>
+    <ion-card-header>
+      Ventas
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #lineCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
