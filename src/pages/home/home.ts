@@ -1,3 +1,4 @@
+import { VendedorServiceProvider } from './../../providers/vendedor-service/vendedor-service';
 import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
@@ -22,8 +23,9 @@ export class HomePage {
 
   username = '';
   email = '';
+  data1 : any;
 
-  constructor(private navCtrl: NavController, private auth: AuthService) {
+  constructor(private navCtrl: NavController, private auth: AuthService, public vend: VendedorServiceProvider) {
     
     console.log('Iniciando Home')
     let info = this.auth.getUserInfo();
@@ -33,35 +35,43 @@ export class HomePage {
         this.username = 'user';
         this.email = 'mail';
 
-    localStorage.setItem('vend_id', '99');
+    //localStorage.setItem('vend_id', '99');
+    
+
+   // var data0 = vend.GetDataChar(localStorage.getItem('vend_id'),0);
+
+   // var data3 = vend.GetDataChar(localStorage.getItem('vend_id'),2);
+
   }
 
   ionViewDidLoad() {
+
+    this.data1 = this.vend.GetDataChar(localStorage.getItem('vend_id'),1);
+
+    
+    this.vend.GetDataChar(localStorage.getItem('vend_id'),1).subscribe(
+        data => {
+          this.data1 = data;
+          console.log(data);
+        },
+        err => {
+          console.log(err);
+        },
+        () => console.log('Proceso Completo')
+      );
+
+
+
+    let values = Object.keys(this.data1).map(key => this.data1[key]);
  
     this.barChart = new Chart(this.barCanvas.nativeElement, {
 
         type: 'bar',
         data: {
-            labels: ["BJP", "INC", "AAP", "CPI", "CPI-M", "NCP"],
+            labels: Object.keys(this.data1),//["BJP", "INC", "AAP", "CPI", "CPI-M", "NCP"],
             datasets: [{
                 label: '# of Votes',
-                data: [200, 50, 30, 15, 20, 34],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
+                data: values,//[200, 50, 30, 15, 20, 34],
                 borderWidth: 1
             }]
         },

@@ -36,5 +36,14 @@ export class VendedorServiceProvider {
       var response = this.http.get(url).map(res => res.json());
       return response;
     }
+
+    GetDataChar(vend_id, clase)
+    {
+      var url = this.baseApiUrl + 'DashBoard?vend_id='+vend_id+'&clase=' + encodeURI(clase);
+      var response = this.http.get(url).map(res => res.json());
+      return response;
+
+    }
+
   }
   
