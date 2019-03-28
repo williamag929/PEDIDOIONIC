@@ -50,6 +50,25 @@ export class HomePage {
 
         //this.data0 = this.vend.GetDataChar(localStorage.getItem('vend_id'), 0);
 
+
+
+        var poolColors = function (a) {
+            var pool = [];
+            for(var i=0;i<a;i++){
+                pool.push(dynamicColors());
+            }
+            return pool;
+        }
+    
+        var dynamicColors = function() {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            return "rgb(" + r + "," + g + "," + b + ")";
+        }
+    
+
+
         this.vend.GetDataChar(localStorage.getItem('vend_id'), 1).subscribe(
             data => {
                 this.data0 = data;
@@ -77,7 +96,8 @@ export class HomePage {
                         datasets: [{
                             label: 'Clientes',
                             data: values,//[200, 50, 30, 15, 20, 34],
-                            borderWidth: 1
+                            borderWidth: 1,
+                            backgroundColor: poolColors(10)
                         }]
                     },
                     options: {
@@ -130,6 +150,7 @@ export class HomePage {
                         datasets: [{
                             label: 'Grupos',
                             data: values,
+                            backgroundColor: poolColors(10)
                         }]
                     }
         
