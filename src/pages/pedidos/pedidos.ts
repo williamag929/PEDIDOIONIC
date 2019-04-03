@@ -12,7 +12,7 @@ import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-vi
 import { FileTransfer } from '@ionic-native/file-transfer';
 
 import { VendedorServiceProvider } from '../../providers/vendedor-service/vendedor-service';
-
+import { AlertController } from 'ionic-angular';
 
 
 
@@ -133,7 +133,8 @@ export class PedidosPage {
     private document: DocumentViewer,
     private file: File,
     private transfer: FileTransfer,
-    private vendedorService : VendedorServiceProvider
+    private vendedorService : VendedorServiceProvider,
+    public alertCtrl: AlertController
 
   ) { }
 
@@ -205,18 +206,30 @@ export class PedidosPage {
 
 ///envia el pedido para ser marcado como
 //cerrado y enviar el correo
+showAlert(titulo,mensaje) {
+  const alert = this.alertCtrl.create({
+    title: titulo,
+    subTitle: mensaje,
+    buttons: ['OK']
+  });
+  alert.present();
+}
+
   sendpedido(ped_id) {
     //leer encabezado
     this.pedidosService.SendPedido(this.pedido).subscribe(
       data => {
         this.pedido = data;
         console.log('envio correo', data);
-        alert('Pedido Enviado');
+        this.showAlert('Exitoso!','Pedido Enviado')
+        //alert('Pedido Enviado');
         //leer datos cliente
       },
       err => {
         console.log(err);
-        alert('Error al enviar');
+        this.showAlert('Error!','Error al enviar')
+
+        //alert('Error al enviar');
       },
       () => console.log('Proceso Completo')
     );

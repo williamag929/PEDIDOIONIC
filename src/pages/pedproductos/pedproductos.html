@@ -11,9 +11,7 @@
 
 
   <ion-buttons end>
-    <button ion-button icon-only (click)="openPedido()">
-      <ion-icon name="checkbox"></ion-icon>
-    </button>
+    <ion-badge></ion-badge>
   </ion-buttons>
 </ion-navbar>
 </ion-header>
@@ -39,9 +37,16 @@
   </div>
 
 
+  <ion-fab bottom right slot="fixed">
+      <button ion-fab primary (click)="openPedido()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+  </ion-fab> 
+
 
 <div class="bar bar-footer bar-balanced">
-  <button ion-button full (click)="openPedido()">Aceptar</button>
+  
+
 </div>
 
 </ion-content>
