@@ -90,7 +90,7 @@
           {{item.codigo}} {{item.descripcion}}
         </h2>
         <p>
-          Precio: {{item.precio}}, Cant: {{item.cant}}, Total Item: {{item.subtotal}}
+          Precio: {{item.precio | number}} | Cant: {{item.cant}} | Total Item: {{item.subtotal | number}}
         </p>
       </ion-item>
       <ion-item-options>
@@ -108,7 +108,9 @@
             Descuento
           </ion-col>
           <ion-col col-3 align-self-end>
+              <span class="right">
             {{pedido.ped_desc | number}}
+              </span>
           </ion-col>
         </ion-row>
     <ion-row>
@@ -116,7 +118,9 @@
           Subtotal
         </ion-col>
         <ion-col col-3 align-self-end>
+            <span class="right">
           {{pedido.ped_subtotal | number}}
+            </span>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -124,15 +128,19 @@
             Impuesto
           </ion-col>
           <ion-col col-3 align-self-end>
+            <span class="right">
             {{pedido.ped_impuesto | number}}
+          </span>
           </ion-col>
         </ion-row>
         <ion-row>
             <ion-col col-3 justify-content-start>
-              Total
+              Total 
             </ion-col>
             <ion-col col-3 align-self-end>
+                <span class="right">
               {{pedido.ped_total | number}}
+                </span>
             </ion-col>
           </ion-row>
     </ion-grid>
