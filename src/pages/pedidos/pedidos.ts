@@ -222,6 +222,7 @@ showAlert(titulo,mensaje) {
         this.pedido = data;
         console.log('envio correo', data);
         this.showAlert('Exitoso!','Pedido Enviado')
+        this.fillpedido(this.pedido.ped_id);
         //alert('Pedido Enviado');
         //leer datos cliente
       },
