@@ -26,7 +26,7 @@
     <ion-item>
       <ion-label fixed>Dirección</ion-label>
       <ion-input type="text" name="direccionentr" [(ngModel)]="pedido.direccionentr"></ion-input>
-    </ion-item>    
+    </ion-item>
     <ion-item>
       <ion-label fixed>Numero</ion-label>
       <ion-input type="text" name="ped_numero" [readonly]=true [(ngModel)]="pedido.ped_numero"></ion-input>
@@ -39,7 +39,7 @@
 
     <ion-item>
       <ion-label>Forma Pago</ion-label>
-      <ion-select   [(ngModel)]="pedido.formapago">>
+      <ion-select [(ngModel)]="pedido.formapago">>
         <ion-option value="Contado">Contado</ion-option>
         <ion-option value="Credito">Credito</ion-option>
       </ion-select>
@@ -62,25 +62,25 @@
     </ion-item>
 
 
-  <ion-item>
-    <ion-label>Plazo</ion-label>
-    <ion-select [(ngModel)]="pedido.plazo">
-      <ion-option value="0">0</ion-option>
-      <ion-option value="10">10</ion-option>
-      <ion-option value="15">15</ion-option>
-      <ion-option value="30">30</ion-option>
-      <ion-option value="45">45</ion-option>
-    </ion-select>
-  </ion-item>
+    <ion-item>
+      <ion-label>Plazo</ion-label>
+      <ion-select [(ngModel)]="pedido.plazo">
+        <ion-option value="0">0</ion-option>
+        <ion-option value="10">10</ion-option>
+        <ion-option value="15">15</ion-option>
+        <ion-option value="30">30</ion-option>
+        <ion-option value="45">45</ion-option>
+      </ion-select>
+    </ion-item>
 
 
-</ion-list>
+  </ion-list>
 
-  <ion-fab bottom left slot="fixed">
-      <button ion-fab primary (click)="productos($event)">
-        <ion-icon name="cart"></ion-icon>
-      </button>
-  </ion-fab> 
+  <ion-fab *ngIf="!pedido.ped_closed" bottom left slot="fixed">
+    <button ion-fab primary (click)="productos($event)">
+      <ion-icon name="cart"></ion-icon>
+    </button>
+  </ion-fab>
 
 
   <ion-list>
@@ -92,9 +92,10 @@
         <p>
           Precio: {{item.precio | number}} | Cant: {{item.cant}} | Total Item: {{item.subtotal | number}}
         </p>
+        <ion-badge *ngIf="item.valido" item-end>?</ion-badge>
       </ion-item>
       <ion-item-options>
-        <button ion-button color="danger" icon-start (click)="itemDeleted(item,$index)">
+        <button *ngIf="!pedido.ped_closed" ion-button color="danger" icon-start (click)="itemDeleted(item,$index)">
           <ion-icon name="text"></ion-icon>
           Borrar
         </button>
@@ -103,53 +104,62 @@
   </ion-list>
 
   <ion-grid>
-      <ion-row>
-          <ion-col col-3 justify-content-start>
-            Descuento
-          </ion-col>
-          <ion-col col-3 align-self-end>
-              <span class="right">
-            {{pedido.ped_desc | number}}
-              </span>
-          </ion-col>
-        </ion-row>
     <ion-row>
-        <ion-col col-3 justify-content-start>
-          Subtotal
-        </ion-col>
-        <ion-col col-3 align-self-end>
-            <span class="right">
+      <ion-col col-3 justify-content-start>
+        Descuento
+      </ion-col>
+      <ion-col col-3 align-self-end>
+        <span class="right">
+          {{pedido.ped_desc | number}}
+        </span>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-3 justify-content-start>
+        Subtotal
+      </ion-col>
+      <ion-col col-3 align-self-end>
+        <span class="right">
           {{pedido.ped_subtotal | number}}
-            </span>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-          <ion-col col-3 justify-content-start>
-            Impuesto
-          </ion-col>
-          <ion-col col-3 align-self-end>
-            <span class="right">
-            {{pedido.ped_impuesto | number}}
-          </span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col col-3 justify-content-start>
-              Total 
-            </ion-col>
-            <ion-col col-3 align-self-end>
-                <span class="right">
-              {{pedido.ped_total | number}}
-                </span>
-            </ion-col>
-          </ion-row>
-    </ion-grid>
-  
-    <ion-item>
-      <ion-textarea placeholder="Observación" type="text" name="ped_note" autocomplete="on" autocorrect="on" [(ngModel)]="pedido.ped_note"></ion-textarea>
+        </span>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-3 justify-content-start>
+        Impuesto
+      </ion-col>
+      <ion-col col-3 align-self-end>
+        <span class="right">
+          {{pedido.ped_impuesto | number}}
+        </span>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-3 justify-content-start>
+        Total
+      </ion-col>
+      <ion-col col-3 align-self-end>
+        <span class="right">
+          {{pedido.ped_total | number}}
+        </span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-list>
+    <ion-item *ngIf="pedido.ped_closed">
+      Cerrado
+      <ion-icon item-end *ngIf="pedido.ped_closed" name="checkmark"></ion-icon>
     </ion-item>
+    <ion-item *ngIf="pedido.ped_procesado">
+      Procesado
+      <ion-icon item-end *ngIf="pedido.ped_procesado" name="checkmark"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <ion-item>
+    <ion-textarea placeholder="Observación" type="text" name="ped_note" autocomplete="on" autocorrect="on"
+      [(ngModel)]="pedido.ped_note"></ion-textarea>
+  </ion-item>
 
 
 </ion-content>
-
-
