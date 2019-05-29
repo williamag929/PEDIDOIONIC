@@ -268,62 +268,48 @@ export class PedidosPage {
   }
 
 
-  verificapedido() {
+  async verificapedido() {
 
-    console.log('valida pedido');
+    let promises = [];
 
-    var IsValid = true;
+    this.ped_dets.map(async (data) => {
+      this.productoService.GetProducto(data.ped_id, data.codigo).subscribe(
+        prod => {
+          this.producto = prod;
 
-    async () => {
-      for (let data of this.ped_dets) {
+          if (data.cant > prod.existencia && this.validaexistencia) //&& this.verexistencia
+          {
+            data.valido = false;
+            promises.push(data);
+          }
+          else {
+            data.valido = true;
+          }
 
-        console.log('ped_id', data.ped_id);
+        },
+        err => {
+          console.log(err);
+        },
+        () => console.log('Proceso Completo'));
+    });
 
-        console.log('ped_id', data.codigo);
-
-        this.productoService.GetProducto(data.ped_id, data.codigo).subscribe(
-          prod => {
-            this.producto = prod;
-
-            console.log('existencia', prod.existencia);
-
-            console.log('existencia', this.validaexistencia);
-
-            console.log('cant', data.cant);
-
-
-            if (data.cant > prod.existencia && this.validaexistencia) //&& this.verexistencia
-            {
-              data.valido = false;
-            }
-            else {
-              data.valido = true;
-            }
-
-          },
-          err => {
-            console.log(err);
-          },
-          () => console.log('Proceso Completo'));
-      }
-    }
-
-    console.log('valido', IsValid);
-    return IsValid;
-
+    return promises;
   }
 
   //envia pedido marca como cerrado
   sendpedido(ped_id) {
     //leer encabezado
-
     //validar primero el pedido y es valido
-
-    if (this.verificapedido()) {
+    var invalidos = this.ped_dets.filter(c => c.valido == false).length;
+    //console.log("invalidos", invalidos);
+    if (invalidos > 0) {
+      this.showAlert('Alerta!', 'Verificar productos agotados')
+    }
+    else {
       this.pedidosService.SendPedido(this.pedido).subscribe(
         data => {
           this.pedido = data;
-          console.log('envio correo', data);
+          //console.log('envio correo', data);
           this.showAlert('Exitoso!', 'Pedido Enviado');
           this.fillpedido(this.pedido.ped_id);
           //alert('Pedido Enviado');
@@ -332,15 +318,12 @@ export class PedidosPage {
         err => {
           console.log(err);
           this.showAlert('Error!', 'Error al enviar');
-
           //alert('Error al enviar');
         },
         () => console.log('Proceso Completo')
       );
     }
-    else {
-      this.showAlert('Alerta!', 'Verificar productos agotados')
-    }
+
 
   }
 
@@ -361,6 +344,7 @@ export class PedidosPage {
     }
 
     //var baseApiUrl = GlobalVariable.BASE_API_URL;
+
     var baseApiUrl = localStorage.getItem("urlapi");
 
     const transfer = this.transfer.create();
@@ -401,6 +385,8 @@ export class PedidosPage {
     this.pedidosService.GetPedidosdet(this.pedido.ped_id).subscribe(
       data => {
         this.ped_dets = data;
+        this.verificapedido();
+
         console.log(data);
       },
       err => {
@@ -565,6 +551,4 @@ export class PedidosPage {
     });
     actionSheet.present();
   }
-
-
 }

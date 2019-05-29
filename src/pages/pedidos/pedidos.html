@@ -92,7 +92,7 @@
         <p>
           Precio: {{item.precio | number}} | Cant: {{item.cant}} | Total Item: {{item.subtotal | number}}
         </p>
-        <ion-badge *ngIf="item.valido" item-end>?</ion-badge>
+        <ion-icon *ngIf="!item.valido" name="alert" item-end></ion-icon>
       </ion-item>
       <ion-item-options>
         <button *ngIf="!pedido.ped_closed" ion-button color="danger" icon-start (click)="itemDeleted(item,$index)">
