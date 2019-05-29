@@ -13,6 +13,7 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 
 import { VendedorServiceProvider } from '../../providers/vendedor-service/vendedor-service';
 import { AlertController } from 'ionic-angular';
+import { ProductoServiceProvider } from '../../providers/producto-service/producto-service';
 
 
 
@@ -35,7 +36,7 @@ export class PedidosPage {
   cliente: {
     cli_id: number, cli_nombre: string,
     cli_direccion: string,
-    descuento : number
+    descuento: number
   } = {
       cli_id: 0,
       cli_nombre: '',
@@ -63,8 +64,8 @@ export class PedidosPage {
     ped_procesado: boolean,
     ped_closed: boolean,
     ped_note: string,
-    descuento : number,
-    formapago : string,
+    descuento: number,
+    formapago: string,
     plazo: number,
     direccionentr: string
   } = {
@@ -86,13 +87,13 @@ export class PedidosPage {
       descuento: 0,
       formapago: '',
       plazo: 0,
-      direccionentr:''
+      direccionentr: ''
     };
 
   ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }
     = { ped_det_id: 0, ped_id: 0, pro_id: '', pro_nom: '', cant: 0, precio: 0, porc_desc: 0, val_desc: 0, porc_imp: 0, val_imp: 0, subtotal: 0 };
 
-  ped_dets: Array<{ ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }>;
+  ped_dets: Array<{ ped_det_id: number, ped_id: number, codigo: string, descripcion: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number, valido: boolean }>;
 
   //ped_dets: Array<{ ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, subtotal: number }>;
 
@@ -115,12 +116,59 @@ export class PedidosPage {
       cli_id: 0
     }
 
-  coords:  {
+  coords: {
     latitude: number,
-    longitude : number}=
-    {latitude:0.0, longitude: 0.0}
+    longitude: number
+  } =
+    { latitude: 0.0, longitude: 0.0 }
 
-  vendedor:any;
+
+  producto: {
+    pro_id: string, pro_nom: string, pro_ref: string, pro_und: string,
+    pro_grupo1: string,
+    pro_grupo2: string,
+    pro_grupo3: string,
+    imp_cod: number,
+    imp_porc: number,
+    precio: number,
+    precio1: number,
+    precio2: number,
+    precio3: number,
+    precio4: number,
+    precio5: number,
+    preccio6: number,
+    estado: string,
+    peso: number,
+    ordenado: number,
+    existencia: number,
+    cantprom: number,
+    porc_descprom: number
+  } =
+    {
+      pro_id: '', pro_nom: '', pro_ref: '', pro_und: '',
+      pro_grupo1: '',
+      pro_grupo2: '',
+      pro_grupo3: '',
+      imp_cod: 0,
+      imp_porc: 0,
+      precio: 0,
+      precio1: 0,
+      precio2: 0,
+      precio3: 0,
+      precio4: 0,
+      precio5: 0,
+      preccio6: 0,
+      estado: '',
+      peso: 0,
+      ordenado: 0,
+      existencia: 0,
+      cantprom: 0,
+      porc_descprom: 0
+
+    };
+
+  vendedor: any;
+  validaexistencia: boolean;
 
 
   constructor(public navCtrl: NavController,
@@ -133,7 +181,8 @@ export class PedidosPage {
     private document: DocumentViewer,
     private file: File,
     private transfer: FileTransfer,
-    private vendedorService : VendedorServiceProvider,
+    private vendedorService: VendedorServiceProvider,
+    public productoService: ProductoServiceProvider,
     public alertCtrl: AlertController
 
   ) { }
@@ -147,6 +196,9 @@ export class PedidosPage {
 
     var vend_id = localStorage.getItem('vend_id');
 
+    if (localStorage.getItem('validaexistencia') == 'true')
+      this.validaexistencia = true;
+
 
     //retirar usado solo para permisos
 
@@ -156,8 +208,8 @@ export class PedidosPage {
         console.log('vendedor', data);
         localStorage.setItem('modprecio', data.modprecio);
         localStorage.setItem('verexistencia', data.verexistencia);
-        localStorage.setItem('validaexistencia',data.validaexistencia);
-        },
+        localStorage.setItem('validaexistencia', data.validaexistencia);
+      },
       err => {
         console.log(err);
       },
@@ -184,12 +236,12 @@ export class PedidosPage {
       this.pedido.ped_fecha = new Date().toISOString().slice(0, 16);
 
 
-  
+
       this.pedido.vend_id = parseInt(vend_id);
 
       this.pedido.descuento = this.cliente.descuento;
 
-      
+
 
       //this.pedido.ped_fec_ent = new Date(Date.now());
     }
@@ -204,35 +256,91 @@ export class PedidosPage {
 
   }
 
-///envia el pedido para ser marcado como
-//cerrado y enviar el correo
-showAlert(titulo,mensaje) {
-  const alert = this.alertCtrl.create({
-    title: titulo,
-    subTitle: mensaje,
-    buttons: ['OK']
-  });
-  alert.present();
-}
+  ///envia el pedido para ser marcado como
+  //cerrado y enviar el correo
+  showAlert(titulo, mensaje) {
+    const alert = this.alertCtrl.create({
+      title: titulo,
+      subTitle: mensaje,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
 
+
+  verificapedido() {
+
+    console.log('valida pedido');
+
+    var IsValid = true;
+
+    async () => {
+      for (let data of this.ped_dets) {
+
+        console.log('ped_id', data.ped_id);
+
+        console.log('ped_id', data.codigo);
+
+        this.productoService.GetProducto(data.ped_id, data.codigo).subscribe(
+          prod => {
+            this.producto = prod;
+
+            console.log('existencia', prod.existencia);
+
+            console.log('existencia', this.validaexistencia);
+
+            console.log('cant', data.cant);
+
+
+            if (data.cant > prod.existencia && this.validaexistencia) //&& this.verexistencia
+            {
+              data.valido = false;
+            }
+            else {
+              data.valido = true;
+            }
+
+          },
+          err => {
+            console.log(err);
+          },
+          () => console.log('Proceso Completo'));
+      }
+    }
+
+    console.log('valido', IsValid);
+    return IsValid;
+
+  }
+
+  //envia pedido marca como cerrado
   sendpedido(ped_id) {
     //leer encabezado
-    this.pedidosService.SendPedido(this.pedido).subscribe(
-      data => {
-        this.pedido = data;
-        console.log('envio correo', data);
-        this.showAlert('Exitoso!','Pedido Enviado')
-        //alert('Pedido Enviado');
-        //leer datos cliente
-      },
-      err => {
-        console.log(err);
-        this.showAlert('Error!','Error al enviar')
 
-        //alert('Error al enviar');
-      },
-      () => console.log('Proceso Completo')
-    );
+    //validar primero el pedido y es valido
+
+    if (this.verificapedido()) {
+      this.pedidosService.SendPedido(this.pedido).subscribe(
+        data => {
+          this.pedido = data;
+          console.log('envio correo', data);
+          this.showAlert('Exitoso!', 'Pedido Enviado');
+          this.fillpedido(this.pedido.ped_id);
+          //alert('Pedido Enviado');
+          //leer datos cliente
+        },
+        err => {
+          console.log(err);
+          this.showAlert('Error!', 'Error al enviar');
+
+          //alert('Error al enviar');
+        },
+        () => console.log('Proceso Completo')
+      );
+    }
+    else {
+      this.showAlert('Alerta!', 'Verificar productos agotados')
+    }
 
   }
 
@@ -330,8 +438,8 @@ showAlert(titulo,mensaje) {
     });
   }
 
-//carrito para adicionar productos
-//push a pagina PedproductosPage
+  //carrito para adicionar productos
+  //push a pagina PedproductosPage
   productos(event) {
     //guarda pedido
     //si ya existe modifica
@@ -341,32 +449,30 @@ showAlert(titulo,mensaje) {
           console.log("suscb", res);
         });
       //ubicacion 
-      console.log("coords",this.coords);
+      console.log("coords", this.coords);
 
-    
-      try
-      {
-      this.location.geolocid = 0;
-      this.location.tiporeg = "Pedido";
-      this.location.regid = this.pedido.ped_id;
-      this.location.fecha = this.pedido.ped_fecha;
-      
-      this.location.geolocpos = JSON.stringify({ latitude: this.coords.latitude, longitude:this.coords.longitude});
-      this.location.vend_id = this.pedido.vend_id;     
-      this.location.cli_id = this.pedido.cli_id;
 
-      //console.log(this.location.geolocpos);
+      try {
+        this.location.geolocid = 0;
+        this.location.tiporeg = "Pedido";
+        this.location.regid = this.pedido.ped_id;
+        this.location.fecha = this.pedido.ped_fecha;
 
-      this.locationService.SetLocation(this.location)
-        .subscribe(res => {
-          console.log("loc", res)
-        });
-      }catch(err)
-      {}
+        this.location.geolocpos = JSON.stringify({ latitude: this.coords.latitude, longitude: this.coords.longitude });
+        this.location.vend_id = this.pedido.vend_id;
+        this.location.cli_id = this.pedido.cli_id;
+
+        //console.log(this.location.geolocpos);
+
+        this.locationService.SetLocation(this.location)
+          .subscribe(res => {
+            console.log("loc", res)
+          });
+      } catch (err) { }
 
       //adiciona productos
       this.navCtrl.push(PedproductosPage, {
-        pedido: this.pedido, ped_id: this.pedido.ped_id,descuento: this.pedido.descuento, callback: this.myCallbackFunction
+        pedido: this.pedido, ped_id: this.pedido.ped_id, descuento: this.pedido.descuento, callback: this.myCallbackFunction
       });
     }
     else {
@@ -374,27 +480,27 @@ showAlert(titulo,mensaje) {
         console.log("suscb", res);
         this.pedido.ped_id = res.ped_id;
         this.navCtrl.push(PedproductosPage, {
-          pedido: this.pedido, ped_id: this.pedido.ped_id,descuento: this.pedido.descuento, callback: this.myCallbackFunction
+          pedido: this.pedido, ped_id: this.pedido.ped_id, descuento: this.pedido.descuento, callback: this.myCallbackFunction
         });
       }, err => console.log(err));
     }
   }
 
-//borra item
-  itemDeleted(item,idx) {
+  //borra item
+  itemDeleted(item, idx) {
 
     let index = this.ped_dets.indexOf(item);
 
-    if(index > -1){
+    if (index > -1) {
 
 
-    console.log("suscb", item);
-    this.pedidosService.DeletePedidodet(item.ped_det_id).subscribe(res => {
-      console.log("suscb res", res);
-      this.ped_dets.splice(index, 1);
-    }, err => console.log(err));
+      console.log("suscb", item);
+      this.pedidosService.DeletePedidodet(item.ped_det_id).subscribe(res => {
+        console.log("suscb res", res);
+        this.ped_dets.splice(index, 1);
+      }, err => console.log(err));
 
-  }
+    }
     //ped_dets
     //this.pedidosService.
 
@@ -417,7 +523,7 @@ showAlert(titulo,mensaje) {
       alert("Geolocation is not supported by this browser.");
     }
   }
-//mostrar ubicacion
+  //mostrar ubicacion
   showPosition(position: any, self: any) {
     console.log("Coordenadas", position.coords);
     this.coords = position.coords;
