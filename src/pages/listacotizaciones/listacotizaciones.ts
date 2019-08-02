@@ -1,77 +1,70 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { PedidoServiceProvider } from '../../providers/pedido-service/pedido-service';
-import { PedidosPage } from '../../pages/pedidos/pedidos';
+import { CotizacionServiceProvider } from '../../providers/cotizacion-service/cotizacion-service';
+import { CotizacionesPage } from '../cotizaciones/cotizaciones';
+
 
 /**
- * Generated class for the ListapedidosPage page.
+ * Generated class for the ListacotizacionesPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
 
 @Component({
-  selector: 'page-listapedidos',
-  templateUrl: 'listapedidos.html',
+  selector: 'page-listacotizaciones',
+  templateUrl: 'listacotizaciones.html',
 })
-export class ListapedidosPage {
-  public pedidos: any;
-  public pedidosloaded: any;
+export class ListacotizacionesPage {
+  public cotizaciones: any;
+  public cotizacionesloaded: any;
   selectedItem: any;
   cliente:any;
 
-  searchfav: any;
+  searchfav : any;
 
-  pedido: {
-    ped_id: number,
-    ped_tipo: string,
-    ped_numero: number,
+  cotizacion: {
+    cot_id: number,
+    cot_tipo: string,
+    cot_numero: number,
     cli_id: number,
     cli_nombre: string,
     cli_suc: number,
     cli_direccion: string,
     vend_id: number,
     vend_nomb: string,
-    ped_fecha: Date,
-    ped_fec_ent: Date,
-    ped_subtotal: number,
-    ped_impuesto: number,
-    ped_total: number,
+    cot_fecha: Date,
+    cot_fec_ent: Date,
+    cot_subtotal: number,
+    cot_impuesto: number,
+    cot_total: number,
     cli_ciudad: string,
     vend_zona: string,
-    ped_procesado: boolean,
-    ped_closed: boolean,
     descuento : number,
-    formapago : string,
-    plazo: number
   }={
-    ped_id: 0,
-    ped_tipo: 'PE',
-    ped_numero: 0,
+    cot_id: 0,
+    cot_tipo: 'CT',
+    cot_numero: 0,
     cli_id: 0,
     cli_nombre: '',
     cli_suc: 0,
     cli_direccion: '',
     vend_id: 0,
     vend_nomb: '',
-    ped_fecha: null,
-    ped_fec_ent: null,
-    ped_subtotal: 0,
-    ped_impuesto: 0,
-    ped_total: 0,
+    cot_fecha: null,
+    cot_fec_ent: null,
+    cot_subtotal: 0,
+    cot_impuesto: 0,
+    cot_total: 0,
     cli_ciudad: '',
     vend_zona: '',
-    ped_procesado: false,
-    ped_closed: false,
-    descuento: 0,
-    formapago:'',
-    plazo:0
+    descuento: 0
   };
 
 
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
-     public pedidosService: PedidoServiceProvider) {
+     public cotizacionesService: CotizacionServiceProvider) {
     this.loadData();
   }
 
@@ -83,15 +76,15 @@ export class ListapedidosPage {
 
     console.log('vendped',vend_id);
     
-    this.pedidosService.GetPedidos(vend_id).subscribe(
+    this.cotizacionesService.Getcotizaciones(vend_id).subscribe(
       data => {
-        this.pedidos = data;
-        this.pedidosloaded = data;
+        this.cotizaciones = data;
+        this.cotizacionesloaded = data;
 
         if (this.cliente > 0)
        {
-          this.pedidos = this.filtercliente(this.cliente,"cli_id");
-          this.pedidosloaded = this.pedidos;
+          this.cotizaciones = this.filtercliente(this.cliente,"cli_id");
+          this.cotizacionesloaded = this.cotizaciones;
         }
 
         console.log(data);
@@ -106,7 +99,7 @@ export class ListapedidosPage {
 
   filtercliente(element,field) {
     let results = [];
-    results = this.pedidos.filter(function (item) {
+    results = this.cotizaciones.filter(function (item) {
       //por cada propieda del item busca
       for (let property in item) {
         //si la propieda es null continua
@@ -131,12 +124,12 @@ export class ListapedidosPage {
     let fObj = val.split(" ");
 
     //reinicia la busqueda
-    this.pedidos = this.pedidosloaded;
+    this.cotizaciones = this.cotizacionesloaded;
 
     //por cada elemento realiza la busqueda
     fObj.forEach(element => {
       //acumula la busqueda
-      this.pedidos = this.pedidos.filter(function (item) {
+      this.cotizaciones = this.cotizaciones.filter(function (item) {
         //por cada propieda del item busca
         for (let property in item) {
           //si la propieda es null continua
@@ -162,9 +155,9 @@ export class ListapedidosPage {
 
     console.log('Ped Sel',item);
 
-    //this.navCtrl.setRoot(PedidosPage);
-    this.navCtrl.push(PedidosPage, {
-      item: item, ped_id: item.ped_id
+    //this.navCtrl.setRoot(cotizacionesPage);
+    this.navCtrl.push(CotizacionesPage, {
+      item: item, cot_id: item.cot_id
     });
   }
 }

@@ -20,16 +20,16 @@
 <ion-content>
   <ion-searchbar [(ngModel)]="searchfav" (ionInput)="getItems($event)"></ion-searchbar>
   <ion-list>
-    <button ion-item *ngFor="let item of (productos ? productos.slice(0,50): []) " (click)="openModal($event, item)">
-      <p text-wrap>
-        {{item.pro_nom}}
-      </p>
-      <p>
-        {{item.pro_id}} {{item.pro_und}}
-        <a *ngIf="verexistencia">| Disp:  {{item.existencia}}</a>
-      </p>
-      <ion-badge *ngIf="item.ordenado != 0" item-end>{{item.ordenado}}</ion-badge>  
-    </button>
+    <ion-item ion-item *ngFor="let item of (productos ? productos.slice(0,50): []) " (click)="openModal($event, item)">
+        <p text-wrap>
+            {{item.pro_nom}}
+          </p>
+          <p>
+            {{item.pro_id}} {{item.pro_und}}
+            <a *ngIf="verexistencia">| Disp:  {{item.existencia}}</a>
+          </p>
+          <ion-badge *ngIf="item.ordenado != 0" item-end>{{item.ordenado}}</ion-badge>  
+    </ion-item>
   </ion-list>
   <div *ngIf="selectedItem" padding>
     Lista Selección <b>{{selectedItem.pro_nom}}</b>
@@ -37,7 +37,7 @@
 
 
   <ion-fab bottom right slot="fixed">
-      <button ion-fab primary (click)="openPedido()">
+      <button ion-fab primary (click)="opencotizacion()">
         <ion-icon name="checkmark"></ion-icon>
       </button>
   </ion-fab> 
