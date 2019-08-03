@@ -1,6 +1,5 @@
-import { CotizacionesPage } from './../cotizaciones/cotizaciones';
 import { Component } from '@angular/core';
-import { App, NavController, NavParams, ViewController } from 'ionic-angular';
+import { App, NavController, NavParams } from 'ionic-angular';
 import { ProductoServiceProvider } from '../../providers/producto-service/producto-service';
 import { ModalController } from 'ionic-angular';
 import { CotdetModalPage } from '../cotdet-modal/cotdet-modal';

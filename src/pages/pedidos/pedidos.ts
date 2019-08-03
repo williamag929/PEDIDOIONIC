@@ -1,19 +1,16 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { PedproductosPage } from '../../pages/pedproductos/pedproductos';
-import { PedidoServiceProvider } from '../../providers/pedido-service/pedido-service';
 import { LocationServiceProvider } from '../../providers/location-service/location-service';
 
 import { ClienteServiceProvider } from '../../providers/cliente-service/cliente-service';
 import { Platform, ActionSheetController } from 'ionic-angular';
-import { DecimalPipe } from '@angular/common';
-import { File } from '@ionic-native/file';
-import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
-import { FileTransfer } from '@ionic-native/file-transfer';
 
 import { VendedorServiceProvider } from '../../providers/vendedor-service/vendedor-service';
 import { AlertController } from 'ionic-angular';
 import { ProductoServiceProvider } from '../../providers/producto-service/producto-service';
+import { PedproductosPage } from '../../pages/pedproductos/pedproductos';
+import { PedidoServiceProvider } from '../../providers/pedido-service/pedido-service';
+
 
 
 
@@ -30,7 +27,6 @@ import { ProductoServiceProvider } from '../../providers/producto-service/produc
 @Component({
   selector: 'page-pedidos',
   templateUrl: 'pedidos.html'
-  //template: '<pdf-viewer [src]="pdfSrc" [show-all]="true"></pdf-viewer>'
 })
 export class PedidosPage {
   cliente: {
@@ -185,9 +181,6 @@ export class PedidosPage {
     public clienteService: ClienteServiceProvider,
     public platform: Platform,
     public actionsheetCtrl: ActionSheetController,
-    private document: DocumentViewer,
-    private file: File,
-    private transfer: FileTransfer,
     private vendedorService: VendedorServiceProvider,
     public productoService: ProductoServiceProvider,
     public alertCtrl: AlertController
@@ -343,40 +336,6 @@ export class PedidosPage {
       );
     }
 
-
-  }
-
-  ///descarga el pdf
-  getpedpdf(ped_id) {
-    // this.pedidosService.GetPdf(ped_id).subscribe((file: ArrayBuffer) => {
-    //   this.pdfSrc = new Uint8Array(file);
-    // or directly passing ArrayBuffer
-    // this.pdfSrc = file;
-    //  });
-    console.log(ped_id);
-    let path = null;
-
-    if (this.platform.is('ios')) {
-      path = this.file.documentsDirectory;
-    } else if (this.platform.is('android')) {
-      path = this.file.dataDirectory;
-    }
-
-    //var baseApiUrl = GlobalVariable.BASE_API_URL;
-
-    var baseApiUrl = localStorage.getItem("urlapi");
-
-    const transfer = this.transfer.create();
-
-    var url = baseApiUrl + 'pedidoPdf/' + encodeURI(ped_id);
-
-    console.log(url);
-
-    transfer.download(url, path + ped_id + '.pdf').then(entry => {
-      let url = entry.toURL();
-      this.document.viewDocument(url, 'application/pdf', {});
-      console.log('procesado');
-    });
 
   }
 
@@ -556,7 +515,7 @@ export class PedidosPage {
           text: 'Imprimir',
           icon: !this.platform.is('ios') ? 'share' : null,
           handler: () => {
-            this.getpedpdf(this.pedido.ped_id);
+            
             console.log('Get Pdf clicked');
           }
         },

@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http,Request } from '@angular/http';
-import { RequestOptions, Headers, Response } from '@angular/http'
+import { Http } from '@angular/http';
+import {  Headers } from '@angular/http'
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch'
-import { Observable } from "rxjs/Observable";
-import { GlobalVariable } from '../../app/app.config';
 
 
 

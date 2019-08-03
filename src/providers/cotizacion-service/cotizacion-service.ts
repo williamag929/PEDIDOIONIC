@@ -1,14 +1,9 @@
-import { AppSetting } from './../../app/app.config';
 import { Injectable } from '@angular/core';
-import { Http,Request } from '@angular/http';
-import { RequestOptions, Headers, Response } from '@angular/http'
+import { Http} from '@angular/http';
+import {  Headers, Response } from '@angular/http'
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch'
 import { Observable } from "rxjs/Observable";
-import {DomSanitizer} from '@angular/platform-browser';
-
-import { GlobalVariable} from '../../app/app.config';
-
 /*
   Generated class for the cotizacionServiceProvider provider.
 

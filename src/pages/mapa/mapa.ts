@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import {
  GoogleMaps,
@@ -71,7 +71,6 @@ export class MapaPage {
 
 
   constructor(
-    private navCtrl: NavController,
     public navParams: NavParams,
     private geolocation: Geolocation,
     private googleMaps: GoogleMaps) {

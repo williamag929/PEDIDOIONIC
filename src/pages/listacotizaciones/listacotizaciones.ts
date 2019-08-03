@@ -101,16 +101,14 @@ export class ListacotizacionesPage {
     let results = [];
     results = this.cotizaciones.filter(function (item) {
       //por cada propieda del item busca
-      for (let property in item) {
         //si la propieda es null continua
-        if (item[field] === null) {
-          continue;
-        }
+        //if (item[field] === null) {
+        //  continue;
+        //}
         //si la busqueda es acertada retorna true
         if (item[field] == element) {
           return true;
         }
-      }
       //si no se cumple retorna falso
       return false;
     });

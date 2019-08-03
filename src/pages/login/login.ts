@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { NavController,LoadingController, Loading } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
-import { HomePage } from '../../pages/home/home';
 import { ClientesPage } from '../../pages/clientes/clientes';
 
 @Component({
@@ -12,7 +11,8 @@ export class LoginPage {
   loading: Loading;
   registerCredentials = { email: '', password: '' };
  
-  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) { }
+  constructor(private nav: NavController, private auth: AuthService, 
+     private loadingCtrl: LoadingController) { }
  
   public createAccount() {
     this.nav.push('RegisterPage');
@@ -59,11 +59,11 @@ export class LoginPage {
   showError(text) {
     this.loading.dismiss();
  
-    let alert = this.alertCtrl.create({
-      title: 'Fail',
-      subTitle: text,
-      buttons: ['OK']
-    });
+    //let alert = this.alertCtrl.create({
+    //  title: 'Fail',
+    //  subTitle: text,
+    //  buttons: ['OK']
+    //});
     //alert.present(prompt);
   }
 }

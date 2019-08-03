@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { VendedorServiceProvider } from '../../providers/vendedor-service/vendedor-service';
-import { GlobalVariable, AppSetting} from '../../app/app.config';
+import { GlobalVariable} from '../../app/app.config';
 import { Http } from '@angular/http';
-import { urlToNavGroupStrings } from 'ionic-angular/umd/navigation/url-serializer';
 
  
 export class User {
@@ -81,8 +79,6 @@ export class AuthService {
     }
   }
  
-  private baseApiUrl = GlobalVariable.LOG_API_URL;
-
   public register(credentials) {
     if (credentials.email === null || credentials.password === null) {
       return Observable.throw("Please insert credentials");

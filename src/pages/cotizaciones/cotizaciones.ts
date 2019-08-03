@@ -4,17 +4,12 @@ import { LocationServiceProvider } from '../../providers/location-service/locati
 
 import { ClienteServiceProvider } from '../../providers/cliente-service/cliente-service';
 import { Platform, ActionSheetController } from 'ionic-angular';
-import { DecimalPipe } from '@angular/common';
-import { File } from '@ionic-native/file';
-import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
-import { FileTransfer } from '@ionic-native/file-transfer';
 
 import { VendedorServiceProvider } from '../../providers/vendedor-service/vendedor-service';
 import { AlertController } from 'ionic-angular';
 import { ProductoServiceProvider } from '../../providers/producto-service/producto-service';
 import { CotizacionServiceProvider } from '../../providers/cotizacion-service/cotizacion-service';
 import { CotproductosPage } from '../cotproductos/cotproductos';
-
 
 
 //import { ModalController } from 'ionic-angular';
@@ -185,9 +180,6 @@ export class CotizacionesPage {
     public clienteService: ClienteServiceProvider,
     public platform: Platform,
     public actionsheetCtrl: ActionSheetController,
-    private document: DocumentViewer,
-    private file: File,
-    private transfer: FileTransfer,
     private vendedorService: VendedorServiceProvider,
     public productoService: ProductoServiceProvider,
     public alertCtrl: AlertController
@@ -355,29 +347,23 @@ export class CotizacionesPage {
     // this.pdfSrc = file;
     //  });
     console.log(cot_id);
-    let path = null;
 
-    if (this.platform.is('ios')) {
-      path = this.file.documentsDirectory;
-    } else if (this.platform.is('android')) {
-      path = this.file.dataDirectory;
-    }
 
     //var baseApiUrl = GlobalVariable.BASE_API_URL;
 
     var baseApiUrl = localStorage.getItem("urlapi");
 
-    const transfer = this.transfer.create();
+    //const transfer = this.transfer.create();
 
     var url = baseApiUrl + 'cotizacionPdf/' + encodeURI(cot_id);
 
     console.log(url);
 
-    transfer.download(url, path + cot_id + '.pdf').then(entry => {
-      let url = entry.toURL();
-      this.document.viewDocument(url, 'application/pdf', {});
-      console.log('procesado');
-    });
+    //transfer.download(url, path + cot_id + '.pdf').then(entry => {
+    //  let url = entry.toURL();
+    //  this.document.viewDocument(url, 'application/pdf', {});
+    //  console.log('procesado');
+    //});
 
   }
 

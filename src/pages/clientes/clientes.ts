@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ClienteServiceProvider } from '../../providers/cliente-service/cliente-service';
 import { PedidosPage } from '../../pages/pedidos/pedidos';

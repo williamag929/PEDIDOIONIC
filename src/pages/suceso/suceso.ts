@@ -1,10 +1,8 @@
-import { ClienteInfoPage } from './../cliente-info/cliente-info';
 import { ClienteServiceProvider } from './../../providers/cliente-service/cliente-service';
 
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
-import { GlobalVariable } from '../../app/app.config';
 import { LocationServiceProvider } from '../../providers/location-service/location-service';
 import { SucesoServiceProvider } from '../../providers/suceso-service/suceso-service';
 

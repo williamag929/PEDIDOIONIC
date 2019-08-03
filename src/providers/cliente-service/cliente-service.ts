@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http,Request } from '@angular/http';
-import { RequestOptions, Headers, Response } from '@angular/http'
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch'
-import { Observable } from "rxjs/Observable";
-
-import { GlobalVariable, AppSetting} from '../../app/app.config';
 
 /*
   Generated class for the ClienteServiceProvider provider.
@@ -32,7 +28,6 @@ export class ClienteServiceProvider {
   private baseApiUrl = localStorage.getItem("urlapi");
 
   data: any;
-  private headers: Headers;
 
   GetClientes(vend_id) {
     var url = this.baseApiUrl + 'vcliente/' + encodeURI(vend_id);

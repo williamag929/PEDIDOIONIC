@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavParams } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 import { PedidoServiceProvider } from '../../providers/pedido-service/pedido-service';
 import { ProductoServiceProvider } from '../../providers/producto-service/producto-service';

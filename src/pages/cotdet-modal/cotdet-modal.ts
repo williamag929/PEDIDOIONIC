@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import {  NavParams } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 import { CotizacionServiceProvider } from '../../providers/cotizacion-service/cotizacion-service';
 import { ProductoServiceProvider } from '../../providers/producto-service/producto-service';

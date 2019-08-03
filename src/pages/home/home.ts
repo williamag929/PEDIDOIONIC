@@ -30,7 +30,7 @@ export class HomePage {
     constructor(private navCtrl: NavController, private auth: AuthService, public vend: VendedorServiceProvider) {
 
         console.log('Iniciando Home')
-        let info = this.auth.getUserInfo();
+        //let info = this.auth.getUserInfo();
         //this.username = info['name'];
         //this.email = info['email'];
 

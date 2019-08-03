@@ -1,7 +1,7 @@
 import { SucesoPage } from './../suceso/suceso';
 import { SucesoServiceProvider } from './../../providers/suceso-service/suceso-service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 /**
  * Generated class for the ListasucesosPage page.
@@ -80,16 +80,12 @@ export class ListasucesosPage {
     let results = [];
     results = this.sucesos.filter(function (item) {
       //por cada propieda del item busca
-      for (let property in item) {
         //si la propieda es null continua
-        if (item[field] === null) {
-          continue;
-        }
+
         //si la busqueda es acertada retorna true
         if (item[field] == element) {
           return true;
         }
-      }
       //si no se cumple retorna falso
       return false;
     });

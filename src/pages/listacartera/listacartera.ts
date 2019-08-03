@@ -37,8 +37,7 @@ export class ListacarteraPage {
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
-    public cartera: CarteraServiceProvider,
-    private auth: AuthService) {
+    public cartera: CarteraServiceProvider) {
 
     this.selectedItem = navParams.get('item');
 
@@ -47,7 +46,7 @@ export class ListacarteraPage {
     this.cli_nombre = this.selectedItem.cli_nombre;
     this.cli_nit = this.selectedItem.cli_nit;
 
-    let info = this.auth.getUserInfo();
+    //let info = this.auth.getUserInfo();
 
     this.loadCartera();
 

@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { GlobalVariable} from '../../app/app.config';
-
 /*
   Generated class for the VendedorServiceProvider provider.
 
