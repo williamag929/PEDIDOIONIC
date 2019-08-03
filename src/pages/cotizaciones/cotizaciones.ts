@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { PedproductosPage } from '../../pages/pedproductos/pedproductos';
-import { PedidoServiceProvider } from '../../providers/pedido-service/pedido-service';
 import { LocationServiceProvider } from '../../providers/location-service/location-service';
 
 import { ClienteServiceProvider } from '../../providers/cliente-service/cliente-service';
@@ -14,6 +12,8 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 import { VendedorServiceProvider } from '../../providers/vendedor-service/vendedor-service';
 import { AlertController } from 'ionic-angular';
 import { ProductoServiceProvider } from '../../providers/producto-service/producto-service';
+import { CotizacionServiceProvider } from '../../providers/cotizacion-service/cotizacion-service';
+import { CotproductosPage } from '../cotproductos/cotproductos';
 
 
 
@@ -21,18 +21,18 @@ import { ProductoServiceProvider } from '../../providers/producto-service/produc
 //import { ModalPage } from '../pages/modal-page';
 
 /**
- * Generated class for the PedidosPage page.
+ * Generated class for the cotizacionsPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
 
 @Component({
-  selector: 'page-pedidos',
-  templateUrl: 'pedidos.html'
+  selector: 'page-cotizaciones',
+  templateUrl: 'cotizaciones.html'
   //template: '<pdf-viewer [src]="pdfSrc" [show-all]="true"></pdf-viewer>'
 })
-export class PedidosPage {
+export class CotizacionesPage {
   cliente: {
     cli_id: number, cli_nombre: string,
     cli_direccion: string,
@@ -50,54 +50,54 @@ export class PedidosPage {
 
   cli_nombre: string;
 
-  pedido: {
-    ped_id: number,
-    ped_numero: number,
-    ped_tipo: string,
+  cotizacion: {
+    cot_id: number,
+    cot_numero: number,
+    cot_tipo: string,
     cli_id: number,
     cli_suc: number,
     vend_id: number,
-    ped_fecha: any,
-    ped_fec_ent: any,
-    ped_subtotal: number,
-    ped_impuesto: number,
-    ped_total: number,
-    ped_desc: number,
-    ped_procesado: boolean,
-    ped_closed: boolean,
-    ped_note: string,
+    cot_fecha: any,
+    cot_fec_ent: any,
+    cot_subtotal: number,
+    cot_impuesto: number,
+    cot_total: number,
+    cot_desc: number,
+    cot_procesado: boolean,
+    cot_closed: boolean,
+    cot_note: string,
     descuento: number,
     formapago: string,
     plazo: number,
     direccionentr: string
   } = {
-      ped_id: 0,
-      ped_numero: 0,
-      ped_tipo: '',
+      cot_id: 0,
+      cot_numero: 0,
+      cot_tipo: '',
       cli_id: 0,
       cli_suc: 0,
       vend_id: 0,
-      ped_fecha: '',
-      ped_fec_ent: '',
-      ped_subtotal: 0,
-      ped_impuesto: 0,
-      ped_total: 0,
-      ped_desc: 0,
-      ped_procesado: false,
-      ped_closed: false,
-      ped_note: '',
+      cot_fecha: '',
+      cot_fec_ent: '',
+      cot_subtotal: 0,
+      cot_impuesto: 0,
+      cot_total: 0,
+      cot_desc: 0,
+      cot_procesado: false,
+      cot_closed: false,
+      cot_note: '',
       descuento: 0,
       formapago: '',
       plazo: 0,
       direccionentr: ''
     };
 
-  ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }
-    = { ped_det_id: 0, ped_id: 0, pro_id: '', pro_nom: '', cant: 0, precio: 0, porc_desc: 0, val_desc: 0, porc_imp: 0, val_imp: 0, subtotal: 0 };
+  cot_det: { cot_det_id: number, cot_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }
+    = { cot_det_id: 0, cot_id: 0, pro_id: '', pro_nom: '', cant: 0, precio: 0, porc_desc: 0, val_desc: 0, porc_imp: 0, val_imp: 0, subtotal: 0 };
 
-  ped_dets: Array<{ ped_det_id: number, ped_id: number, codigo: string, descripcion: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number, valido: boolean }>;
+  cot_dets: Array<{ cot_det_id: number, cot_id: number, codigo: string, descripcion: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number, valido: boolean }>;
 
-  //ped_dets: Array<{ ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, subtotal: number }>;
+  //cot_dets: Array<{ cot_det_id: number, cot_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, subtotal: number }>;
 
   location: {
     geolocid: number,
@@ -180,7 +180,7 @@ export class PedidosPage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    public pedidosService: PedidoServiceProvider,
+    public cotizacionsService: CotizacionServiceProvider,
     public locationService: LocationServiceProvider,
     public clienteService: ClienteServiceProvider,
     public platform: Platform,
@@ -197,9 +197,9 @@ export class PedidosPage {
   ///carga el formulario
   ionViewDidLoad() {
 
-    this.pedido.ped_id = this.navParams.get('ped_id');
+    this.cotizacion.cot_id = this.navParams.get('cot_id');
 
-    console.log('ped_id', this.pedido.ped_id);
+    console.log('cot_id', this.cotizacion.cot_id);
 
     var vend_id = localStorage.getItem('vend_id');
 
@@ -239,43 +239,44 @@ export class PedidosPage {
 
 
 
-    if (this.pedido.ped_id == 0) {
-      //es un nuevo pedido
+    if (this.cotizacion.cot_id == 0) {
+      //es un nuevo cotizacion
       this.cliente = this.navParams.get('item');
 
-      this.pedido.direccionentr = this.cliente.cli_direccion;
+      this.cotizacion.direccionentr = this.cliente.cli_direccion;
 
       this.listaprecio = this.cliente.lista_id;
 
-      this.pedido.ped_tipo = this.navParams.get('ped_tipo');
+      this.cotizacion.cot_tipo = this.navParams.get('cot_tipo');
 
-      this.pedido.cli_id = this.cliente.cli_id;
-      this.pedido.ped_numero = 0;  //buscar prox numero  
-      this.pedido.ped_fec_ent = new Date().toISOString().slice(0, 16);
-      this.pedido.ped_fecha = new Date().toISOString().slice(0, 16);
+      this.cotizacion.cli_id = this.cliente.cli_id;
 
-
-
-      this.pedido.vend_id = parseInt(vend_id);
-
-      this.pedido.descuento = this.cliente.descuento;
+      this.cotizacion.cot_numero = 0;  //buscar prox numero  
+      this.cotizacion.cot_fec_ent = new Date().toISOString().slice(0, 16);
+      this.cotizacion.cot_fecha = new Date().toISOString().slice(0, 16);
 
 
 
-      //this.pedido.ped_fec_ent = new Date(Date.now());
+      this.cotizacion.vend_id = parseInt(vend_id);
+
+      this.cotizacion.descuento = this.cliente.descuento;
+
+
+
+      //this.cotizacion.cot_fec_ent = new Date(Date.now());
     }
     else {
 
-      this.pedido = this.navParams.get('item');
+      this.cotizacion = this.navParams.get('item');
 
-      //carga pedido
-      this.fillpedido(this.pedido.ped_id);
+      //carga cotizacion
+      this.fillcotizacion(this.cotizacion.cot_id);
 
     }
 
   }
 
-  ///envia el pedido para ser marcado como
+  ///envia el cotizacion para ser marcado como
   //cerrado y enviar el correo
   showAlert(titulo, mensaje) {
     const alert = this.alertCtrl.create({
@@ -287,12 +288,12 @@ export class PedidosPage {
   }
 
 
-  async verificapedido() {
+  async verificacotizacion() {
 
     let promises = [];
 
-    this.ped_dets.map(async (data) => {
-      this.productoService.GetProducto(data.ped_id, data.codigo).subscribe(
+    this.cot_dets.map(async (data) => {
+      this.productoService.GetProductoCot(data.cot_id, data.codigo).subscribe(
         prod => {
           this.producto = prod;
 
@@ -315,23 +316,23 @@ export class PedidosPage {
     return promises;
   }
 
-  //envia pedido marca como cerrado
-  sendpedido(ped_id) {
+  //envia cotizacion marca como cerrado
+  sendcotizacion(cot_id) {
     //leer encabezado
-    //validar primero el pedido y es valido
-    var invalidos = this.ped_dets.filter(c => c.valido == false).length;
+    //validar primero el cotizacion y es valido
+    var invalidos = this.cot_dets.filter(c => c.valido == false).length;
     //console.log("invalidos", invalidos);
     if (invalidos > 0) {
       this.showAlert('Alerta!', 'Verificar productos agotados')
     }
     else {
-      this.pedidosService.SendPedido(this.pedido).subscribe(
+      this.cotizacionsService.Sendcotizacion(this.cotizacion).subscribe(
         data => {
-          this.pedido = data;
+          this.cotizacion = data;
           //console.log('envio correo', data);
-          this.showAlert('Exitoso!', 'Pedido Enviado');
-          this.fillpedido(this.pedido.ped_id);
-          //alert('Pedido Enviado');
+          this.showAlert('Exitoso!', 'cotizacion Enviado');
+          this.fillcotizacion(this.cotizacion.cot_id);
+          //alert('cotizacion Enviado');
           //leer datos cliente
         },
         err => {
@@ -347,13 +348,13 @@ export class PedidosPage {
   }
 
   ///descarga el pdf
-  getpedpdf(ped_id) {
-    // this.pedidosService.GetPdf(ped_id).subscribe((file: ArrayBuffer) => {
+  getpedpdf(cot_id) {
+    // this.cotizacionsService.GetPdf(cot_id).subscribe((file: ArrayBuffer) => {
     //   this.pdfSrc = new Uint8Array(file);
     // or directly passing ArrayBuffer
     // this.pdfSrc = file;
     //  });
-    console.log(ped_id);
+    console.log(cot_id);
     let path = null;
 
     if (this.platform.is('ios')) {
@@ -368,11 +369,11 @@ export class PedidosPage {
 
     const transfer = this.transfer.create();
 
-    var url = baseApiUrl + 'pedidoPdf/' + encodeURI(ped_id);
+    var url = baseApiUrl + 'cotizacionPdf/' + encodeURI(cot_id);
 
     console.log(url);
 
-    transfer.download(url, path + ped_id + '.pdf').then(entry => {
+    transfer.download(url, path + cot_id + '.pdf').then(entry => {
       let url = entry.toURL();
       this.document.viewDocument(url, 'application/pdf', {});
       console.log('procesado');
@@ -381,13 +382,13 @@ export class PedidosPage {
   }
 
   ///llena la pantalla con los datos
-  ///del pedido
-  fillpedido(ped_id) {
+  ///del cotizacion
+  fillcotizacion(cot_id) {
 
     //leer encabezado
-    this.pedidosService.GetPedido(ped_id).subscribe(
+    this.cotizacionsService.Getcotizacion(cot_id).subscribe(
       data => {
-        this.pedido = data;
+        this.cotizacion = data;
         console.log('lectura', data);
 
         //leer datos cliente
@@ -401,10 +402,10 @@ export class PedidosPage {
 
     //leer detalle
 
-    this.pedidosService.GetPedidosdet(this.pedido.ped_id).subscribe(
+    this.cotizacionsService.Getcotizacionesdet(this.cotizacion.cot_id).subscribe(
       data => {
-        this.ped_dets = data;
-        this.verificapedido();
+        this.cot_dets = data;
+        this.verificacotizacion();
 
         console.log(data);
       },
@@ -425,7 +426,7 @@ export class PedidosPage {
         this.cliente = data;
         console.log('cliente', data);
         this.listaprecio = data.lista_id;
-        this.pedido.descuento = this.cliente.descuento;
+        this.cotizacion.descuento = this.cliente.descuento;
 
       },
       err => {
@@ -437,11 +438,11 @@ export class PedidosPage {
 
 
   // callback para refrescar pantalla
-  //al regresar del carrito fillpedido
+  //al regresar del carrito fillcotizacion
   myCallbackFunction = (_params) => {
     return new Promise((resolve, reject) => {
       console.log("_params", _params);
-      this.fillpedido(_params);
+      this.fillcotizacion(_params);
       resolve();
     });
   }
@@ -449,10 +450,10 @@ export class PedidosPage {
   //carrito para adicionar productos
   //push a pagina PedproductosPage
   productos(event) {
-    //guarda pedido
+    //guarda cotizacion
     //si ya existe modifica
-    if (this.pedido.ped_id > 0) {
-      this.pedidosService.SetPedido(this.pedido)
+    if (this.cotizacion.cot_id > 0) {
+      this.cotizacionsService.Setcotizacion(this.cotizacion)
         .subscribe(res => {
           console.log("suscb", res);
         });
@@ -462,13 +463,13 @@ export class PedidosPage {
 
       try {
         this.location.geolocid = 0;
-        this.location.tiporeg = "Pedido";
-        this.location.regid = this.pedido.ped_id;
-        this.location.fecha = this.pedido.ped_fecha;
+        this.location.tiporeg = "cotizacion";
+        this.location.regid = this.cotizacion.cot_id;
+        this.location.fecha = this.cotizacion.cot_fecha;
 
         this.location.geolocpos = JSON.stringify({ latitude: this.coords.latitude, longitude: this.coords.longitude });
-        this.location.vend_id = this.pedido.vend_id;
-        this.location.cli_id = this.pedido.cli_id;
+        this.location.vend_id = this.cotizacion.vend_id;
+        this.location.cli_id = this.cotizacion.cli_id;
 
         //console.log(this.location.geolocpos);
 
@@ -479,16 +480,16 @@ export class PedidosPage {
       } catch (err) { }
 
       //adiciona productos
-      this.navCtrl.push(PedproductosPage, {
-        pedido: this.pedido, ped_id: this.pedido.ped_id, descuento: this.pedido.descuento, callback: this.myCallbackFunction
+      this.navCtrl.push(CotproductosPage, {
+        cotizacion: this.cotizacion, cot_id: this.cotizacion.cot_id, descuento: this.cotizacion.descuento, callback: this.myCallbackFunction
       });
     }
     else {
-      this.pedidosService.SetPedido(this.pedido).subscribe(res => {
+      this.cotizacionsService.Setcotizacion(this.cotizacion).subscribe(res => {
         console.log("suscb", res);
-        this.pedido.ped_id = res.ped_id;
-        this.navCtrl.push(PedproductosPage, {
-          pedido: this.pedido, ped_id: this.pedido.ped_id, descuento: this.pedido.descuento, callback: this.myCallbackFunction
+        this.cotizacion.cot_id = res.cot_id;
+        this.navCtrl.push(CotproductosPage, {
+          cotizacion: this.cotizacion, cot_id: this.cotizacion.cot_id, descuento: this.cotizacion.descuento, callback: this.myCallbackFunction
         });
       }, err => console.log(err));
     }
@@ -497,20 +498,20 @@ export class PedidosPage {
   //borra item
   itemDeleted(item) {
 
-    let index = this.ped_dets.indexOf(item);
+    let index = this.cot_dets.indexOf(item);
 
     if (index > -1) {
 
 
       console.log("suscb", item);
-      this.pedidosService.DeletePedidodet(item.ped_det_id).subscribe(res => {
+      this.cotizacionsService.Deletecotizaciondet(item.cot_det_id).subscribe(res => {
         console.log("suscb res", res);
-        this.ped_dets.splice(index, 1);
+        this.cot_dets.splice(index, 1);
       }, err => console.log(err));
 
     }
-    //ped_dets
-    //this.pedidosService.
+    //cot_dets
+    //this.cotizacionsService.
 
   }
 
@@ -548,7 +549,7 @@ export class PedidosPage {
           role: 'destructive',
           icon: !this.platform.is('ios') ? 'send' : null,
           handler: () => {
-            this.sendpedido(this.pedido.ped_id);
+            this.sendcotizacion(this.cotizacion.cot_id);
             console.log('Enviar clicked');
           }
         },
@@ -556,7 +557,7 @@ export class PedidosPage {
           text: 'Imprimir',
           icon: !this.platform.is('ios') ? 'share' : null,
           handler: () => {
-            this.getpedpdf(this.pedido.ped_id);
+            this.getpedpdf(this.cotizacion.cot_id);
             console.log('Get Pdf clicked');
           }
         },
@@ -565,7 +566,7 @@ export class PedidosPage {
           role: 'cancel', // will always sort to be on the bottom
           icon: !this.platform.is('ios') ? 'refresh' : null,
           handler: () => {
-            this.fillpedido(this.pedido.ped_id);
+            this.fillcotizacion(this.cotizacion.cot_id);
             console.log('Cancel clicked');
           }
         }

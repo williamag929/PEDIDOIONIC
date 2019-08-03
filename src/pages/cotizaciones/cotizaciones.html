@@ -1,12 +1,12 @@
 <!--
-  Generated template for the PedidosPage page.
+  Generated template for the cotizacionsPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>Pedido</ion-title>
+    <ion-title>cotizacion</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="openMenu()">
         <ion-icon name="apps"></ion-icon>
@@ -25,21 +25,21 @@
     </ion-item>
     <ion-item>
       <ion-label fixed>Dirección</ion-label>
-      <ion-input type="text" name="direccionentr" [(ngModel)]="pedido.direccionentr"></ion-input>
+      <ion-input type="text" name="direccionentr" [(ngModel)]="cotizacion.direccionentr"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label fixed>Numero</ion-label>
-      <ion-input type="text" name="ped_numero" [readonly]=true [(ngModel)]="pedido.ped_numero"></ion-input>
+      <ion-input type="text" name="cot_numero" [readonly]=true [(ngModel)]="cotizacion.cot_numero"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label fixed>Fecha Entrega</ion-label>
-      <ion-datetime displayFormat="MMM DD YYYY" name="ped_fec_ent" [(ngModel)]="pedido.ped_fec_ent"></ion-datetime>
+      <ion-datetime displayFormat="MMM DD YYYY" name="cot_fec_ent" [(ngModel)]="cotizacion.cot_fec_ent"></ion-datetime>
     </ion-item>
 
 
     <ion-item *ngIf="verformapago">
       <ion-label>Forma Pago</ion-label>
-      <ion-select [(ngModel)]="pedido.formapago">>
+      <ion-select [(ngModel)]="cotizacion.formapago">>
         <ion-option value="Contado">Contado</ion-option>
         <ion-option value="Credito">Credito</ion-option>
       </ion-select>
@@ -52,12 +52,12 @@
 
     <ion-item *ngIf="!verformapago">
       <ion-label fixed>Descuento</ion-label>
-      <ion-input type="text" name="descuento" [(ngModel)]="pedido.descuento" [readonly]=true></ion-input>
+      <ion-input type="text" name="descuento" [(ngModel)]="cotizacion.descuento" [readonly]=true></ion-input>
     </ion-item>
 
-    <ion-item *ngIf="pedido.formapago == 'Contado'">
+    <ion-item *ngIf="cotizacion.formapago == 'Contado'">
       <ion-label>Descuento</ion-label>
-      <ion-select [(ngModel)]="pedido.descuento">
+      <ion-select [(ngModel)]="cotizacion.descuento">
         <ion-option value="0">0%</ion-option>
         <ion-option value="10">10%</ion-option>
         <ion-option value="12">12%</ion-option>
@@ -69,7 +69,7 @@
 
     <ion-item *ngIf="verplazo">
       <ion-label>Plazo</ion-label>
-      <ion-select [(ngModel)]="pedido.plazo">
+      <ion-select [(ngModel)]="cotizacion.plazo">
         <ion-option value="0">0</ion-option>
         <ion-option value="10">10</ion-option>
         <ion-option value="15">15</ion-option>
@@ -81,7 +81,7 @@
 
   </ion-list>
 
-  <ion-fab *ngIf="!pedido.ped_closed" bottom left slot="fixed">
+  <ion-fab bottom left slot="fixed">
     <button ion-fab primary (click)="productos($event)">
       <ion-icon name="cart"></ion-icon>
     </button>
@@ -89,9 +89,9 @@
 
 
   <ion-list>
-    <ion-item-sliding *ngFor="let item of ped_dets">
+    <ion-item-sliding *ngFor="let item of cot_dets">
       <ion-item>
-        <p text-wrap>
+        <p>
           {{item.codigo}} {{item.descripcion}}
         </p>
         <p>
@@ -100,7 +100,7 @@
         <ion-icon *ngIf="!item.valido" name="alert" item-end></ion-icon>
       </ion-item>
       <ion-item-options>
-        <button *ngIf="!pedido.ped_closed" ion-button color="danger" icon-start (click)="itemDeleted(item)">
+        <button *ngIf="!cotizacion.cot_closed" ion-button color="danger" icon-start (click)="itemDeleted(item)">
           <ion-icon name="text"></ion-icon>
           Borrar
         </button>
@@ -115,7 +115,7 @@
       </ion-col>
       <ion-col col-3 align-self-end>
         <span class="right">
-          {{pedido.ped_desc | number}}
+          {{cotizacion.cot_desc | number}}
         </span>
       </ion-col>
     </ion-row>
@@ -125,7 +125,7 @@
       </ion-col>
       <ion-col col-3 align-self-end>
         <span class="right">
-          {{pedido.ped_subtotal | number}}
+          {{cotizacion.cot_subtotal | number}}
         </span>
       </ion-col>
     </ion-row>
@@ -135,7 +135,7 @@
       </ion-col>
       <ion-col col-3 align-self-end>
         <span class="right">
-          {{pedido.ped_impuesto | number}}
+          {{cotizacion.cot_impuesto | number}}
         </span>
       </ion-col>
     </ion-row>
@@ -145,25 +145,25 @@
       </ion-col>
       <ion-col col-3 align-self-end>
         <span class="right">
-          {{pedido.ped_total | number}}
+          {{cotizacion.cot_total | number}}
         </span>
       </ion-col>
     </ion-row>
   </ion-grid>
   <ion-list>
-    <ion-item *ngIf="pedido.ped_closed">
+    <ion-item *ngIf="cotizacion.cot_closed">
       Cerrado
-      <ion-icon item-end *ngIf="pedido.ped_closed" name="checkmark"></ion-icon>
+      <ion-icon item-end *ngIf="cotizacion.cot_closed" name="checkmark"></ion-icon>
     </ion-item>
-    <ion-item *ngIf="pedido.ped_procesado">
+    <ion-item *ngIf="cotizacion.cot_procesado">
       Procesado
-      <ion-icon item-end *ngIf="pedido.ped_procesado" name="checkmark"></ion-icon>
+      <ion-icon item-end *ngIf="cotizacion.cot_procesado" name="checkmark"></ion-icon>
     </ion-item>
   </ion-list>
 
   <ion-item>
-    <ion-textarea placeholder="Observación" type="text" name="ped_note" autocomplete="on" autocorrect="on"
-      [(ngModel)]="pedido.ped_note"></ion-textarea>
+    <ion-textarea placeholder="Observación" type="text" name="cot_note" autocomplete="on" autocorrect="on"
+      [(ngModel)]="cotizacion.cot_note"></ion-textarea>
   </ion-item>
 
 

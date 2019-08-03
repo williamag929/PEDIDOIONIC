@@ -1,3 +1,5 @@
+import { CotizacionesPage } from './../cotizaciones/cotizaciones';
+import { ListacotizacionesPage } from './../listacotizaciones/listacotizaciones';
 import { ListasucesosPage } from './../listasucesos/listasucesos';
 import { SucesoPage } from './../suceso/suceso';
 import { ListapedidosPage } from './../listapedidos/listapedidos';
@@ -115,10 +117,46 @@ export class ClienteInfoPage {
 
   }
 
+  cotizacion(event) {
+    //this.navCtrl.setRoot(PedidosPage);
+
+    //mostrar menu por tipo documento
+    this.clienteService.GetDocumentos('CT').subscribe(
+      data => {
+        this.documentos = data;
+
+        //console.log(data);
+        //console.log(data[0].tipo)
+        if (data.length > 1) {
+          this.openMenu();
+        }
+        else {
+          //crear pedido
+          this.navCtrl.push(CotizacionesPage, {
+            item: this.cliente, cot_id: 0, cot_tipo: "COT"
+          });
+        }
+      },
+      err => {
+        console.log(err);
+      });
+
+
+
+  }
+
+
   //lista de pedidos
   pedidos(event) {
     //this.navCtrl.setRoot(PedidosPage);
     this.navCtrl.push(ListapedidosPage, {
+      cli_id: this.cliente.cli_id
+    });
+  }
+
+  cotizaciones(event) {
+    //this.navCtrl.setRoot(PedidosPage);
+    this.navCtrl.push(ListacotizacionesPage, {
       cli_id: this.cliente.cli_id
     });
   }

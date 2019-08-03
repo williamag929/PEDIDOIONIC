@@ -25,6 +25,8 @@ export class ProductosModalPage {
 
   descuento: number = 0.0;
 
+  searchfav : any;
+
   pedido: {
     ped_id: number,
     ped_numero: number,

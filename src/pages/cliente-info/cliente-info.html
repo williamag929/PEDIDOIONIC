@@ -39,7 +39,7 @@
 
     <ion-item>
       <ion-label fixed>Telefono 2</ion-label>
-      <ion-input type="text" name="cli_phone2" [(ngModel)]="cliente.phone2"></ion-input>
+      <ion-input type="text" name="cli_phone2" [(ngModel)]="cliente.cli_phone2"></ion-input>
     </ion-item>
 
 
@@ -52,6 +52,13 @@
       </button>
       <h2>Pedido</h2>
       <ion-badge item-end (click)="pedidos($event)"> {{cliente.pedidos}}</ion-badge>
+    </ion-item>
+    <ion-item>
+      <button ion-button item-start clear small (click)="cotizacion($event)">
+        <ion-icon name="add"></ion-icon>
+      </button>
+      <h2>Cotizacion</h2>
+      <ion-badge item-end (click)="cotizaciones($event)"> 0</ion-badge>
     </ion-item>
     <ion-item>
       <button ion-button item-start clear small  (click)="cartera($event)">

@@ -1,3 +1,6 @@
+import { CotproductosPage } from './../pages/cotproductos/cotproductos';
+import { CotizacionesPage } from './../pages/cotizaciones/cotizaciones';
+import { ListacotizacionesPage } from './../pages/listacotizaciones/listacotizaciones';
 import { ListasucesosPage } from './../pages/listasucesos/listasucesos';
 import { SucesoServiceProvider } from './../providers/suceso-service/suceso-service';
 import { SucesoPage } from './../pages/suceso/suceso';
@@ -45,6 +48,8 @@ import { Toast } from '@ionic-native/toast';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { DocumentViewer } from '@ionic-native/document-viewer';
+import { CotizacionServiceProvider } from '../providers/cotizacion-service/cotizacion-service';
+import { CotdetModalPage } from '../pages/cotdet-modal/cotdet-modal';
 
 
 
@@ -61,6 +66,10 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     PedidosPage,
     PedproductosPage,
     PeddetModalPage,
+    ListacotizacionesPage,
+    CotizacionesPage,
+    CotproductosPage,
+    CotdetModalPage,
     ListacarteraPage,
     MapaPage,
     SearchfilterPipe,
@@ -78,12 +87,16 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     IonicPageModule.forChild(ListacarteraPage),   
     IonicPageModule.forChild(ListacarteraPage), 
     IonicPageModule.forChild(ListapedidosPage),
+    IonicPageModule.forChild(ListacotizacionesPage),
     IonicPageModule.forChild(ListasucesosPage),
     IonicPageModule.forChild(PeddetModalPage),
+    IonicPageModule.forChild(CotdetModalPage),
     IonicPageModule.forChild(MapaPage),
     IonicPageModule.forChild(PedidosPage),
+    IonicPageModule.forChild(CotizacionesPage),
     IonicPageModule.forChild(PedproductosPage),
     IonicPageModule.forChild(SucesoPage),
+
     //AgmCoreModule.forRoot({apiKey:'AIzaSyA_ilIcEf7N06opMqZInZN10rfP3zz5QTs'})
   ],
   bootstrap: [IonicApp],
@@ -95,9 +108,13 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     ClientesPage,
     ClienteInfoPage,
     ListapedidosPage,
+    ListapedidosPage,    
     PedidosPage,
+    CotizacionesPage,
     PedproductosPage,
+    CotproductosPage,
     PeddetModalPage,
+    CotdetModalPage,
     ListacarteraPage,
     MapaPage,
     SucesoPage,
@@ -110,6 +127,7 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     ClienteServiceProvider,
     ProductoServiceProvider,
     PedidoServiceProvider,
+    CotizacionServiceProvider,    
     AuthService,
     VendedorServiceProvider,
     CarteraServiceProvider,
@@ -121,7 +139,8 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     Toast,
     File,
     DocumentViewer,
-    FileTransfer    
+    FileTransfer,
+    CotizacionServiceProvider    
   ]
 })
 export class AppModule { }
