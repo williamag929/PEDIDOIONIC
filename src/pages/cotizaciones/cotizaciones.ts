@@ -10,6 +10,7 @@ import { AlertController } from 'ionic-angular';
 import { ProductoServiceProvider } from '../../providers/producto-service/producto-service';
 import { CotizacionServiceProvider } from '../../providers/cotizacion-service/cotizacion-service';
 import { CotproductosPage } from '../cotproductos/cotproductos';
+import { CotizacionpreviewPage } from '../cotizacionpreview/cotizacionpreview';
 
 
 //import { ModalController } from 'ionic-angular';
@@ -543,7 +544,10 @@ export class CotizacionesPage {
           text: 'Imprimir',
           icon: !this.platform.is('ios') ? 'share' : null,
           handler: () => {
-            this.getpedpdf(this.cotizacion.cot_id);
+            //this.getpedpdf(this.cotizacion.cot_id);
+            this.navCtrl.push(CotizacionpreviewPage, {
+              cotizacion: this.cotizacion, callback: this.myCallbackFunction
+            });            
             console.log('Get Pdf clicked');
           }
         },

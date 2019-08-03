@@ -10,6 +10,7 @@ import { AlertController } from 'ionic-angular';
 import { ProductoServiceProvider } from '../../providers/producto-service/producto-service';
 import { PedproductosPage } from '../../pages/pedproductos/pedproductos';
 import { PedidoServiceProvider } from '../../providers/pedido-service/pedido-service';
+import { PedidopreviewPage } from '../pedidopreview/pedidopreview';
 
 
 
@@ -515,7 +516,9 @@ export class PedidosPage {
           text: 'Imprimir',
           icon: !this.platform.is('ios') ? 'share' : null,
           handler: () => {
-            
+            this.navCtrl.push(PedidopreviewPage, {
+              pedido: this.pedido, callback: this.myCallbackFunction
+            });
             console.log('Get Pdf clicked');
           }
         },

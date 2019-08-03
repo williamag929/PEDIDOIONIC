@@ -1,0 +1,93 @@
+<!--
+  Generated template for the PeddetModalPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+      <ion-title>Cotizacion</ion-title>
+      <ion-buttons end>
+        <button ion-button (click)="print('printable')">
+          <ion-icon name="print"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  
+  
+  
+  <ion-content padding>
+    <ion-list id="printable">
+  
+          <ion-item>EMPRESA DEMO</ion-item>
+          <ion-item>NIT</ion-item>
+          <ion-item>DIRECCION-TELEFONO</ion-item>
+        <ion-item>
+          
+          <p>Cliente: {{cliente.cli_nombre}}</p>
+          <p>Direccion: {{cliente.cli_direccion}}</p>
+          <p>Pedido Numero:{{cotizacion.cot_numero}}</p>
+          <p>Fecha: {{cotizacion.cot_fecha | date }}</p>
+          <p>Forma Pago: {{cotizacion.formapago}} Plazo: {{cotizacion.plazo}}</p>
+        
+        </ion-item>
+        <ion-item *ngFor="let item of cot_dets">
+          <p text-wrap>
+            {{item.codigo}} {{item.descripcion}}
+          </p>
+          <p>
+            Precio: {{item.precio | number}} | Cant: {{item.cant}} | Total Item: {{item.subtotal | number}}
+          </p>
+        </ion-item>
+        <ion-item>
+            <ion-grid>
+                <ion-row>
+                  <ion-col col-3 justify-content-start>
+                    Descuento
+                  </ion-col>
+                  <ion-col col-3 align-self-end>
+                    <span class="right">
+                      {{cotizacion.cot_desc | number}}
+                    </span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col col-3 justify-content-start>
+                    Subtotal
+                  </ion-col>
+                  <ion-col col-3 align-self-end>
+                    <span class="right">
+                      {{cotizacion.cot_subtotal | number}}
+                    </span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col col-3 justify-content-start>
+                    Impuesto
+                  </ion-col>
+                  <ion-col col-3 align-self-end>
+                    <span class="right">
+                      {{cotizacion.cot_impuesto | number}}
+                    </span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col col-3 justify-content-start>
+                    Total
+                  </ion-col>
+                  <ion-col col-3 align-self-end>
+                    <span class="right">
+                      {{cotizacion.cot_total | number}}
+                    </span>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+  
+  
+        </ion-item>
+        <ion-item></ion-item>
+  
+    </ion-list>
+  </ion-content>
+  

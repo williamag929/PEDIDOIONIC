@@ -23,6 +23,7 @@ import { PeddetModalPage } from '../pages/peddet-modal/peddet-modal';
 import { ListacarteraPage } from '../pages/listacartera/listacartera';
 import { MapaPage } from '../pages/mapa/mapa';
 
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ClienteServiceProvider } from '../providers/cliente-service/cliente-service';
@@ -48,6 +49,9 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 import { DocumentViewer } from '@ionic-native/document-viewer';
 import { CotizacionServiceProvider } from '../providers/cotizacion-service/cotizacion-service';
 import { CotdetModalPage } from '../pages/cotdet-modal/cotdet-modal';
+import { PrintProvider } from '../providers/print-service/print-service';
+import { PedidopreviewPage } from '../pages/pedidopreview/pedidopreview';
+import { CotizacionpreviewPage } from '../pages/cotizacionpreview/cotizacionpreview';
 
 
 
@@ -72,8 +76,9 @@ import { CotdetModalPage } from '../pages/cotdet-modal/cotdet-modal';
     MapaPage,
     SearchfilterPipe,
     SucesoPage,
-    ListasucesosPage
-
+    ListasucesosPage,
+    PedidopreviewPage,
+    CotizacionpreviewPage
   ],
   imports: [
     BrowserModule,
@@ -94,6 +99,8 @@ import { CotdetModalPage } from '../pages/cotdet-modal/cotdet-modal';
     IonicPageModule.forChild(CotizacionesPage),
     IonicPageModule.forChild(PedproductosPage),
     IonicPageModule.forChild(SucesoPage),
+    IonicPageModule.forChild(PedidopreviewPage),
+    IonicPageModule.forChild(CotizacionpreviewPage),
 
     //AgmCoreModule.forRoot({apiKey:'AIzaSyA_ilIcEf7N06opMqZInZN10rfP3zz5QTs'})
   ],
@@ -131,14 +138,13 @@ import { CotdetModalPage } from '../pages/cotdet-modal/cotdet-modal';
     CarteraServiceProvider,
     LocationServiceProvider,
     SucesoServiceProvider,
-    //NativeGeocoder,
     Geolocation,
     GoogleMaps, Geocoder,
     Toast,
     File,
     DocumentViewer,
     FileTransfer,
-    CotizacionServiceProvider    
+    PrintProvider    
   ]
 })
 export class AppModule { }
