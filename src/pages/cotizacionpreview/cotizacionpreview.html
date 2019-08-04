@@ -27,9 +27,8 @@
     <ion-item>
       <p>Cliente: {{cliente.cli_nombre}}</p>
       <p>Direccion: {{cliente.cli_direccion}}</p>
-      <p>Pedido Numero:{{cotizacion.cot_numero}}</p>
+      <p>Cotizacion Numero:{{cotizacion.cot_numero}}</p>
       <p>Fecha: {{cotizacion.cot_fecha | date }}</p>
-      <p>Forma Pago: {{cotizacion.formapago}} Plazo: {{cotizacion.plazo}}</p>
     </ion-item>
     <ion-item *ngFor="let item of cot_dets">
       <p text-wrap>
