@@ -500,7 +500,7 @@ export class PedidosPage {
   //menu emergente
   openMenu() {
     let actionSheet = this.actionsheetCtrl.create({
-      title: 'Albums',
+      title: 'Opciones',
       cssClass: 'action-sheets-basic-page',
       buttons: [
         {
@@ -514,7 +514,7 @@ export class PedidosPage {
         },
         {
           text: 'Imprimir',
-          icon: !this.platform.is('ios') ? 'share' : null,
+          icon: 'print',
           handler: () => {
             this.navCtrl.push(PedidopreviewPage, {
               pedido: this.pedido, callback: this.myCallbackFunction

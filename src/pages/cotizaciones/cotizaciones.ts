@@ -528,7 +528,7 @@ export class CotizacionesPage {
   //menu emergente
   openMenu() {
     let actionSheet = this.actionsheetCtrl.create({
-      title: 'Albums',
+      title: 'Opciones',
       cssClass: 'action-sheets-basic-page',
       buttons: [
         {
@@ -542,7 +542,7 @@ export class CotizacionesPage {
         },
         {
           text: 'Imprimir',
-          icon: !this.platform.is('ios') ? 'share' : null,
+          icon: 'print',
           handler: () => {
             //this.getpedpdf(this.cotizacion.cot_id);
             this.navCtrl.push(CotizacionpreviewPage, {
