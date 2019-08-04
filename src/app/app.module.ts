@@ -52,6 +52,7 @@ import { CotdetModalPage } from '../pages/cotdet-modal/cotdet-modal';
 import { PrintProvider } from '../providers/print-service/print-service';
 import { PedidopreviewPage } from '../pages/pedidopreview/pedidopreview';
 import { CotizacionpreviewPage } from '../pages/cotizacionpreview/cotizacionpreview';
+import { ConfigServiceProvider } from '../providers/config-service/config-service';
 
 
 
@@ -144,7 +145,8 @@ import { CotizacionpreviewPage } from '../pages/cotizacionpreview/cotizacionprev
     File,
     DocumentViewer,
     FileTransfer,
-    PrintProvider    
+    PrintProvider,
+    ConfigServiceProvider    
   ]
 })
 export class AppModule { }

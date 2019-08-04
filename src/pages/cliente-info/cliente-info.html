@@ -58,7 +58,7 @@
         <ion-icon name="add"></ion-icon>
       </button>
       <h2>Cotizacion</h2>
-      <ion-badge item-end (click)="cotizaciones($event)"> 0</ion-badge>
+      <ion-badge item-end (click)="cotizaciones($event)"> {{cliente.cotizaciones}}</ion-badge>
     </ion-item>
     <ion-item>
       <button ion-button item-start clear small  (click)="cartera($event)">

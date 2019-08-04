@@ -1,3 +1,4 @@
+import { ConfigServiceProvider } from './../../providers/config-service/config-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { PedidoServiceProvider } from '../../providers/pedido-service/pedido-service';
@@ -76,6 +77,15 @@ export class PedidopreviewPage {
       direccionentr: ''
     };
 
+    config:
+    {smtp:string,nit:string,empresa:string,direccion:string,telefono:string,telefono2:string,
+      texto1:string,texto2:string,texto3:string,usuario:string,password:string,
+      port:number,subject:string,body:string}=
+      {smtp:"smtp.gmail.com",nit:"9999",empresa:"DEMO",direccion:"DIR",telefono:"TEL",
+      telefono2:"TEL2",texto1:"18.221.179.176:3128",texto2:"NA",texto3:"NA",
+      usuario:"williamag929@gmail.com",password:"wiagho1982",port:587,subject:"Pedido de venta",
+      body:"Adjunto a este correo, el pedido de venta numero"}    
+
   ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }
     = { ped_det_id: 0, ped_id: 0, pro_id: '', pro_nom: '', cant: 0, precio: 0, porc_desc: 0, val_desc: 0, porc_imp: 0, val_imp: 0, subtotal: 0 };
 
@@ -95,7 +105,8 @@ export class PedidopreviewPage {
     private vendedorService: VendedorServiceProvider,
     private pedidosService: PedidoServiceProvider,
     private clienteService: ClienteServiceProvider,
-    private printService: PrintProvider) {
+    private printService: PrintProvider,
+    private configService: ConfigServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -110,6 +121,17 @@ export class PedidopreviewPage {
 
     this.callback = this.navParams.get("callback");
 
+
+
+    this.configService.GetConfig().subscribe(
+      data => {
+
+        console.log('config', data);
+
+        this.config = data;
+
+      }
+    )    
 
     //retirar usado solo para permisos
 

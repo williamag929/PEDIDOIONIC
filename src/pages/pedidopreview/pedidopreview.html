@@ -19,74 +19,75 @@
 
 <ion-content padding>
   <ion-list id="printable">
+    <ion-item>
+      <p>{{config.empresa}}</p>
+      <p>{{config.nit}}</p>
+      <p>Dir. {{config.direccion}}-Tel{{config.telefono}}</p>
+    </ion-item>
+    <ion-item>
 
-        <ion-item>EMPRESA DEMO</ion-item>
-        <ion-item>NIT</ion-item>
-        <ion-item>DIRECCION-TELEFONO</ion-item>
-      <ion-item>
-        
-        <p>Cliente: {{cliente.cli_nombre}}</p>
-        <p>Direccion: {{cliente.cli_direccion}}</p>
-        <p>Pedido Numero:{{pedido.ped_numero}}</p>
-        <p>Fecha: {{pedido.ped_fecha | date }}</p>
-        <p>Forma Pago: {{pedido.formapago}} Plazo: {{pedido.plazo}}</p>
-      
-      </ion-item>
-      <ion-item *ngFor="let item of ped_dets"> 
-        <p text-wrap>
-          {{item.codigo}} {{item.descripcion}}
-        </p>
-        <p>
-          Precio: {{item.precio | number}} | Cant: {{item.cant}} | Total Item: {{item.subtotal | number}}
-        </p>
-      </ion-item>
-      <ion-item>
-          <ion-grid>
-              <ion-row>
-                <ion-col col-3 justify-content-start>
-                  Descuento
-                </ion-col>
-                <ion-col col-3 align-self-end>
-                  <span class="right">
-                    {{pedido.ped_desc | number}}
-                  </span>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col col-3 justify-content-start>
-                  Subtotal
-                </ion-col>
-                <ion-col col-3 align-self-end>
-                  <span class="right">
-                    {{pedido.ped_subtotal | number}}
-                  </span>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col col-3 justify-content-start>
-                  Impuesto
-                </ion-col>
-                <ion-col col-3 align-self-end>
-                  <span class="right">
-                    {{pedido.ped_impuesto | number}}
-                  </span>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col col-3 justify-content-start>
-                  Total
-                </ion-col>
-                <ion-col col-3 align-self-end>
-                  <span class="right">
-                    {{pedido.ped_total | number}}
-                  </span>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
+      <p>Cliente: {{cliente.cli_nombre}}</p>
+      <p>Direccion: {{cliente.cli_direccion}}</p>
+      <p>Pedido Numero:{{pedido.ped_numero}}</p>
+      <p>Fecha: {{pedido.ped_fecha | date }}</p>
+      <p>Forma Pago: {{pedido.formapago}} Plazo: {{pedido.plazo}}</p>
+
+    </ion-item>
+    <ion-item *ngFor="let item of ped_dets">
+      <p text-wrap>
+        {{item.codigo}} {{item.descripcion}}
+      </p>
+      <p>
+        Precio: {{item.precio | number}} | Cant: {{item.cant}} | Total Item: {{item.subtotal | number}}
+      </p>
+    </ion-item>
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-3 justify-content-start>
+            Descuento
+          </ion-col>
+          <ion-col col-3 align-self-end>
+            <span class="right">
+              {{pedido.ped_desc | number}}
+            </span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-3 justify-content-start>
+            Subtotal
+          </ion-col>
+          <ion-col col-3 align-self-end>
+            <span class="right">
+              {{pedido.ped_subtotal | number}}
+            </span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-3 justify-content-start>
+            Impuesto
+          </ion-col>
+          <ion-col col-3 align-self-end>
+            <span class="right">
+              {{pedido.ped_impuesto | number}}
+            </span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-3 justify-content-start>
+            Total
+          </ion-col>
+          <ion-col col-3 align-self-end>
+            <span class="right">
+              {{pedido.ped_total | number}}
+            </span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
 
-      </ion-item>
-      <ion-item></ion-item>
+    </ion-item>
+    <ion-item></ion-item>
 
   </ion-list>
 </ion-content>
