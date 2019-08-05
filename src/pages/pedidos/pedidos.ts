@@ -251,8 +251,10 @@ export class PedidosPage {
 
 
       this.pedido.vend_id = parseInt(vend_id);
+      
 
-      this.pedido.descuento = this.cliente.descuento;
+      if (this.pedido.descuento == 0)
+        this.pedido.descuento = this.cliente.descuento;
 
 
 
@@ -385,7 +387,9 @@ export class PedidosPage {
         this.cliente = data;
         console.log('cliente', data);
         this.listaprecio = data.lista_id;
-        this.pedido.descuento = this.cliente.descuento;
+
+        if (this.pedido.descuento == 0)
+          this.pedido.descuento = this.cliente.descuento;
 
       },
       err => {
