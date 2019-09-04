@@ -66,7 +66,7 @@ export class PedidoServiceProvider {
     //this.headers.append('Content-Type', 'application/json');
 
 
-    var url = this.baseApiUrl +'pedidoPdf/'+ + encodeURI(ped_id);
+    var url = this.baseApiUrl +'pedidoPdf/'+  encodeURI(ped_id);
     var response = this.http.get(url).map(res => res.json());
     return response;
  

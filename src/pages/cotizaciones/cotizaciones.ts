@@ -532,7 +532,7 @@ export class CotizacionesPage {
       cssClass: 'action-sheets-basic-page',
       buttons: [
         {
-          text: 'Enviar',
+          text: 'Procesar a Pedido',
           role: 'destructive',
           icon: !this.platform.is('ios') ? 'send' : null,
           handler: () => {
@@ -552,7 +552,7 @@ export class CotizacionesPage {
           }
         },
         {
-          text: 'Refrescar',
+          text: 'Actualizar',
           role: 'cancel', // will always sort to be on the bottom
           icon: !this.platform.is('ios') ? 'refresh' : null,
           handler: () => {

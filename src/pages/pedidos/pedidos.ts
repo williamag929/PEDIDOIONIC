@@ -312,7 +312,7 @@ export class PedidosPage {
   }
 
   //envia pedido marca como cerrado
-  sendpedido(ped_id) {
+  sendpedido() {
     //leer encabezado
     //validar primero el pedido y es valido
     var invalidos = this.ped_dets.filter(c => c.valido == false).length;
@@ -508,11 +508,11 @@ export class PedidosPage {
       cssClass: 'action-sheets-basic-page',
       buttons: [
         {
-          text: 'Enviar',
+          text: 'Procesar Pedido',
           role: 'destructive',
           icon: !this.platform.is('ios') ? 'send' : null,
           handler: () => {
-            this.sendpedido(this.pedido.ped_id);
+            this.sendpedido();
             console.log('Enviar clicked');
           }
         },
@@ -527,7 +527,7 @@ export class PedidosPage {
           }
         },
         {
-          text: 'Refrescar',
+          text: 'Actualizar',
           role: 'cancel', // will always sort to be on the bottom
           icon: !this.platform.is('ios') ? 'refresh' : null,
           handler: () => {

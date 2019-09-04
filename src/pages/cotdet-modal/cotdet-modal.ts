@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {  NavParams } from 'ionic-angular';
+import { NavParams } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 import { CotizacionServiceProvider } from '../../providers/cotizacion-service/cotizacion-service';
 import { ProductoServiceProvider } from '../../providers/producto-service/producto-service';
@@ -69,7 +69,7 @@ export class CotdetModalPage {
     ordenado: number,
     existencia: number
   } = {
-    pro_id: '',
+      pro_id: '',
       pro_nom: '',
       pro_und: '',
       precio: 0,
@@ -165,30 +165,24 @@ export class CotdetModalPage {
     this.cot_det.subtotal = (this.cot_det.cant * this.cot_det.precio) + this.cot_det.val_imp;
 
     //validar existencia
-    if (this.cot_det.cant > this.producto.existencia && this.validaexistencia) //&& this.verexistencia
-    {
-      this.mensaje = "Producto supera el disponible";
-      this.valido = false
+
+    this.valido = true;
+    //guardar informa
+
+
+
+    if (this.cot_det.cant > 0) {
+      this.cotizacionsService.Setcotizaciondet(this.cot_det).subscribe(res => {
+        this.cot_det.cot_det_id = res.cot_det_id;
+        this.viewCtrl.dismiss(this.cot_det);
+
+      }, err => console.log(err));
     }
     else {
 
-      this.valido = true;
-      //guardar informa
-
-
-      
-      if (this.cot_det.cant > 0) {
-        this.cotizacionsService.Setcotizaciondet(this.cot_det).subscribe(res => {
-          this.cot_det.cot_det_id = res.cot_det_id;
-          this.viewCtrl.dismiss(this.cot_det);
-
-        }, err => console.log(err));
-      }
-      else {
-
-        this.viewCtrl.dismiss(this.cot_det);
-      }
+      this.viewCtrl.dismiss(this.cot_det);
     }
+
     //console.log("resp", this.cotizacionsService.Setcotizaciondet(this.cot_det));
 
 
@@ -198,15 +192,9 @@ export class CotdetModalPage {
 
     console.log("Existencia", this.producto.existencia)
 
-    if (cantidad > this.producto.existencia && this.validaexistencia) //&& this.verexistencia
-    {
-      this.mensaje = "Producto supera el disponible";
-      this.valido = false
-    }
-    else {
-      this.mensaje = "";
-      this.valido = true;
-    }
+    this.mensaje = "";
+    this.valido = true;
+
 
     if (cantidad >= this.producto.cantprom && this.producto.cantprom > 0) {
       this.mensaje = "Producto aplica descuento " + this.producto.porc_descprom.toString();
