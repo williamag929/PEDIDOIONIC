@@ -210,8 +210,8 @@ export class CotizacionesPage {
         localStorage.setItem('validaexistencia', data.validaexistencia);
 
 
-        if (data.validaexistencia)
-          this.validaexistencia = true;
+        //if (data.validaexistencia)
+        //  this.validaexistencia = true;
 
         if (data.verformapago)
           this.verformapago = true;
@@ -313,12 +313,7 @@ export class CotizacionesPage {
   sendcotizacion(cot_id) {
     //leer encabezado
     //validar primero el cotizacion y es valido
-    var invalidos = this.cot_dets.filter(c => c.valido == false).length;
-    //console.log("invalidos", invalidos);
-    if (invalidos > 0) {
-      this.showAlert('Alerta!', 'Verificar productos agotados')
-    }
-    else {
+
       this.cotizacionsService.Sendcotizacion(this.cotizacion).subscribe(
         data => {
           this.cotizacion = data;
@@ -335,7 +330,7 @@ export class CotizacionesPage {
         },
         () => console.log('Proceso Completo')
       );
-    }
+
 
 
   }
