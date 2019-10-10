@@ -44,6 +44,8 @@ export class ClienteInfoPage {
     pedidos: number,
     visitas: number,
     cartera: number,
+    lista_id: string,
+    cli_email : string,
     cotizaciones: number
   } = {
       cli_id: 0,
@@ -62,6 +64,8 @@ export class ClienteInfoPage {
       pedidos: 0,
       visitas: 0,
       cartera: 0,
+      lista_id: '',
+      cli_email: '',
       cotizaciones: 0
     };
   selectedItem: any;

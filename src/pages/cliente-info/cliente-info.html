@@ -21,6 +21,10 @@
       <ion-label fixed>Cliente</ion-label>
       <ion-input type="text" name="cli_nombre" [(ngModel)]="cliente.cli_nombre"></ion-input>
     </ion-item>
+    <ion-item>
+      <ion-label fixed>Sucursal</ion-label>
+      <ion-input type="text" name="cli_suc" [(ngModel)]="cliente.cli_suc"></ion-input>
+    </ion-item>
 
     <ion-item>
       <ion-label fixed>Direccion</ion-label>
@@ -42,7 +46,15 @@
       <ion-input type="text" name="cli_phone2" [(ngModel)]="cliente.cli_phone2"></ion-input>
     </ion-item>
 
+    <ion-item>
+      <ion-label fixed>Lista Precio</ion-label>
+      <ion-input type="text" name="lista_id" [(ngModel)]="cliente.lista_id"></ion-input>
+    </ion-item>
 
+    <ion-item>
+      <ion-label fixed>Correo</ion-label>
+      <ion-input type="text" name="cli_email" [(ngModel)]="cliente.cli_email"></ion-input>
+    </ion-item>
   </ion-list>
 
   <ion-list>
