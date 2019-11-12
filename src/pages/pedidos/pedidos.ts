@@ -89,10 +89,13 @@ export class PedidosPage {
       direccionentr: ''
     };
 
-  ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number }
-    = { ped_det_id: 0, ped_id: 0, pro_id: '', pro_nom: '', cant: 0, precio: 0, porc_desc: 0, val_desc: 0, porc_imp: 0, val_imp: 0, subtotal: 0 };
+  ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, 
+    val_desc: number, porc_imp: number, val_imp: number, subtotal: number, pesotot : number }
+    = { ped_det_id: 0, ped_id: 0, pro_id: '', pro_nom: '', cant: 0, precio: 0, porc_desc: 0,
+     val_desc: 0, porc_imp: 0, val_imp: 0, subtotal: 0, pesotot : 0 };
 
-  ped_dets: Array<{ ped_det_id: number, ped_id: number, codigo: string, descripcion: string, cant: number, precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number, valido: boolean }>;
+  ped_dets: Array<{ ped_det_id: number, ped_id: number, codigo: string, descripcion: string, cant: number,
+     precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number, valido: boolean }>;
 
   //ped_dets: Array<{ ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, subtotal: number }>;
 
