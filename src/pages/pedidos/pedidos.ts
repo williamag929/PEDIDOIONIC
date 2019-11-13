@@ -66,7 +66,8 @@ export class PedidosPage {
     descuento: number,
     formapago: string,
     plazo: number,
-    direccionentr: string
+    direccionentr: string,
+    peso : number
   } = {
       ped_id: 0,
       ped_numero: 0,
@@ -86,7 +87,8 @@ export class PedidosPage {
       descuento: 0,
       formapago: '',
       plazo: 0,
-      direccionentr: ''
+      direccionentr: '',
+      peso:0
     };
 
   ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, 

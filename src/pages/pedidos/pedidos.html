@@ -150,6 +150,18 @@
         </span>
       </ion-col>
     </ion-row>
+    <ion-row>
+      <ion-col col-3 justify-content-start>
+        Peso Total
+      </ion-col>
+      <ion-col col-3 align-self-end>
+        <span class="right">
+          {{pedido.peso}}
+        </span>
+      </ion-col>
+    </ion-row>
+
+    
   </ion-grid>
   <ion-list>
     <ion-item *ngIf="pedido.ped_closed">
