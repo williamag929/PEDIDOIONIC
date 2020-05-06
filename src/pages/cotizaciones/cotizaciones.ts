@@ -431,7 +431,7 @@ export class CotizacionesPage {
 
   //carrito para adicionar productos
   //push a pagina PedproductosPage
-  productos(event) {
+  getproductos(event) {
     //guarda cotizacion
     //si ya existe modifica
     if (this.cotizacion.cot_id > 0) {

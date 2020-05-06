@@ -15,47 +15,58 @@
 
 <ion-content padding>
 
-  <ion-list>
 
-    <ion-item>
-      <ion-label fixed>Cliente</ion-label>
-      <ion-input type="text" name="cli_nombre" [(ngModel)]="cliente.cli_nombre"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label fixed>Sucursal</ion-label>
-      <ion-input type="text" name="cli_suc" [(ngModel)]="cliente.cli_suc"></ion-input>
-    </ion-item>
 
-    <ion-item>
-      <ion-label fixed>Direccion</ion-label>
-      <ion-input type="text" name="cli_direccion" [(ngModel)]="cliente.cli_direccion"></ion-input>
-    </ion-item>
+  <ion-content padding>
+    <ion-card>
+    <ion-list>
+  
+      <ion-item>
+        <h3>{{cliente.cli_nombre}}</h3>
+      </ion-item>
+  
+      <p>
+        <ion-chip color="primary" (click)="pedido($event)">
+          <ion-icon name="cart"></ion-icon>
+          <ion-label>Pedido</ion-label>
+        </ion-chip>
+        <ion-chip color="primary" (click)="cotizacion($event)">
+          <ion-icon name="briefcase"></ion-icon>
+          <ion-label>Cotizacion</ion-label>
+        </ion-chip>
+        <ion-chip color="primary"  (click)="suceso($event)">
+          <ion-icon name="calendar"></ion-icon>
+          <ion-label>Actividad</ion-label>
+        </ion-chip>
+      </p>
+  
+      <ion-item  lines="none">
+        <ion-label position="stacked">Direccion</ion-label>
+        <p>{{cliente.cli_direccion}}</p>
+        <p>{{cliente.cli_ciudad}}</p>
+      </ion-item>
+  
+      <ion-item  lines="none">
+        <ion-label position="stacked">Telefono</ion-label>
+        <ion-input placeholder="Telefono" type="number" name="cli_phone1" [(ngModel)]="cliente.cli_phone1"></ion-input>
+        <ion-input placeholder="Celular" type="number" name="cli_phone2" [(ngModel)]="cliente.cli_phone2"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label fixed>Ciudad</ion-label>
-      <ion-input type="text" name="cli_ciudad" [(ngModel)]="cliente.cli_ciudad"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Lista Precio</ion-label>
+        <ion-input type="text" name="lista_id" [(ngModel)]="cliente.lista_id"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="stacked">Correo</ion-label>
+        <ion-input type="text" name="cli_email" [(ngModel)]="cliente.cli_email"></ion-input>
+      </ion-item>
+  
+  
+    </ion-list>
+  
+  </ion-card>
 
-    <ion-item>
-      <ion-label fixed>Telefono 1</ion-label>
-      <ion-input type="text" name="cli_phone1" [(ngModel)]="cliente.cli_phone1"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label fixed>Telefono 2</ion-label>
-      <ion-input type="text" name="cli_phone2" [(ngModel)]="cliente.cli_phone2"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label fixed>Lista Precio</ion-label>
-      <ion-input type="text" name="lista_id" [(ngModel)]="cliente.lista_id"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label fixed>Correo</ion-label>
-      <ion-input type="text" name="cli_email" [(ngModel)]="cliente.cli_email"></ion-input>
-    </ion-item>
-  </ion-list>
 
   <ion-list>
     <ion-item>
