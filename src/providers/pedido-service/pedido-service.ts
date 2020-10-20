@@ -42,6 +42,13 @@ export class PedidoServiceProvider {
     return response;
   }
 
+  GetMediopago()
+  {
+    var url = this.baseApiUrl + 'Mediopago/';
+    var response = this.http.get(url).map(res => res.json());
+    return response;    
+  }
+
 
   SendPedido(object) {
 

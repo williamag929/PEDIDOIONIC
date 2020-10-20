@@ -47,6 +47,8 @@ export class PedidosPage {
 
   cli_nombre: string;
 
+  mediospago: any;
+
   pedido: {
     ped_id: number,
     ped_numero: number,
@@ -97,7 +99,7 @@ export class PedidosPage {
      val_desc: 0, porc_imp: 0, val_imp: 0, subtotal: 0, pesotot : 0 };
 
   ped_dets: Array<{ ped_det_id: number, ped_id: number, codigo: string, descripcion: string, cant: number,
-     precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number, valido: boolean }>;
+     precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number, valido: boolean, pesotot: number }>;
 
   //ped_dets: Array<{ ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, subtotal: number }>;
 
@@ -402,6 +404,23 @@ export class PedidosPage {
       },
       () => console.log('Proceso Completo')
     );
+  }
+
+  fillmediopago(){
+    this.pedidosService.GetMediopago().subscribe(
+      data => {
+        this.mediospago = data;
+        console.log('MedioPago', data);
+
+        
+       
+      },
+      err => {
+        console.log(err);
+      },
+      () => console.log('Proceso Completo')
+    );
+
   }
 
 
