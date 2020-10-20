@@ -59,12 +59,12 @@
       <ion-label>Descuento</ion-label>
       <ion-select [(ngModel)]="pedido.descuento">
         <ion-option value="0">0%</ion-option>
-        <ion-option value="5">5%</ion-option>        
+        <ion-option value="5">5%</ion-option>
         <ion-option value="10">10%</ion-option>
         <ion-option value="12">12%</ion-option>
         <ion-option value="14">14%</ion-option>
         <ion-option value="15">15%</ion-option>
-        <ion-option value="17">17%</ion-option>        
+        <ion-option value="17">17%</ion-option>
         <ion-option value="20">20%</ion-option>
       </ion-select>
     </ion-item>
@@ -74,10 +74,13 @@
       <ion-label>Plazo</ion-label>
       <ion-select [(ngModel)]="pedido.plazo">
         <ion-option value="0">0</ion-option>
+        <ion-option value="8">8</ion-option>
         <ion-option value="10">10</ion-option>
         <ion-option value="15">15</ion-option>
         <ion-option value="30">30</ion-option>
         <ion-option value="45">45</ion-option>
+        <ion-option value="50">50</ion-option>
+
       </ion-select>
     </ion-item>
 
@@ -98,7 +101,7 @@
           {{item.codigo}} {{item.descripcion}}
         </p>
         <p>
-          Precio: {{item.precio | number}} | Cant: {{item.cant}} | Total Item: {{item.subtotal | number}} | Peso: {{item.pesotot}} 
+          Precio: {{item.precio | number}} | Cant: {{item.cant}} | Total Item: {{item.subtotal | number}} | Peso: {{item.pesotot}}
         </p>
         <ion-icon *ngIf="!item.valido" name="alert" item-end></ion-icon>
       </ion-item>
@@ -163,7 +166,7 @@
       </ion-col>
     </ion-row>
 
-    
+
   </ion-grid>
   <ion-list>
     <ion-item *ngIf="pedido.ped_closed">

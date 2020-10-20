@@ -93,13 +93,13 @@ export class PedidosPage {
       peso:0
     };
 
-  ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number, 
+  ped_det: { ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, porc_desc: number,
     val_desc: number, porc_imp: number, val_imp: number, subtotal: number, pesotot : number }
     = { ped_det_id: 0, ped_id: 0, pro_id: '', pro_nom: '', cant: 0, precio: 0, porc_desc: 0,
      val_desc: 0, porc_imp: 0, val_imp: 0, subtotal: 0, pesotot : 0 };
 
   ped_dets: Array<{ ped_det_id: number, ped_id: number, codigo: string, descripcion: string, cant: number,
-     precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number, valido: boolean, pesotot: number }>;
+     precio: number, porc_desc: number, val_desc: number, porc_imp: number, val_imp: number, subtotal: number, valido: boolean,pesotot: number }>;
 
   //ped_dets: Array<{ ped_det_id: number, ped_id: number, pro_id: string, pro_nom: string, cant: number, precio: number, subtotal: number }>;
 
@@ -251,14 +251,14 @@ export class PedidosPage {
       this.pedido.ped_tipo = this.navParams.get('ped_tipo');
 
       this.pedido.cli_id = this.cliente.cli_id;
-      this.pedido.ped_numero = 0;  //buscar prox numero  
+      this.pedido.ped_numero = 0;  //buscar prox numero
       this.pedido.ped_fec_ent = new Date().toISOString().slice(0, 16);
       this.pedido.ped_fecha = new Date().toISOString().slice(0, 16);
 
 
 
       this.pedido.vend_id = parseInt(vend_id);
-      
+
 
       if (this.pedido.descuento == 0)
         this.pedido.descuento = this.cliente.descuento;
@@ -412,8 +412,8 @@ export class PedidosPage {
         this.mediospago = data;
         console.log('MedioPago', data);
 
-        
-       
+
+
       },
       err => {
         console.log(err);
@@ -444,7 +444,7 @@ export class PedidosPage {
         .subscribe(res => {
           console.log("suscb", res);
         });
-      //ubicacion 
+      //ubicacion
       console.log("coords", this.coords);
 
 
